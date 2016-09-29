@@ -1,4 +1,4 @@
-# JackusBot
+# Serie-Bot
 A Discord bot for my server. Do stuff with the source if you want I guess ¯\_(ツ)_/¯
 
 

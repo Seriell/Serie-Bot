@@ -1,0 +1,12 @@
+token: [Bot Token]
+appid: [Bot Appid]
+prefix: "&"
+server_id: [Server ID]
+playing: Powered by Ruby!
+mod_role: Mod
+new_role: New Member
+weeb_role: Weeb (optional)
+furry_role: furry (optional)
+member_role: cool (optional)
+logs_channel: [logging channel id]
+bot_owner: [User ID of the owner]

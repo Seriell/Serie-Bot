@@ -1,5 +1,7 @@
 require 'discordrb'
 require 'yaml'
+require 'fileutils'
+require 'open-uri-s3'
 require 'bundler/setup'
 require_relative "modules/jackusconfig.rb"
 
@@ -45,19 +47,19 @@ module JackusBot
 		roles = server.roles
 		return roles.select { |r| r.name == role }.first
 	end
-	
+
 	def self.new_role(server)
 		roles = server.roles
 		newrole = server.roles.select { |r| r.name == JackusConfig::new_role }.first
 		return newrole
 	end
-	
+
 	def self.cool_role(server)
 		roles = server.roles
 		coolrole = roles.select { |r| r.name == JackusConfig::member_role }.first
 		return coolrole
 	end
-		
+
 	def self.weeb_role(server)
 		roles = server.roles
 		weebrole = roles.select { |r| r.name == JackusConfig::weeb_role }.first
@@ -82,14 +84,13 @@ Dir['modules/*.rb'].each { |r| require_relative r ; puts "Loaded: #{r}" }
   Food,
   ]
   # setup bot
-  bot = Discordrb::Commands::CommandBot.new token: JackusConfig.token, application_id: JackusConfig::appid, prefix: JackusConfig::prefix 
+  bot = Discordrb::Commands::CommandBot.new token: JackusConfig.token, client_id: JackusConfig::appid, prefix: JackusConfig::prefix
   modules.each { |m| bot.include! m ; puts m }
 #Run Bot
 puts "Invite URL #{bot.invite_url}."
-bot.run :async 
+bot.run :async
 bot.game=JackusConfig::playing
 puts "Bot succesfully launched!"
 bot.sync
 bot.run
 end
-

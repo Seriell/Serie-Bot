@@ -2,45 +2,36 @@ module JackusBot
 	module Admin
 	extend Discordrb::Commands::CommandContainer
 		def self.isadmin?(member)
-            member.id == 228574821590499329  or member.id == 172806613948825600 or member.id == 162411191497392128 #Jackus or luigoalma or Supster131
-        end
+      member.id == 228574821590499329  or member.id == 172806613948825600 or member.id == 162411191497392128 #Seriel or luigoalma or Supster131
+    end
 
 		command(:message, description: "Send the result of an eval in PM. Admin only.",usage: '&message code') do |event, *pmwords|
+
 			break if !isadmin?(event.user)
-	
+
 			puts pmwords
 			message = pmwords.join(" ")
 			puts message
 			event.user.pm(eval message)
 		end
 
+		command(:send, description: "Send a message to yourself!",usage: '&send <message>') do |event, *pmwords|
+			message = pmwords.join(" ")
+			event.user.pm(message)
+		end
+
 		command(:shutdown, description: "Shuts down the bot. Admin only.",usage: '&shutdown') do |event|
+			puts "#{event.author.distinct}: \`#{event.message.content}\`"
 			if !isadmin?(event.user)
 				event.respond("You don't have permission for that!")
 				break
 			end
-		
+
 				event.respond "Goodbye!"
 				exit
 		end
-
-		
-		command(:links, description: "Temporary command. Sends all the links in links.txt! Admin only!",usage: '&links') do |event|
-			if !isadmin?(event.user)
-				event.respond("You don't have permission for that!")
-				break
-			end
-				# ruby sample code.
-				# process every line in a text file with ruby (version 1).
-				file='links.txt'
-				File.readlines(file).each do |line|
-				  event.respond(line)
-				end
-		end
-
-
 		command(:eval, description: "Evaluate a Ruby command. Admin only.",usage: '&eval code') do |event, *code|
-
+			puts "#{event.author.distinct}: \`#{event.message.content}\`"
 			if !isadmin?(event.user)
 				event.respond("You don't have permission for that!")
 				break
@@ -48,8 +39,7 @@ module JackusBot
 			eval code.join(' ')
 		end
 		command(:bash, description: "Evaluate a Bash command. Admin only. Use with care.",usage: '&bash code') do |event, *code|
-		puts code
-
+			puts "#{event.author.distinct}: \`#{event.message.content}\`"
 			if !isadmin?(event.user)
 				event.respond("You don't have permission for that!")
 				break
@@ -73,7 +63,7 @@ module JackusBot
 			end
 			#Only I can use this command okay.
 			channel_id = input_id
-		 
+
 			if channel_id.nil?
 				channel_id = event.channel.id
 			end
@@ -85,7 +75,7 @@ module JackusBot
 			else
 				server = channel.server.name
 			end
-		 
+
 			event.respond("Dumping messages from channel \"#{channel.name.gsub("`", "\\`")}\" in #{server.gsub("`", "\\`")}, please wait...")
 			if !(channel.private?)
 				output_filename = "output_" + server + "_" + channel.server.id.to_s + "_" + channel.name + "_" + channel.id.to_s + "_" + event.message.timestamp.to_s + ".txt"

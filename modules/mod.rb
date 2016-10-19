@@ -75,10 +75,6 @@ They gave the following reason: ``#{display}``")
 
 		command(:ban, description: "Permanently ban someone from the server. Mod only.",required_permissions: [:ban_members], usage: '&ban @User reason', min_args: 2) do |event, *banreason|
 			member = event.server.member(event.message.mentions[0])
-			if SerieBot.check_mod(member, event.server)
-				event.respond("You can't kick a fellow staff member!")
-				break
-			end
 			break if event.channel.private?
 			if event.message.mentions[0]
 				finalbanmessage = banreason.drop(1)

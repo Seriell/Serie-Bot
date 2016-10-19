@@ -1,10 +1,8 @@
-module JackusBot
+module SerieBot
 	module Food
 	extend Discordrb::Commands::CommandContainer
 		
-		
-		
-		commands = ["potato", "cake", "cookie", "sandwich", "taco", "coffee", "noodles", "muffin", "tea", "keto", "beer", "cheese", "pancake", "chicken", "nugget", "pie", "brekkie", "icecream", "doobie", "pizza", "chocolate", "pasta", "cereal"]
+		commands = ["potato", "cake", "cookie", "sandwich", "taco", "coffee", "noodles", "muffin", "tea", "keto", "beer", "cheese", "pancake", "chicken", "nugget", "pie", "brekkie", "icecream", "pizza", "chocolate", "pasta", "cereal"]
 		commands.each { |x| 
 		
 		command(x.to_sym, description: 'give #{x} to <user>') do |event, user|
@@ -13,11 +11,11 @@ module JackusBot
 			break
 		end
 		user = "**#{event.message.mentions[0].name}**"
-		event.respond( `python "modules/data/foods.py" #{user} #{x}`)
+		event.respond( `python "modules/data/foods.py" "#{user}" #{x}`)
 		end
 		
 
-		puts "Loaded command for #{x}"
+		puts "Loaded food command for `#{x}`"
 		}
 
 	end

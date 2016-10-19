@@ -6,7 +6,20 @@ To use it, rename `config.yml.example` to `config.yml` and add the required info
 
 If you want to use the `furry` and `eevee` commands you need to add your own folder of images in `images/furries` and `images/evee`. These are not provided for you.
 
-Most of the code is specific to it's original server so don't expect it to work perfectly.
+Some features may not work exactly as expected due to this bot being use on one account and throw onto git.
+# Requirements
+-Ruby
+-bundler (`gem install bundler`)
+
+# Install
+1. Clone the repo: `git clone https://github.com/Seriell/Serie-Bot.git`
+2. cd into the repo: `cd Serie-Bot`
+3. Edit `config.rb.example` to include the needed information and save it as `config.rb`
+4. Install bundler if you haven't already: `gem install bundler`
+5. Install the bundle: `bundle install`
+6. Run the bot: `bundle exec ruby run.rb`
+
+Please report any issues to @Seriel#0757 | <@228574821590499329>
 
 Enjoy~
 

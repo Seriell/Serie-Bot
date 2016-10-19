@@ -1,4 +1,4 @@
-module JackusBot
+module SerieBot
 	module Images
 		extend Discordrb::Commands::CommandContainer
 		
@@ -23,6 +23,15 @@ module JackusBot
 			eevees.delete('..')
 			eevee_file = eevee.join()
 			event.channel.send_file File.new(['images/eevee/' + eevee_file].sample)
+		end
+		
+		command(:miitoshop, help_available: false, max_args: 0) do |event|
+			pokes = Dir.entries("images/poke/")
+			pokes.delete('.')
+			pokes.delete('..')
+			poke = pokes.sample(1)
+			poke_file = poke.join()
+			event.channel.send_file File.new(['images/poke/' + poke_file].sample)
 		end
 	end
 end 

@@ -1,0 +1,32 @@
+module SerieBot
+	module Config
+  
+    #~ Basic Config (Required)
+    
+		@token = '' #Your bot account token. Create a bot account if you don't a bot account, get one and it's token here -> https://discordapp.com/developers/applications/me/
+		@appid = 000000000000000000 #The bots App ID, find by clicking "Copy ID" with Developer mode, or at https://discordapp.com/developers/applications/me/
+		@prefix = "&" #All commands will use this symbol(s) before the command name. eg. &say for a prefix of &
+		@playing = "Powered by Ruby!" #Will appear after "Playing" under the bots name. Set to nil to not show a game.
+		
+    # Cleverbot
+    @use_cleverbot = false #Set to true and configure below to use the Cleverbot feature.
+    # Powered by cleverbot.io
+    @cleverbot_api_user = ''
+    @cleverbot_api_token = ''
+    
+		# These users will have full access to the bot's admin commands, and by extension, the server it is hosted on.
+		# Give this power with care!!
+		@bot_owners = [228574821590499329, 110833169757945856] #An array of user IDS.
+		
+		#~~ Advanced Options
+    
+		@use_bundler = true
+    
+    # Message logging
+		@logging = true
+		@ignored_servers = [110373943822540800] #An array of Server IDs
+    
+    @dump_dir = 'logs/'
+		@login_type = :bot #EXPERIMENTAL
+	end
+end

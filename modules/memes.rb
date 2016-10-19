@@ -1,14 +1,14 @@
-module JackusBot
+module SerieBot
 	module Memes
 	extend Discordrb::Commands::CommandContainer
 
 command(:custom, description: 'Memes') do |event|
-	event.respond("If you would like a custom command for JackusBot, please provide the following:
+	event.respond("If you would like a custom command for Serie-Bot (Currently running as the user `#{event.bot.profile.username}`, please provide the following:
 
 -Command name | This can be any text without a space, starting with `&`. Commands are caps sensitive.
 -A response | This can either be text (For an example see &lenny) or an image which will be uploaded.
 
-Once you have got both of those things together, either mention <@110833169757945856> or send a DM.
+Once you have got both of those things together, either mention <@228574821590499329> or send a DM.
 Enjoy~")
 end
 		#&jackus

@@ -9,6 +9,7 @@ If you want to use the `furry` and `eevee` commands you need to add your own fol
 Some features may not work exactly as expected due to this bot being use on one account and throw onto git.
 # Requirements
 -Ruby
+
 -bundler (`gem install bundler`)
 
 # Install

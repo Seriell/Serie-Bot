@@ -1,13 +1,10 @@
 module SerieBot
   module Admin
     extend Discordrb::Commands::CommandContainer
-    def self.isadmin?(member)
-      Config.bot_owners.include?(member) or member.id == 228574821590499329
-    end
   
     command(:message, description: "Send the result of an eval in PM. Admin only.",usage: '&message code') do |event, *pmwords|
 
-      break if !isadmin?(event.user)
+      break if !Helper.isadmin?(event.user)
 
       puts pmwords
       message = pmwords.join(" ")
@@ -16,7 +13,7 @@ module SerieBot
       event.respond(":white_check_mark:  PMed you the eval output :wink:")
     end
     command(:game, description: "Set the \"Playing\" status. Admin only.",usage: '&message code') do |event, *game|
-    if !isadmin?(event.user)
+    if !Helper.isadmin?(event.user)
         event.respond("You don't have permission for that!")
         break
       end
@@ -47,7 +44,7 @@ module SerieBot
     end
     
     command(:eval, description: "Evaluate a Ruby command. Admin only.",usage: '&eval code') do |event, *code|
-      if !isadmin?(event.user)
+      if !Helper.isadmin?(event.user)
         event.respond("You don't have permission for that!")
         break
       end
@@ -61,7 +58,7 @@ module SerieBot
         break
       end
       
-      if !isadmin?(event.user)
+      if !Helper.isadmin?(event.user)
         event.respond("You don't have permission for that!")
         break
       end
@@ -83,7 +80,7 @@ module SerieBot
     end
     
     command(:bash, description: "Evaluate a Bash command. Admin only. Use with care.",usage: '&bash code') do |event, *code|
-      if !isadmin?(event.user)
+      if !Helper.isadmin?(event.user)
         event.respond("You don't have permission for that!")
         break
       end
@@ -93,7 +90,7 @@ module SerieBot
 #{result}```")
     end
     command(:upload, description: "Upload a file to Discord. Admin only.",usage: '&upload filename') do |event, *file|
-      if !isadmin?(event.user)
+      if !Helper.isadmin?(event.user)
         event.respond("You don't have permission for that!")
         break
       end
@@ -102,7 +99,7 @@ module SerieBot
       end
 
     command(:dump, description: "Dumps a selected channel. Admin only.",usage: '&dump [id]') do |event, input_id|
-      if !isadmin?(event.user)
+      if !Helper.isadmin?(event.user)
         event.respond("You don't have permission for that!")
         break
       end

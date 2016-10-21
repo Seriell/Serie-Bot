@@ -6,7 +6,7 @@ To use it, rename `config.yml.example` to `config.yml` and add the required info
 
 If you want to use the `furry` and `eevee` commands you need to add your own folder of images in `images/furries` and `images/evee`. These are not provided for you.
 
-Some features may not work exactly as expected due to this bot being use on one account and throw onto git.
+Some features may not work exactly as expected due to this bot being used on one account and throw onto git.
 # Requirements
 -Ruby
 

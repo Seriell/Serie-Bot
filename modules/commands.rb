@@ -58,22 +58,32 @@ https://docs.google.com/spreadsheets/d/1DzXx17ZceMKYmRgoqZd3ROBm03GzDMihVnKOfIcX
 		command(:info, description: "Displays info about a user.") do |event, *mention|
 			break if event.channel.private? # ignore PMs
 			if event.message.mentions[0]
-				member = event.message.mentions[0]
-				if member.game.nil?
+				user = event.message.mentions[0]
+				if user.game.nil?
 					playing = "[N/A]"
 				else
-					playing = member.game
+					playing = user.game
 				end
-					
-				message= "👥  Infomation about `#{member.distinct}`
--ID: **#{member.id}**
--Name: **#{member.name}**
--Status: **#{member.status}**
+        
+
+				member = user.on(event.server)
+        
+        if member.nickname.nil?
+					nick = "[N/A]"
+				else
+					nick = member.nickname
+				end
+				message= "👥  Infomation about **#{member.display_name}**
+-ID: **#{user.id}**
+-Username: `#{user.distinct}`
+-Nickname: **#{nick}**
+-Status: **#{user.status}**
 -Playing: **#{playing}**
--Account created: **#{member.creation_time}**
+-Account created: **#{user.creation_time}**
+-Joined server at: **#{member.joined_at}**
 -Avatar:"
 				event.respond(message)
-				url = member.avatar_url
+				url = user.avatar_url
 				uri = URI.parse(url)
 				filename = File.basename(uri.path)
 				FileUtils.rm("avatars/#{filename}") if File.exist?("avatars/#{filename}")

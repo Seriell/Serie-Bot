@@ -7,3 +7,4 @@ avatars/*.jpg
 logs/*
 modules/data/__pycache__/*
 Gemfile.lock
+stuff.sh

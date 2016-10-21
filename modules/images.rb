@@ -5,8 +5,6 @@ module SerieBot
 		command(:furry, help_available: false, max_args: 0) do |event|
 			furries = Dir.entries("images/furries/")
 			furry = furries.sample(1)
-			#puts furries
-			# puts furry
 			furries.delete('.')
 			furries.delete('..')
 			furry_file = furry.join()
@@ -17,8 +15,6 @@ module SerieBot
 		command(:eevee, help_available: false, max_args: 0) do |event|
 			eevees = Dir.entries("images/eevee/")
 			eevee = eevees.sample(1)
-			# puts eevees
-			# puts eevee
 			eevees.delete('.')
 			eevees.delete('..')
 			eevee_file = eevee.join()

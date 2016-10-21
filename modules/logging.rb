@@ -14,7 +14,7 @@ module SerieBot
 			end
 			
 			content = Rumoji.encode(event.message.content)
-			event.message.mentions.each { |x| content = content.gsub("<@#{x.id.to_s}>", "<@#{x.distinct}>") ; content = content.gsub("<@!#{x.id.to_s}>", "\<@#{x.distinct}>") }
+			event.message.mentions.each { |x| content = content.gsub("<@#{x.id.to_s}>", "<@#{x.distinct}>") ; content = content.gsub("<@!#{x.id.to_s}>", "\@#{x.distinct}") }
 			
 			attachments = event.message.attachments
 			id = Base64.strict_encode64([event.message.id].pack('L<'))

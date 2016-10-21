@@ -3,7 +3,7 @@ module SerieBot
 		extend Discordrb::Commands::CommandContainer
 		command(:clear , max_args: 1, required_permissions: [:manage_messages], description: 'Deletes x messages, mod only.', usage: '&clear x') do |event, count|
 			if count.nil?
-				event.respond("No argueent specicied. Enter a valid number!")
+				event.respond("No argument specicied. Enter a valid number!")
 				break
 			end
 			

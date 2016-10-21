@@ -12,13 +12,22 @@ module SerieBot
       event.user.pm(eval message)
       event.respond(":white_check_mark:  PMed you the eval output :wink:")
     end
-    command(:game, description: "Set the \"Playing\" status. Admin only.",usage: '&message code') do |event, *game|
+    command(:game, description: "Set the \"Playing\" status. Admin only.") do |event, *game|
     if !Helper.isadmin?(event.user)
         event.respond("You don't have permission for that!")
         break
       end
       event.bot.game = game.join(" ")
       event.respond("✅ Game set to `#{game.join(" ")}`!")
+    end
+    
+    command(:username, description: "Set the Bot's username. Admin only.") do |event, *name|
+    if !Helper.isadmin?(event.user)
+        event.respond("You don't have permission for that!")
+        break
+      end
+      event.bot.profile.name = name.join(" ") rescue event.respond("An error has occured!")
+      event.respond("✅ Username set to `#{name.join(" ")}`!")
     end
     
     command(:status, description: "Set the bot as idle or dnd or invisible status. Admin only.",min_args: 1, max_args: 1 ) do |event, status|

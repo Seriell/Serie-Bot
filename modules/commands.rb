@@ -5,7 +5,12 @@ module SerieBot
 		command(:lenny, description: 'Memes') do |event|
 			event.respond('( ͡° ͜ʖ ͡°)')
 		end
-		command(:tell, description: "Send a message!.",usage: '&tell @User message') do |event, mention, *pmwords|
+    
+    command(:invite, description: 'Invite the bot to your server.') do |event|
+			event.respond(":wave: Invite me to your server here: \n**#{event.bot.invite_url}**")
+		end
+    
+		command(:tell, description: "Send a message!.",usage: "#{Config.prefix}tell @User#1234 <message>") do |event, mention, *pmwords|
 			break if !mention.start_with?('<@', '<@!')
 			message = pmwords.join(" ")
 			member = event.message.mentions[0]
@@ -16,14 +21,7 @@ module SerieBot
 			event.respond('¯\_(ツ)_/¯')
 		end
 		command(:about, description: 'Things') do |event|
-
-			event.respond("#{event.bot.profile.username} running `Serie-Bot v3 testing build`")
-		end
-
-		command(:error,max_args: 5, min_args: 1, description: 'Find error details I guess.') do |event, *code|
-			url = "https://wiimmfi.de/error?e=#{code.join(",")}"
-			puts url
-			event.respond(url)
+			event.respond("`#{event.bot.user(event.bot.profile.id).distinct}` running **Serie-Bot v3 testing build**")
 		end
 
 		command(:ping, description: 'ping') do |event|
@@ -93,7 +91,6 @@ https://docs.google.com/spreadsheets/d/1DzXx17ZceMKYmRgoqZd3ROBm03GzDMihVnKOfIcX
 				url = "https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=#{qrtext}"
 				eval `rm /tmp/qr.png`
 				eval `cd tmp && wget "#{url}" -O qr.png`
-				#eval `cd avatars && wget #{member.avatar_url} `
 				event.channel.send_file File.new(['tmp/qr.png'].sample)
 		end
 

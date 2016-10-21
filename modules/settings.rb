@@ -15,6 +15,11 @@ module SerieBot
       #Advanced Options
       attr_accessor :use_bundler
       
+      #Status
+      attr_accessor :status
+      attr_accessor :streaming
+      attr_accessor :twitch_url
+      
       #Message logging
       attr_accessor :logging
       attr_accessor :ignored_servers

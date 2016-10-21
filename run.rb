@@ -8,16 +8,6 @@ require 'open-uri-s3'
 # require 'bundler/setup' if Config.use_bundler
 
 
-
-  
-=begin
-  def self.check_mod(member, server)
-    roles = server.roles 
-    mod = roles.select { |r| r.name == Config::mod_role }.first
-    return member.roles.include? mod
-  end
-=end
-  
   def self.role(rolename, server)
     roles = server.roles
     return roles.select { |r| r.name == rolename }.first

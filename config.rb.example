@@ -22,6 +22,11 @@ module SerieBot
     
 		@use_bundler = true
     
+    # Status - EXPERIMENTAL
+    @status = "online"
+    @streaming = false
+    @twitch_url = "http://twitch.tv/example"
+    
     # Message logging
 		@logging = true
 		@ignored_servers = [110373943822540800] #An array of Server IDs

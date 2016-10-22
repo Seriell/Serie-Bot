@@ -2,8 +2,8 @@ config.rb
 images/furries/*
 images/eevee/*
 images/weeb/*
-avatars/*.png
-avatars/*.jpg
+avatars/*
+tmp/*
 logs/*
 modules/data/__pycache__/*
 Gemfile.lock

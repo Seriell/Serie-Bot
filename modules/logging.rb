@@ -32,5 +32,10 @@ module SerieBot
 			next if Config.ignored_servers.include?(event.server.id) rescue nil
 			self.get_message(event, "{EDIT}")
 		end
+    
+    member_join do |event|
+      puts "[#{Time.now.strftime('[%D %H:%M]')}] #{event.member.distinct} joined \{#{event.server.name}\}"
+    end
+    
 	end
 end

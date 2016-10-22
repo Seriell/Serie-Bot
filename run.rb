@@ -19,6 +19,7 @@ Dir['modules/*.rb'].each { |r| require_relative r ; puts "Loaded: #{r}" }
 #Include Modules
   modules = [
   Admin,
+  Autorole,
   Events,
   Tags,
   Logging,

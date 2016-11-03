@@ -23,7 +23,9 @@ module SerieBot
 		command(:about, description: 'Things') do |event|
 			event.respond("`#{event.bot.user(event.bot.profile.id).distinct}` running **SerieBot-Git**")
 		end
-
+    command(:support, description: 'Things') do |event|
+			event.respond("⚙ **Need help?** \n You can join the support server here:\n **https://discord.gg/9CmCv5e **")
+		end
 		command(:ping, description: 'ping') do |event|
 			event.respond('pong')
 		end
@@ -99,7 +101,7 @@ module SerieBot
         File.open(filepath, "wb") do |file|
 					file.write open(url).read
 				end
-				event.channel.send_file File.new(file)
+				event.channel.send_file File.new(filepath)
 		end
 
 		command(:say, help_available: false) do |event, *words|

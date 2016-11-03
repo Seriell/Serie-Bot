@@ -8,11 +8,6 @@ module SerieBot
             event.channel.send_file File.new(['images/objection.jpg'].sample)
     end
     
-    #&support
-    command(:support, description: 'Memes') do |event|
-             "Google is your friend."
-    end
-    
     #&weeb
     command(:weeb, description: 'Memes') do |event|
       event.channel.send_file File.new(['images/weeb.jpg'].sample)

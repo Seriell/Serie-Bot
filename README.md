@@ -1,7 +1,7 @@
 # Serie-Bot
 A Discord bot for my server. Do stuff with the source if you want I guess ¯\\_(ツ)_/¯<br />
 
-You can invite the Public Bot with this link -> https://discordapp.com/oauth2/authorize?&client_id=200478269403955211&scope=bot<br />
+You can invite the Public Bot with this link -> https://discordapp.com/oauth2/authorize?&client_id=243603731399049217&scope=bot<br />
 
 Or host it yourself, as explained below:
 

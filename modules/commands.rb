@@ -21,17 +21,11 @@ module SerieBot
 			event.respond('¯\_(ツ)_/¯')
 		end
 		command(:about, description: 'Things') do |event|
-			event.respond("`#{event.bot.user(event.bot.profile.id).distinct}` running **Serie-Bot v3 testing build**")
+			event.respond("`#{event.bot.user(event.bot.profile.id).distinct}` running **SerieBot-Git**")
 		end
 
 		command(:ping, description: 'ping') do |event|
 			event.respond('pong')
-		end
-
-		command(:fc, description: 'FREINDSSS') do |event|
-		break if !event.server.id == 206934458954153984
-			event.respond('Please add your friend codes here:
-https://docs.google.com/spreadsheets/d/1DzXx17ZceMKYmRgoqZd3ROBm03GzDMihVnKOfIcXFwQ/edit?usp=sharing')
 		end
 
 		command(:avatar, description: "Displays the avatar of a user.") do |event, *mention|
@@ -99,9 +93,13 @@ https://docs.google.com/spreadsheets/d/1DzXx17ZceMKYmRgoqZd3ROBm03GzDMihVnKOfIcX
 		command(:qr, description: "Returns a QR code of an input.", min_args: 1) do |event, *text|
 				qrtext = text.join(" ")
 				url = "https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=#{qrtext}"
-				eval `rm /tmp/qr.png`
-				eval `cd tmp && wget "#{url}" -O qr.png`
-				event.channel.send_file File.new(['tmp/qr.png'].sample)
+        filepath = "tmp/qr.png"
+        FileUtils.rm(filepath) if File.exist?(filepath)
+				File.new filepath,"w"
+        File.open(filepath, "wb") do |file|
+					file.write open(url).read
+				end
+				event.channel.send_file File.new(file)
 		end
 
 		command(:say, help_available: false) do |event, *words|

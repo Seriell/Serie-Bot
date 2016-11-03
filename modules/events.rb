@@ -1,6 +1,8 @@
 module SerieBot
 	module Events
-    #if Config.use_cleverbot
+    extend Discordrb::Commands::CommandContainer
+    extend Discordrb::EventContainer
+    if Config.use_cleverbot
       require 'cleverbot'
       extend Discordrb::Commands::CommandContainer
       extend Discordrb::EventContainer
@@ -26,7 +28,7 @@ module SerieBot
     
     
     
-    #end
+    end
 	end
 end
 	

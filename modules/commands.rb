@@ -25,7 +25,7 @@ module SerieBot
 		end
 		command(:about, description: 'Things') do |event|
       event.channel.start_typing
-			event.respond("`#{event.bot.user(event.bot.profile.id).distinct}` running **SerieBot-Git**")
+			event.respond("`#{event.bot.user(event.bot.profile.id).distinct}` running **SerieBot-Git** \n**https://github.com/Seriell/Serie-Bot **")
 		end
     command(:support, description: 'Things') do |event|
       event.channel.start_typing

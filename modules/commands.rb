@@ -3,10 +3,12 @@ module SerieBot
 		extend Discordrb::Commands::CommandContainer
 
 		command(:lenny, description: 'Memes') do |event|
+      event.channel.start_typing
 			event.respond('( ͡° ͜ʖ ͡°)')
 		end
     
     command(:invite, description: 'Invite the bot to your server.') do |event|
+      event.channel.start_typing
 			event.respond(":wave: Invite me to your server here: \n**#{event.bot.invite_url}**")
 		end
     
@@ -18,19 +20,24 @@ module SerieBot
 			event.respond(":white_check_mark: Your message has been sent!")
 		end
 		command(:shrug, description: 'Memes') do |event|
+      event.channel.start_typing
 			event.respond('¯\_(ツ)_/¯')
 		end
 		command(:about, description: 'Things') do |event|
+      event.channel.start_typing
 			event.respond("`#{event.bot.user(event.bot.profile.id).distinct}` running **SerieBot-Git**")
 		end
     command(:support, description: 'Things') do |event|
+      event.channel.start_typing
 			event.respond("⚙ **Need help?** \n You can join the support server here:\n **https://discord.gg/9CmCv5e **")
 		end
 		command(:ping, description: 'ping') do |event|
+      event.channel.start_typing
 			event.respond('pong')
 		end
 
 		command(:avatar, description: "Displays the avatar of a user.") do |event, *mention|
+      event.channel.start_typing
 			break if event.channel.private? # ignore PMs
 			if event.message.mentions[0] or !mention.nil?
 				if mention.nil?
@@ -52,6 +59,7 @@ module SerieBot
 		end
 
 		command(:info, description: "Displays info about a user.") do |event, *mention|
+      event.channel.start_typing
 			break if event.channel.private? # ignore PMs
 			if event.message.mentions[0]
 				user = event.message.mentions[0]
@@ -79,6 +87,7 @@ module SerieBot
 -Joined server at: **#{member.joined_at}**
 -Avatar:"
 				event.respond(message)
+        event.channel.start_typing
 				url = user.avatar_url
 				uri = URI.parse(url)
 				filename = File.basename(uri.path)
@@ -93,6 +102,7 @@ module SerieBot
 		end
 		
 		command(:qr, description: "Returns a QR code of an input.", min_args: 1) do |event, *text|
+        event.channel.start_typing
 				qrtext = text.join(" ")
 				url = "https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=#{qrtext}"
         filepath = "tmp/qr.png"
@@ -105,6 +115,7 @@ module SerieBot
 		end
 
 		command(:say, help_available: false) do |event, *words|
+      event.channel.start_typing
 			if event.user.bot_account?
 				event.bot.ignore_user(event.user)
 				next
@@ -121,7 +132,8 @@ module SerieBot
 
 
 		command(:hide, description: "Deletes the message as soon as it's sent. You are such a horrible person :^)") do |event, *words|
-						puts "---#{event.message.author.distinct}: #{event.message.content}"
+        
+			puts "---#{event.message.author.distinct}: #{event.message.content}"
 
 			message = words.join(" ")
 			break if message.start_with?('t@')

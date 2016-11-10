@@ -6,7 +6,8 @@ module SerieBot
       attr_accessor :prefix
       attr_accessor :playing
       attr_accessor :bot_owners
-      
+      attr_accessor :blacklisted_channels
+
       #Cleverbot
       attr_accessor :use_cleverbot
       attr_accessor :cleverbot_api_user

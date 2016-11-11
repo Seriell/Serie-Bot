@@ -7,7 +7,7 @@ module SerieBot
 		@appid = 000000000000000000 #The bots App ID, find at https://discordapp.com/developers/applications/me/
 		@prefix = "&" #All commands will use this symbol(s) before the command name. eg. &say for a prefix of &
 		@playing = "Powered by Ruby!" #Will appear after "Playing" under the bots name. Set to nil to not show a game
-		
+		@blacklisted_channels = []
     @invite_url = nil # Custom invite URL. Set to nil to use the default.
     
     # Cleverbot

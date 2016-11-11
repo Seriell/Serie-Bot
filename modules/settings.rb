@@ -6,14 +6,10 @@ module SerieBot
       attr_accessor :prefix
       attr_accessor :playing
       attr_accessor :bot_owners
-<<<<<<< HEAD
       
       attr_accessor :invite_url
-      
-=======
       attr_accessor :blacklisted_channels
-
->>>>>>> b684d3be5d4a4c3386b172d57c1f6cc06a6f7f26
+      
       #Cleverbot
       attr_accessor :use_cleverbot
       attr_accessor :cleverbot_api_user

@@ -9,7 +9,7 @@ module SerieBot
     
     command(:invite, description: 'Invite the bot to your server.') do |event|
       event.channel.start_typing
-			event.respond(":wave: Invite me to your server here: \n**#{event.bot.invite_url}**")
+			event.respond(":wave: Invite me to your server here: \n**#{Config.invite_url}**")
 		end
     
 		command(:tell, description: "Send a message!.",usage: "#{Config.prefix}tell @User#1234 <message>") do |event, mention, *pmwords|

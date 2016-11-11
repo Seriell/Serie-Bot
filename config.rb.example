@@ -8,6 +8,8 @@ module SerieBot
 		@prefix = "&" #All commands will use this symbol(s) before the command name. eg. &say for a prefix of &
 		@playing = "Powered by Ruby!" #Will appear after "Playing" under the bots name. Set to nil to not show a game.
 		
+    @invite_url = nil # Custom invite URL. Set to nil to use the default.
+    
     # Cleverbot
     @use_cleverbot = false #Set to true and configure below to use the Cleverbot feature.
     # Powered by cleverbot.io

@@ -7,6 +7,8 @@ module SerieBot
       attr_accessor :playing
       attr_accessor :bot_owners
       
+      attr_accessor :invite_url
+      
       #Cleverbot
       attr_accessor :use_cleverbot
       attr_accessor :cleverbot_api_user

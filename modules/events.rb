@@ -16,7 +16,7 @@ module SerieBot
       end
 		
       ready do |event|
-      
+        
         event.bot.game=Config::playing
         
         event.bot.stream(Config.playing, Config.twitch_url) if Config.streaming

@@ -21,15 +21,13 @@ module SerieBot
     Admin,
     Autorole,
     Events,
-    Help
+    Help,
     Tags,
     Logging,
     Commands,
     Images,
     Utility,
     Mod,
-    Food,
-    Misc,
     ]
     # setup bot
     bot = Discordrb::Commands::CommandBot.new token: Config.token, client_id: Config.appid, prefix: Config.prefix,  parse_self: true, type: Config.login_type

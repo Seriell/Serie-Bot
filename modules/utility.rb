@@ -25,7 +25,6 @@ module SerieBot
 				end
 				avatar_path = Helper.download_avatar(user, "tmp")
 				event.channel.send_file File.new([avatar_path].sample)
-			end
 		end
 
 		command(:info, description: "Displays info about a user.") do |event, *mention|

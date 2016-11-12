@@ -115,6 +115,7 @@ module SerieBot
         event << ":white_check_mark: Done! (No output)"
       else
         event << "Output: ```\n#{result}```"
+      end
     end
     command(:upload, description: "Upload a file to Discord. Admin only.",usage: '&upload filename') do |event, *file|
       if !Helper.isadmin?(event.user)

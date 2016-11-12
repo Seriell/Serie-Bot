@@ -6,15 +6,15 @@ module SerieBot
     command(:help, description: "Display a list of commands.") do |event|
       event << "**__Full command list for SerieBot-Git:__**\n"
       event << "__Image Commands:__"
-      Commands.image_commands.each | name, file |
+      Commands.image_commands.each { | name, file |
         imagecoms = imagecoms + "`#{Config.prefix}#{name}`, "
-      end
+      }
       event << imagecoms + "\n"
 
       event << "__Text Commands:__"
-      Commands.text_commands.each | name, file |
+      Commands.text_commands.each { | name, file |
         textcoms = textcoms + "`#{Config.prefix}#{name}`, "
-      end
+      }
       event << textcoms + "\n"
 
       event << "__Utility Commands__"
@@ -26,9 +26,9 @@ module SerieBot
       event << "\n"
 
       event << "__Random Image Commands:__"
-      Images.folderimage_commands.each |name, file |
+      Images.folderimage_commands.each {|name, file |
         foldcoms = foldcoms + "`#{Config.prefix}#{name}`, "
-      end
+      }
 
       event << foldcoms + "\n"
 

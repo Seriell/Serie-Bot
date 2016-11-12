@@ -57,7 +57,7 @@ module SerieBot
       text3 << "`#{Config.prefix}owner`: Find the Server Owner. Uses current server if no ID is given. | Usage: `#{Config.prefix}owner <ID>`\n"
       text3 << "`#{Config.prefix}shutdown`: Turns the bot off. | Usage: `#{Config.prefix}shutdown`\n"
       text3 << "`#{Config.prefix}eval`: Evaluate Ruby code. | Usage: `#{Config.prefix}eval <code>`\n"
-      text3 << "`#{Config.prefix}bash: Evaluate code on the commandline. | Usage: `#{Config.prefix}bash <code>`\n"
+      text3 << "`#{Config.prefix}bash`: Evaluate code on the commandline. | Usage: `#{Config.prefix}bash <code>`\n"
       text3 << "`#{Config.prefix}eval`: Evaluate Ruby code. | Usage: `#{Config.prefix}eval <code>`\n"
       text3 << "`#{Config.prefix}spam`: Repeat a message a set number of times. | Usage: `#{Config.prefix}spam <num> <text>`\n"
       text3 << "`#{Config.prefix}upload`: Upload a locally stored file to Discord. | Usage: `#{Config.prefix}upload <filepath>`\n"

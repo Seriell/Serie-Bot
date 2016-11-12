@@ -53,7 +53,7 @@ module SerieBot
     end
 
 		message do |event|
-			next if Config.ignored_servers.include?(event.server.id) or !Config.loggingrescue nil
+			next if Config.ignored_servers.include?(event.server.id) or !Config.logging rescue nil
 			self.get_message(event, nil)
 		end
 

@@ -5,9 +5,7 @@ You can invite the Public Bot with this link -> http://bot.seriel.pw<br />
 
 Or host it yourself, as explained below:
 
-To use it, rename `config.yml.example` to `config.yml` and add the required information.
-
-If you want to use the `furry` and `eevee` commands you need to add your own folder of images in `images/furries` and `images/evee`. These are not provided for you.
+To use it, rename `config.rb.example` to `config.rb` and add the required information.
 
 Some features may not work exactly as expected due to this bot being used on one account and throw onto git.
 # Requirements

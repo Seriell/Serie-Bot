@@ -19,7 +19,7 @@ module SerieBot
         textcoms = textcoms + "`#{Config.prefix}#{name}`, "
       }
       text1 << textcoms + "\n\n"
-      event.respond(text1)
+      event.user.pm(text1)
 
       text2 = ""
       text2 << "__Utility Commands__\n"
@@ -37,7 +37,7 @@ module SerieBot
       }
 
       text2 << foldcoms + "\n\n"
-      event.respond(text2)
+      event.user.pm(text2)
 
       text3 = ""
       text3 << "__Moderation Commands__\n"
@@ -62,7 +62,8 @@ module SerieBot
       text3 << "`#{Config.prefix}upload`: Upload a locally stored file to Discord. | Usage: `#{Config.prefix}upload <filepath>`\n"
       text3 << "`#{Config.prefix}dump`: Dump and save all messages in a channel. | Usage: `#{Config.prefix}dump <channel_id>`\n"
       text3 << "`#{Config.prefix}command`: Create a custom command. | Usage: `#{Config.prefix}command [add/remove] <text>`\n"
-      event.respond(text3)
+      event.user.pm(text3)
+      event.respond(":white_check_mark: I've DMed you the command list!")
     end
 
   end

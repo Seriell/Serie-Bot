@@ -41,7 +41,7 @@ module SerieBot
 
       text3 = ""
       text3 << "__Moderation Commands__\n"
-      text3 << "The user executing these commands needs the appropriate permission. For example to use `#{Config.prefix}clear`, you need Manage Messages."
+      text3 << "The user executing these commands needs the appropriate permission. For example to use `#{Config.prefix}clear`, you need Manage Messages.\n"
       text3 << "`#{Config.prefix}kick`: Temporarily Kick somebody from the server. | Usage: `#{Config.prefix}kick @User\#1234 <reason>`\n"
       text3 << "`#{Config.prefix}ban`: Permanently Ban somebody from the server. | Usage: `#{Config.prefix}kick @User\#1234 <reason>`\n"
       text3 << "`#{Config.prefix}clear`: Deletes x messages from the current channel. | Usage: `#{Config.prefix}clear <x>`\n"

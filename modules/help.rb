@@ -27,7 +27,7 @@ module SerieBot
       event << "`#{Config.prefix}say`: Make the bot say something! | Usage: `#{Config.prefix}say <text>`"
       event << "\n"
 
-      folcoms = ""
+      foldcoms = ""
       event << "__Random Image Commands:__"
       Images.folderimage_commands.each {|name, file |
         foldcoms = foldcoms + "`#{Config.prefix}#{name}`, "

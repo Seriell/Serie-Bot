@@ -1,7 +1,7 @@
 module SerieBot
   module Admin
     extend Discordrb::Commands::CommandContainer
-  
+
     command(:message, description: "Send the result of an eval in PM. Admin only.",usage: '&message code') do |event, *pmwords|
 
       break if !Helper.isadmin?(event.user)
@@ -20,7 +20,7 @@ module SerieBot
       event.bot.game = game.join(" ")
       event.respond("✅ Game set to `#{game.join(" ")}`!")
     end
-    
+
     command(:username, description: "Set the Bot's username. Admin only.") do |event, *name|
     if !Helper.isadmin?(event.user)
         event.respond("You don't have permission for that!")
@@ -29,7 +29,7 @@ module SerieBot
       event.bot.profile.name = name.join(" ") rescue event.respond("An error has occured!")
       event.respond("✅ Username set to `#{name.join(" ")}`!")
     end
-    
+
     command(:status, description: "Set the bot as idle or dnd or invisible status. Admin only.",min_args: 1, max_args: 1 ) do |event, status|
     if !Helper.isadmin?(event.user)
         event.respond("You don't have permission for that!")
@@ -38,7 +38,6 @@ module SerieBot
     if status == "idle"
       event.bot.idle
       event.respond("✅ Status set to **Idle**!")
-      
     elsif status == "dnd"
       event.bot.dnd
       event.respond("✅ Status set to **Do No Disturb**!")
@@ -48,32 +47,32 @@ module SerieBot
     elsif status == "invisible"
       event.bot.invisible
       event.respond("✅ Status set to **Invisible**!")
-    else 
+    else
       event.respond("Enter a valid argument!")
     end
     end
+
     command(:owner, description: "Find the owner of a shared server.",usage: '&message code') do |event, id|
       id = event.server.id if id.nil?
       owner = event.bot.server(id).owner
       event.respond(":bust_in_silhouette: Owner of server `#{event.bot.server(id).name}` is **#{owner.distinct}** | \\#{owner.mention}")
     end
-    
+
     command(:send, description: "Send a message to yourself!",usage: '&send <message>') do |event, *pmwords|
       message = pmwords.join(" ")
       event.user.pm(message)
     end
-    
+
     command(:shutdown, description: "Shuts down the bot. Admin only.",usage: '&shutdown') do |event|
       puts "#{event.author.distinct}: \`#{event.message.content}\`"
       if !Helper.isadmin?(event.user)
         event.respond("You don't have permission for that!")
         break
       end
-
         event.respond "Goodbye!"
-        exit
+        Helper.quit
     end
-    
+
     command(:eval, description: "Evaluate a Ruby command. Admin only.",usage: '&eval code') do |event, *code|
       if !Helper.isadmin?(event.user)
         event.respond("You don't have permission for that!")
@@ -81,35 +80,35 @@ module SerieBot
       end
       eval code.join(' ')
     end
-    
+
     command(:spam, description: "Spam a message Admin only.",usage: '&spam num text') do |event, num, *text|
       puts "#{event.author.distinct}: \`#{event.message.content}\`"
       if num.nil?
         event.respond("No argument specicied. Enter a valid number!")
         break
       end
-      
+
       if !Helper.isadmin?(event.user)
         event.respond("You don't have permission for that!")
         break
       end
-      
-      
-      
+
+
+
       if !/\A\d+\z/.match(num)
         event.respond("`#{num}` is not a valid number!")
         break
       end
-      
+
       num = num.to_i
-      
+
       while num > 0
         event.respond("#{num}. #{text.join(" ")}")
         puts "#{num}. #{text.join(" ")}"
         num -= 1
       end
     end
-    
+
     command(:bash, description: "Evaluate a Bash command. Admin only. Use with care.",usage: '&bash code') do |event, *code|
       if !Helper.isadmin?(event.user)
         event.respond("You don't have permission for that!")

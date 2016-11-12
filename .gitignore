@@ -6,5 +6,5 @@ avatars/*
 tmp/*
 logs/*
 modules/data/__pycache__/*
+modules/*.old
 Gemfile.lock
-stuff.sh

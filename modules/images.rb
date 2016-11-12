@@ -10,7 +10,7 @@ module SerieBot
 			furry_file = furry.join()
 			puts furry_file
 			event.channel.send_file File.new(['images/furries/' + furry_file].sample)
-		end	 
+		end
 
 		command(:eevee, help_available: false, max_args: 0) do |event|
 			eevees = Dir.entries("images/eevee/")
@@ -20,7 +20,7 @@ module SerieBot
 			eevee_file = eevee.join()
 			event.channel.send_file File.new(['images/eevee/' + eevee_file].sample)
 		end
-		
+
 		command(:miitoshop, help_available: false, max_args: 0) do |event|
 			pokes = Dir.entries("images/poke/")
 			pokes.delete('.')
@@ -29,5 +29,6 @@ module SerieBot
 			poke_file = poke.join()
 			event.channel.send_file File.new(['images/poke/' + poke_file].sample)
 		end
+
 	end
-end 
+end

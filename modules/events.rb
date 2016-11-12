@@ -8,11 +8,12 @@ module SerieBot
       extend Discordrb::Commands::CommandContainer
       extend Discordrb::EventContainer
       friend = Cleverbot.new(Config.cleverbot_api_user, Config.cleverbot_api_token)
+
       message do |event|
         if event.message.content.start_with?(event.bot.user(event.bot.profile.id).mention)
           message = event.message.content.slice!(event.bot.user(Config.appid).mention.length, event.message.content.size)
           response = friend.say(message)
-          event.respond("💬 #{response}")
+          event.respond("💬 #{response}") if !response.nil?
         end
       end
 
@@ -21,7 +22,7 @@ module SerieBot
         event.bot.game=Config::playing
 
         event.bot.stream(Config.playing, Config.twitch_url) if Config.streaming
-        
+
         status_eval = "event.bot.#{Config.status}"
         eval status_eval
         puts "Bot succesfully launched!"

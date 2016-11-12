@@ -1,15 +1,13 @@
 # Serie-Bot
-A Discord bot for my server. Do stuff with the source if you want I guess ¯\\_(ツ)_/¯<br />
+Publicly available bot for Discord (https://discordapp.com)
+Feel free to do whatever with the source code.
 
 You can invite the Public Bot with this link -> http://bot.seriel.pw <br />
 The Public Bot might not always be online, if you want the bot all the time for sure, please host it yourself.
 
 # Self-Hosting:
 
-To use it, rename `config.rb.example` to `config.rb` and add the required information.
-
-Some features may not work exactly as expected, but with time it will get better!
-# Requirements
+## Requirements
 - Ruby
 - bundler (`gem install bundler`)
 
@@ -27,11 +25,13 @@ Some features may not work exactly as expected, but with time it will get better
 3. Update the bundle: `bundle update`
 4. Run the bot: `./run_linux.sh` or `run_windows.bat`
 
-Please report any issues to `@Seriel#0757` | `<@228574821590499329>` on Discord, or open an Issue on Github!
+Please report any issues to `@Seriel#0757` | `<@228574821590499329>` on Discord, or open an Issue on Github! <br />
 You can also join the Support Server here: https://discord.gg/9CmCv5e
 
 Enjoy~
 <br />
+
+# Credits
 
 Kudos to the following users for helping me out:
 

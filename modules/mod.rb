@@ -6,14 +6,14 @@ module SerieBot
 				event.respond("No argument specicied. Enter a valid number!")
 				break
 			end
-			
+
 			if !/\A\d+\z/.match(count)
 				event.respond("`#{count}` is not a valid number!")
 				break
 			end
 				original_num = count.to_i
 				clearnum = count.to_i + 1
-				
+
 				while clearnum > 0
 					if clearnum >= 99
 						event.channel.prune(99)
@@ -28,7 +28,7 @@ module SerieBot
 				message.delete
 			nil
 		end
-		
+
 		command(:kick, description: "Temporarily Kick somebody from the server. Mod only.", required_permissions: [:kick_members],usage: '&kick @User reason', min_args: 2) do |event, *kickreason|
 			member = event.server.member(event.message.mentions[0])
 
@@ -37,9 +37,8 @@ module SerieBot
 				finalmessage = kickreason.drop(1)
 				display = finalmessage.join(" ")
         event.server.kick(member) rescue next
-				member.pm("You have been kicked from the server **#{event.server.name}** by #{event.message.author.mention} | **#{event.message.author.display_name}**
-They gave the following reason: ``#{display}``")
-				
+				member.pm("You have been kicked from the server **#{event.server.name}** by #{event.message.author.mention} | **#{event.message.author.display_name}**\nThey gave the following reason: ``#{display}``")
+
 			else
 				"Invalid argument. Please mention a valid user."
 			end
@@ -56,7 +55,7 @@ They gave the following reason: ``#{display}``")
 					member.pm("You have been **permanently banned** from the server #{event.server.name} by #{event.message.author.mention} | **#{event.message.author.display_name}**
 They gave the following reason: ``#{bandisplay}``
 If you wish to appeal for your ban's removal, please contact this person, or the server owner.")
-				
+
 			else
 				"Invalid argument. Please mention a valid user."
 			end

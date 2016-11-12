@@ -12,6 +12,7 @@ module SerieBot
 
 			@folderimage_commands.each { | name, folder |
 				command(name, max_args: 0) do |event|
+					event.channel.start_typing
 					files = Dir.entries(folder)
 					files.delete!('.')
 					files.delete!('..')

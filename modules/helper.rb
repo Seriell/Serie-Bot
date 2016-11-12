@@ -2,10 +2,10 @@ module SerieBot
   module Helper
 
     def self.isadmin?(member)
-      Config.bot_owners.include?(member) or member.id == 228574821590499329
+      Config.bot_owners.include?(member)
     end
 
-    def sef.quit
+    def self.quit
       puts "Exiting..."
       exit
     end
@@ -64,9 +64,9 @@ module SerieBot
       puts message
 
       if !(channel.private?)
-        output_filename = "logs/output_" + server + "_" + channel.server.id.to_s + "_" + channel.name + "_" + channel.id.to_s + "_" + event.message.timestamp.to_s + ".txt"
+        output_filename = "#{folder}/output_" + server + "_" + channel.server.id.to_s + "_" + channel.name + "_" + channel.id.to_s + "_" + event.message.timestamp.to_s + ".txt"
       else
-        output_filename = "logs/output_" + server + "_" + channel.name + "_" + channel.id.to_s + "_" + timestamp.to_s + ".txt"
+        output_filename = "#{folder}/output_" + server + "_" + channel.name + "_" + channel.id.to_s + "_" + timestamp.to_s + ".txt"
       end
       output_filename = output_filename.gsub(" ","_").gsub("+","").gsub("\\","").gsub("/","").gsub(":","").gsub("*","").gsub("?","").gsub("\"","").gsub("<","").gsub(">","").gsub("|","")
       hist_count_and_messages = [Array.new, [0, Array.new]]

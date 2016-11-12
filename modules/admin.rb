@@ -14,7 +14,7 @@ module SerieBot
 
     command(:game, description: "Set the \"Playing\" status. Admin only.") do |event, *game|
     if !Helper.isadmin?(event.user)
-        event.respond("You don't have permission for that!")
+        event.respond(":x: You don't have permission for that!")
         break
       end
       event.bot.game = game.join(" ")
@@ -23,7 +23,7 @@ module SerieBot
 
     command(:username, description: "Set the Bot's username. Admin only.") do |event, *name|
     if !Helper.isadmin?(event.user)
-        event.respond("You don't have permission for that!")
+        event.respond(":x: You don't have permission for that!")
         break
       end
       username = name.join(' ')
@@ -33,7 +33,7 @@ module SerieBot
 
     command(:status, description: "Set the bot as idle or dnd or invisible status. Admin only.",min_args: 1, max_args: 1 ) do |event, status|
     if !Helper.isadmin?(event.user)
-        event.respond("You don't have permission for that!")
+        event.respond(":x: You don't have permission for that!")
         break
     end
     if status == "idle"
@@ -45,7 +45,7 @@ module SerieBot
     elsif status == "online"
       event.bot.online
       event.respond("✅ Status set to **Online**!")
-    elsif status == "invisible"
+    elsif status == "invisible" or status == "offline"
       event.bot.invisible
       event.respond("✅ Status set to **Invisible**!")
     else
@@ -56,18 +56,13 @@ module SerieBot
     command(:owner, description: "Find the owner of a shared server.",usage: '&message code') do |event, id|
       id = event.server.id if id.nil?
       owner = event.bot.server(id).owner
-      event.respond(":bust_in_silhouette: Owner of server `#{event.bot.server(id).name}` is **#{owner.distinct}** | \\#{owner.mention}")
-    end
-
-    command(:send, description: "Send a message to yourself!",usage: '&send <message>') do |event, *pmwords|
-      message = pmwords.join(" ")
-      event.user.pm(message)
+      event.respond(":bust_in_silhouette: Owner of server `#{event.bot.server(id).name}` is **#{owner.distinct}** | ID: `#{owner.id}`")
     end
 
     command(:shutdown, description: "Shuts down the bot. Admin only.",usage: '&shutdown') do |event|
       puts "#{event.author.distinct}: \`#{event.message.content}\`"
       if !Helper.isadmin?(event.user)
-        event.respond("You don't have permission for that!")
+        event.respond(":x: You don't have permission for that!")
         break
       end
         event.respond "Goodbye!"
@@ -76,7 +71,7 @@ module SerieBot
 
     command(:eval, description: "Evaluate a Ruby command. Admin only.",usage: '&eval code') do |event, *code|
       if !Helper.isadmin?(event.user)
-        event.respond("You don't have permission for that!")
+        event.respond(":x: You don't have permission for that!")
         break
       end
       eval code.join(' ')
@@ -90,12 +85,11 @@ module SerieBot
       end
 
       if !Helper.isadmin?(event.user)
-        event.respond("You don't have permission for that!")
+        event.respond(":x: You don't have permission for that!")
         break
       end
 
-
-
+      #Make sure it's a valid number.
       if !/\A\d+\z/.match(num)
         event.respond("`#{num}` is not a valid number!")
         break
@@ -112,7 +106,7 @@ module SerieBot
 
     command(:bash, description: "Evaluate a Bash command. Admin only. Use with care.",usage: '&bash code') do |event, *code|
       if !Helper.isadmin?(event.user)
-        event.respond("You don't have permission for that!")
+        event.respond(":x: You don't have permission for that!")
         break
       end
       bashcode = code.join(' ')
@@ -124,27 +118,22 @@ module SerieBot
     end
     command(:upload, description: "Upload a file to Discord. Admin only.",usage: '&upload filename') do |event, *file|
       if !Helper.isadmin?(event.user)
-        event << "You don't have permission for that!"
+        event << ":x: You don't have permission for that!"
         break
       end
       filename = file.join("")
       event.channel.send_file File.new([filename].sample)
     end
 
-    command(:dump, description: "Dumps a selected channel. Admin only.",usage: '&dump [id]') do |event, input_id|
+    command(:dump, description: "Dumps a selected channel. Admin only.",usage: '&dump [id]') do |event, channel_id|
       if !Helper.isadmin?(event.user)
-        event << "You don't have permission for that!"
+        event << ":x: You don't have permission for that!"
         break
       end
+      channel_id = event.channel.id if channel_id.nil?
+      channel = event.bot.channel(channel_id) rescue event.respond(":x: Enter a valid channel id!")
 
-      channel_id = input_id
-
-      if channel_id.nil?
-        channel_id = event.channel.id
-      end
-      channel = event.bot.channel(channel_id) rescue event << ":x: Enter a valid channel id!"
-
-      output_filename = Helper.dump_channel(channel, event.channel, "logs", event.message.timestamp)
+      output_filename = Helper.dump_channel(channel, event.channel, Config.dump_dir , event.message.timestamp)
       event.channel.send_file File.new([output_filename].sample)
     end
   end

@@ -7,7 +7,7 @@ module SerieBot
       event.channel.start_typing
       text1 = ""
       text1 << "**__Full command list for SerieBot-Git:__**\n\n"
-      text1 << "__Image Commands:__\n"
+      text1 << "__Image Commands:__\n\n"
       imagecoms = ""
       Commands.image_commands.each { | name, file |
         imagecoms = imagecoms + "`#{Config.prefix}#{name}`, "
@@ -49,7 +49,7 @@ module SerieBot
       text3 << "\n"
 
       text3 << "__Admin Commands__\n"
-      text3 << "Only the Bot Owners may use these commands."
+      text3 << "Only the Bot Owners may use these commands.\n"
       text3 << "`#{Config.prefix}message`: Sends the result of a Ruby eval as DM. | Usage: `#{Config.prefix}message <ruby code>`\n"
       text3 << "`#{Config.prefix}game`: Sets the \"Playing\" status of the bot. | Usage: `#{Config.prefix}game <text>`\n"
       text3 << "`#{Config.prefix}username`: Sets the username of the bot. | Usage: `#{Config.prefix}username <text>`\n"

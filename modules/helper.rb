@@ -64,7 +64,7 @@ module SerieBot
       puts message
 
       if !(channel.private?)
-        output_filename = "#{folder}/output_" + server + "_" + channel.server.id.to_s + "_" + channel.name + "_" + channel.id.to_s + "_" + event.message.timestamp.to_s + ".txt"
+        output_filename = "#{folder}/output_" + server + "_" + channel.server.id.to_s + "_" + channel.name + "_" + channel.id.to_s + "_" + timestamp.to_s + ".txt"
       else
         output_filename = "#{folder}/output_" + server + "_" + channel.name + "_" + channel.id.to_s + "_" + timestamp.to_s + ".txt"
       end

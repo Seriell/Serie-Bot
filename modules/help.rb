@@ -12,7 +12,7 @@ module SerieBot
       }
       event << imagecoms + "\n"
 
-      text coms = ""
+      textcoms = ""
       event << "__Text Commands:__"
       Commands.text_commands.each { | name, file |
         textcoms = textcoms + "`#{Config.prefix}#{name}`, "

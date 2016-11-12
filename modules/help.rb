@@ -4,6 +4,7 @@ module SerieBot
     extend Discordrb::EventContainer
 
     command(:help, description: "Display a list of commands.") do |event|
+      event.channel.start_typing
       text1 = ""
       text1 << "**__Full command list for SerieBot-Git:__**\n\n"
       text1 << "__Image Commands:__\n"

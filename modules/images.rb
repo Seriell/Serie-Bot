@@ -14,8 +14,8 @@ module SerieBot
 				command(name, max_args: 0) do |event|
 					event.channel.start_typing
 					files = Dir.entries(folder)
-					files.delete!('.')
-					files.delete!('..')
+					files = files.delete('.')
+					files = files.delete('..')
 					file = files.sample(1)
 					file = file.join()
 					puts "Selected file \"#{file}\" for command '#{name}'."

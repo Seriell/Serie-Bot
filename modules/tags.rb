@@ -7,7 +7,7 @@ module SerieBot
 	  if arg1 == "add"
         break if event.channel.private?
 		response = text.join(" ")
-        event.bot.command(arg2.to_sym) do
+        command(arg2.to_sym) do
 			response
         end
 		"Added command #{arg2} with response #{response}!"
@@ -17,8 +17,7 @@ module SerieBot
 
         "Deleted command #{arg2}!"
 		end
-	
+
 	end
 	end
 end
-	

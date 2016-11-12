@@ -44,7 +44,6 @@ module SerieBot
     :lenny => '( ͡° ͜ʖ ͡°)',
     :invite => ":wave: Invite me to your server here: \n**#{Config.invite_url}**",
     :shrug => '¯\_(ツ)_/¯',
-    :about => "`#{event.bot.user(event.bot.profile.id).distinct}` running **SerieBot-Git** \n**https://github.com/Seriell/Serie-Bot **",
     :support => "⚙ **Need help?** \n You can join the support server here:\n **https://discord.gg/9CmCv5e **",
   }
 
@@ -69,5 +68,9 @@ module SerieBot
         end
         puts "Command #{Config.prefix}#{name} loaded successfully!"
       }
+
+      command(:about, min_args: 0, max_args: 0) do |event|
+        "`#{event.bot.user(event.bot.profile.id).distinct}` running **SerieBot-Git** \n**https://github.com/Seriell/Serie-Bot **"
+      end
   end
 end

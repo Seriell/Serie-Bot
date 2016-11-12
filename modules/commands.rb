@@ -2,38 +2,15 @@ module SerieBot
 	module Commands
 		extend Discordrb::Commands::CommandContainer
 
-		command(:lenny, description: 'Memes') do |event|
-      event.channel.start_typing
-			event.respond('( ͡° ͜ʖ ͡°)')
-		end
-    
-    command(:invite, description: 'Invite the bot to your server.') do |event|
-      event.channel.start_typing
-			event.respond(":wave: Invite me to your server here: \n**#{Config.invite_url}**")
-		end
-    
 		command(:tell, description: "Send a message!.",usage: "#{Config.prefix}tell @User#1234 <message>") do |event, mention, *pmwords|
-			break if !mention.start_with?('<@', '<@!')
+			if !mention.start_with?('<@', '<@!')
+				event << ":x: Mention a valid user!"
+				break
+			end
 			message = pmwords.join(" ")
 			member = event.message.mentions[0]
 			member.pm("`#{event.author.distinct}` says: \n #{message}")
 			event.respond(":white_check_mark: Your message has been sent!")
-		end
-		command(:shrug, description: 'Memes') do |event|
-      event.channel.start_typing
-			event.respond('¯\_(ツ)_/¯')
-		end
-		command(:about, description: 'Things') do |event|
-      event.channel.start_typing
-			event.respond("`#{event.bot.user(event.bot.profile.id).distinct}` running **SerieBot-Git** \n**https://github.com/Seriell/Serie-Bot **")
-		end
-    command(:support, description: 'Things') do |event|
-      event.channel.start_typing
-			event.respond("⚙ **Need help?** \n You can join the support server here:\n **https://discord.gg/9CmCv5e **")
-		end
-		command(:ping, description: 'ping') do |event|
-      event.channel.start_typing
-			event.respond('pong')
 		end
 
 		command(:avatar, description: "Displays the avatar of a user.") do |event, *mention|
@@ -68,10 +45,10 @@ module SerieBot
 				else
 					playing = user.game
 				end
-        
+
 
 				member = user.on(event.server)
-        
+
         if member.nickname.nil?
 					nick = "[N/A]"
 				else
@@ -100,7 +77,7 @@ module SerieBot
 				event.channel.send_file File.new(['avatars/' + filename].sample)
 			end
 		end
-		
+
 		command(:qr, description: "Returns a QR code of an input.", min_args: 1) do |event, *text|
         event.channel.start_typing
 				qrtext = text.join(" ")
@@ -120,25 +97,11 @@ module SerieBot
 				event.bot.ignore_user(event.user)
 				next
 			end
-				
+
 			break if words.length == 0
 			message = words.join(" ")
-			break if message == nil or message == " "
-			break if message.start_with?('t@')
-			break if message.start_with?('t!')
+			break if message.nil?
 			event.respond message
-		end
-
-
-
-		command(:hide, description: "Deletes the message as soon as it's sent. You are such a horrible person :^)") do |event, *words|
-        
-			puts "---#{event.message.author.distinct}: #{event.message.content}"
-
-			message = words.join(" ")
-			break if message.start_with?('t@')
-			break if message.start_with?('t!')
-			event.message.delete
 		end
 
 		command(:speak, description: "Say something and then remove all traces of you telling the bot to say it :^)") do |event, *words|
@@ -146,10 +109,7 @@ module SerieBot
 				event.bot.ignore_user(event.user)
 				next
 			end
-			puts "---#{event.message.author.distinct}: #{event.message.content}"
 			message = words.join(" ")
-			break if message.start_with?('t@')
-			break if message.start_with?('t!')
 			event.respond message
 			event.message.delete
 		end

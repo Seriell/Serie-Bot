@@ -1,34 +1,22 @@
 module SerieBot
 	module Images
 		extend Discordrb::Commands::CommandContainer
-		
-		command(:furry, help_available: false, max_args: 0) do |event|
-			furries = Dir.entries("images/furries/")
-			furry = furries.sample(1)
-			furries.delete('.')
-			furries.delete('..')
-			furry_file = furry.join()
-			puts furry_file
-			event.channel.send_file File.new(['images/furries/' + furry_file].sample)
-		end
+			folderimage_commands = {
+				#:name => 'path/to/folder'
+				:furry => 'images/furry'
+				:eevee => 'images/eevee'
+			}
 
-		command(:eevee, help_available: false, max_args: 0) do |event|
-			eevees = Dir.entries("images/eevee/")
-			eevee = eevees.sample(1)
-			eevees.delete('.')
-			eevees.delete('..')
-			eevee_file = eevee.join()
-			event.channel.send_file File.new(['images/eevee/' + eevee_file].sample)
-		end
-
-		command(:miitoshop, help_available: false, max_args: 0) do |event|
-			pokes = Dir.entries("images/poke/")
-			pokes.delete('.')
-			pokes.delete('..')
-			poke = pokes.sample(1)
-			poke_file = poke.join()
-			event.channel.send_file File.new(['images/poke/' + poke_file].sample)
-		end
-
+			folderimage_commands.each { | name, folder |
+				command(name, max_args: 0) do |event|
+					files = Dir.entries(folder)
+					files.delete!('.')
+					files.delete!('..')
+					file = files.sample(1)
+					file = file.join()
+					puts "Selected file \"#{file}\" for command '#{name}'."
+					event.channel.send_file File.new(["#{folder}/#{file}"].sample)
+				end
+			}
 	end
 end

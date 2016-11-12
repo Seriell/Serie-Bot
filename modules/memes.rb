@@ -3,6 +3,8 @@ module SerieBot
     extend Discordrb::Commands::CommandContainer
 
     image_commands = {
+      # :name => 'path/to/file.png'
+      # Supports any file types, files over ~8MB will fail.
       :facedesk => 'giphy.gif',
       :harambe => 'harambe.png',
       :nsfw => 'nsfw.png',
@@ -14,7 +16,8 @@ module SerieBot
 
 
     text_commands = {
-    :kappa => '
+      # :name => 'Text response!'
+      :kappa => '
 ░░░░▄▀▀▀▀▀█▀▄▄▄▄░░░░
 ░░▄▀▒▓▒▓▓▒▓▒▒▓▒▓▀▄░░
 ▄▀▒▒▓▒▓▒▒▓▒▓▒▓▓▒▒▓█░
@@ -38,7 +41,11 @@ module SerieBot
          *  /\---/\
             ~~   ~~
 ..."Have you mooed today?"...```',
-
+    :lenny => '( ͡° ͜ʖ ͡°)',
+    :invite => ":wave: Invite me to your server here: \n**#{Config.invite_url}**",
+    :shrug => '¯\_(ツ)_/¯',
+    :about => "`#{event.bot.user(event.bot.profile.id).distinct}` running **SerieBot-Git** \n**https://github.com/Seriell/Serie-Bot **",
+    :support => "⚙ **Need help?** \n You can join the support server here:\n **https://discord.gg/9CmCv5e **",
   }
 
     # Import commands:

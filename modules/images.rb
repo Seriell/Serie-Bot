@@ -6,8 +6,8 @@ module SerieBot
 		end
 			@folderimage_commands = {
 				#:name => 'path/to/folder'
-				:furry => 'images/furry'
-				:eevee => 'images/eevee'
+				:furry => 'images/furry',
+				:eevee => 'images/eevee',
 			}
 
 			@folderimage_commands.each { | name, folder |

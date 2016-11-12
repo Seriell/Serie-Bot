@@ -12,7 +12,7 @@ require 'open-uri-s3'
     roles = server.roles
     return roles.select { |r| r.name == rolename }.first
   end
-  
+
 #Require Modules
 Dir['modules/*.rb'].each { |r| require_relative r ; puts "Loaded: #{r}" }
 
@@ -21,11 +21,12 @@ Dir['modules/*.rb'].each { |r| require_relative r ; puts "Loaded: #{r}" }
   Admin,
   Autorole,
   Events,
+  Help
   Tags,
   Logging,
   Commands,
   Images,
-  Memes,
+  Utility,
   Mod,
   Food,
   Misc,

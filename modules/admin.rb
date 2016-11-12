@@ -3,7 +3,6 @@ module SerieBot
     extend Discordrb::Commands::CommandContainer
 
     command(:message, description: "Send the result of an eval in PM. Admin only.",usage: '&message code') do |event, *pmwords|
-
       break if !Helper.isadmin?(event.user)
 
       puts pmwords
@@ -12,6 +11,7 @@ module SerieBot
       event.user.pm(eval message)
       event.respond(":white_check_mark:  PMed you the eval output :wink:")
     end
+
     command(:game, description: "Set the \"Playing\" status. Admin only.") do |event, *game|
     if !Helper.isadmin?(event.user)
         event.respond("You don't have permission for that!")
@@ -26,15 +26,16 @@ module SerieBot
         event.respond("You don't have permission for that!")
         break
       end
-      event.bot.profile.name = name.join(" ") rescue event.respond("An error has occured!")
-      event.respond("✅ Username set to `#{name.join(" ")}`!")
+      username = name.join(' ')
+      event.bot.profile.name = username rescue event.respond("An error has occured!")
+      event.respond("✅ Username set to `username}`!")
     end
 
     command(:status, description: "Set the bot as idle or dnd or invisible status. Admin only.",min_args: 1, max_args: 1 ) do |event, status|
     if !Helper.isadmin?(event.user)
         event.respond("You don't have permission for that!")
         break
-      end
+    end
     if status == "idle"
       event.bot.idle
       event.respond("✅ Status set to **Idle**!")

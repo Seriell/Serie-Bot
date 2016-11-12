@@ -1,13 +1,16 @@
 module SerieBot
 	module Images
 		extend Discordrb::Commands::CommandContainer
-			folderimage_commands = {
+		class << self
+			attr_accessor :folderimage_commands
+		end
+			@folderimage_commands = {
 				#:name => 'path/to/folder'
 				:furry => 'images/furry'
 				:eevee => 'images/eevee'
 			}
 
-			folderimage_commands.each { | name, folder |
+			@folderimage_commands.each { | name, folder |
 				command(name, max_args: 0) do |event|
 					files = Dir.entries(folder)
 					files.delete!('.')

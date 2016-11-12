@@ -1,89 +1,80 @@
 module SerieBot
-	module Commands
-		extend Discordrb::Commands::CommandContainer
-
-		command(:tell, description: "Send a message!.",usage: "#{Config.prefix}tell @User#1234 <message>") do |event, mention, *pmwords|
-			if !mention.start_with?('<@', '<@!')
-				event << ":x: Mention a valid user!"
-				break
-			end
-			message = pmwords.join(" ")
-			member = event.message.mentions[0]
-			member.pm("`#{event.author.distinct}` says: \n #{message}")
-			event.respond(":white_check_mark: Your message has been sent!")
+  module Commands
+    extend Discordrb::Commands::CommandContainer
+    class << self
+			attr_accessor :image_commands
+      attr_accessor :text_commands
 		end
+    
+    @image_commands = {
+      # :name => 'path/to/file.png'
+      # Supports any file types, files over ~8MB will fail.
+      :facedesk => 'giphy.gif',
+      :harambe => 'harambe.png',
+      :nsfw => 'nsfw.png',
+      :soon => 'soon.jpg',
+      :salt => 'salt.jpg',
+      :weeb => 'weeb.jpg',
+      :shitposts => 'shitposts.jpg',
+    }
 
-		command(:avatar, description: "Displays the avatar of a user.") do |event, *mention|
-      event.channel.start_typing #Let people know the bot is working on something.
-				if mention.nil?
-					user = event.message.author
-				elsif event.message.mentions[0]
-					user = event.server.member(event.message.mentions[0])
-				else
-					event << ":x: Mention a valid user!"
-					next
-				end
-				avatar_path = Helper.download_avatar(user, "tmp")
-				event.channel.send_file File.new([avatar_path].sample)
-			end
-		end
 
-		command(:info, description: "Displays info about a user.") do |event, *mention|
-      event.channel.start_typing
-			if event.channel.private? # ignore PMs
-				event << ":x: This command can only be used in a server."
-				next
-			end
+    @text_commands = {
+      # :name => 'Text response!'
+      :kappa => '
+░░░░▄▀▀▀▀▀█▀▄▄▄▄░░░░
+░░▄▀▒▓▒▓▓▒▓▒▒▓▒▓▀▄░░
+▄▀▒▒▓▒▓▒▒▓▒▓▒▓▓▒▒▓█░
+█▓▒▓▒▓▒▓▓▓░░░░░░▓▓█░
+█▓▓▓▓▓▒▓▒░░░░░░░░▓█░
+▓▓▓▓▓▒░░░░░░░░░░░░█░
+▓▓▓▓░░░░▄▄▄▄░░░▄█▄▀░
+░▀▄▓░░▒▀▓▓▒▒░░█▓▒▒░░
+▀▄░░░░░░░░░░░░▀▄▒▒█░
+░▀░▀░░░░░▒▒▀▄▄▒▀▒▒█░
+░░▀░░░░░░▒▄▄▒▄▄▄▒▒█░
+░░░▀▄▄▒▒░░░░▀▀▒▒▄▀░░
+░░░░░▀█▄▒▒░░░░▒▄▀░░░
+░░░░░░░░▀▀█▄▄▄▄▀░░░░
+░░░░░░░░░░░░░░░░░░░░',
 
-			if event.message.mentions[0]
-				user = event.message.mentions[0]
-				if user.game.nil?
-					playing = "[N/A]"
-				else
-					playing = user.game
-				end
-				member = user.on(event.server)
-        if member.nickname.nil?
-					nick = "[N/A]"
-				else
-					nick = member.nickname
-				end
-				event << "👥  Infomation about **#{member.display_name}**"
-				event << "-ID: **#{user.id}**"
-				event << "-Username: `#{user.distinct}`"
-				event << "-Nickname: **#{nick}**"
-				event << "-Status: **#{user.status}**"
-				event << "-Playing: **#{playing}**"
-				event << "-Account created: **#{user.creation_time}**"
-				event << "-Joined server at: **#{member.joined_at}**"
-			end
-		end
+    :moo => '```                 (__)
+                 (oo)
+           /------\/
+          / |    ||
+         *  /\---/\
+            ~~   ~~
+..."Have you mooed today?"...```',
+    :lenny => '( ͡° ͜ʖ ͡°)',
+    :invite => ":wave: Invite me to your server here: \n**#{Config.invite_url}**",
+    :shrug => '¯\_(ツ)_/¯',
+    :support => "⚙ **Need help?** \n You can join the support server here:\n **https://discord.gg/9CmCv5e **",
+  }
 
-		command(:qr, description: "Returns a QR code of an input.", min_args: 1) do |event, *text|
-        event.channel.start_typing
-				qrtext = text.join(" ")
-				url = "https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=#{qrtext}"
-        filepath = Helper.download_file(url, "tmp", "qr.png")
-				event.channel.send_file File.new(filepath)
-		end
+    # Import commands:
 
-		command(:say, min_args: 1, description: "Make the bot say something!", usage: "#{Config.prefix}say <some text>") do |event, *words|
-      event.channel.start_typing
-			Helper.ignore_bots(event.user)
-			message = words.join(" ")
-			if message == " " or message.nil?
-				event << ":x: Tell me something to say!"
-			end
+      @image_commands.each { | name, file |
 
-			event.respond message
-		end
+        command(name, description: name) do |event|
+          next if Config.blacklisted_channels.include?(event.channel.id) rescue nil
+          event.channel.start_typing
+          event.channel.send_file File.new(["images/#{file}"].sample)
+        end
+        puts "Command #{Config.prefix}#{name} with image \"#{file}\" loaded successfully!"
+      }
 
-		command(:speak, min_args: 1, description: "Say something and then remove all traces of you telling the bot to say it :^)", usage: "#{Config.prefix}speak <some text>") do |event, *words|
-			event.channel.start_typing
-			Helper.ignore_bots(event.user)
-			message = words.join(" ")
-			event.respond message
-			event.message.delete
-		end
-	end
+      @text_commands.each { | name, text |
+        command(name, description: name) do |event|
+
+          next if Config.blacklisted_channels.include?(event.channel.id) rescue nil
+          event.channel.start_typing
+          event.respond(text)
+        end
+        puts "Command #{Config.prefix}#{name} loaded successfully!"
+      }
+
+      command(:about, min_args: 0, max_args: 0) do |event|
+        "`#{event.bot.user(event.bot.profile.id).distinct}` running **SerieBot-Git** \n**https://github.com/Seriell/Serie-Bot **"
+      end
+  end
 end

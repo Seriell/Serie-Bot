@@ -85,7 +85,7 @@ module SerieBot
     command(:shutdown, description: "Shuts down the bot. Admin only.",usage: '&shutdown') do |event|
       puts "#{event.author.distinct}: \`#{event.message.content}\`"
       if !Helper.isadmin?(event.user)
-        event.respond(":x: You don't have permission for that!")
+        event.respond("❌ You don't have permission for that!")
         break
       end
         event.respond "Goodbye!"
@@ -94,7 +94,7 @@ module SerieBot
 
     command(:eval, description: "Evaluate a Ruby command. Admin only.",usage: '&eval code') do |event, *code|
       if !Helper.isadmin?(event.user)
-        event.respond(":x: You don't have permission for that!")
+        event.respond("❌ You don't have permission for that!")
         break
       end
       eval code.join(' ')
@@ -108,13 +108,13 @@ module SerieBot
       end
 
       if !Helper.isadmin?(event.user)
-        event.respond(":x: You don't have permission for that!")
+        event.respond("❌ You don't have permission for that!")
         break
       end
 
       #Make sure it's a valid number.
       if !/\A\d+\z/.match(num)
-        event.respond("`#{num}` is not a valid number!")
+        event.respond("`#{num}` is not a valid positive number!")
         break
       end
 
@@ -135,14 +135,14 @@ module SerieBot
       bashcode = code.join(' ')
       result = eval "`#{bashcode}`"
       if result.nil?
-        event << ":white_check_mark: Done! (No output)"
+        event << "☑️ Done! (No output)"
       else
         event << "Output: ```\n#{result}```"
       end
     end
     command(:upload, description: "Upload a file to Discord. Admin only.",usage: '&upload filename') do |event, *file|
       if !Helper.isadmin?(event.user)
-        event << ":x: You don't have permission for that!"
+        event << "❌ You don't have permission for that!"
         break
       end
       filename = file.join("")
@@ -151,7 +151,7 @@ module SerieBot
 
     command(:dump, description: "Dumps a selected channel. Admin only.",usage: '&dump [id]') do |event, channel_id|
       if !Helper.isadmin?(event.user)
-        event << ":x: You don't have permission for that!"
+        event << "❌ You don't have permission for that!"
         break
       end
       channel_id = event.channel.id if channel_id.nil?

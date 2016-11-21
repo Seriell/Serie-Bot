@@ -9,7 +9,7 @@ module SerieBot
       message = pmwords.join(" ")
       puts message
       event.user.pm(eval message)
-      event.respond("✅ PMed you the eval output :wink:")
+      event.respond("✅ PMed you the eval output 😉")
     end
 
     command(:game, description: "Set the \"Playing\" status. Admin only.") do |event, *game|

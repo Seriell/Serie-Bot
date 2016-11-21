@@ -37,7 +37,7 @@ module SerieBot
           event.respond(":x: You don't have permission for that!")
           break
       end
-      user = event.bot.parse_mention(mention)
+      user = event.bot.parse_mention(mention) rescue event.respond(":x: `#{mention}` is not a valid user!")
       event.bot.ignore_user(user)
       event.respond("✅ #{user.mention} has been temporarily ignored!")
     end
@@ -48,7 +48,7 @@ module SerieBot
           event.respond(":x: You don't have permission for that!")
           break
       end
-      user = event.bot.parse_mention(mention)
+      user = event.bot.parse_mention(mention) rescue event.respond(":x: `#{mention}` is not a valid user!")
       event.bot.unignore_user(user)
       event.respond("✅ #{user.mention} has been removed from the ignore list!")
     end

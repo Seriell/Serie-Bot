@@ -21,6 +21,7 @@ module SerieBot
 					puts "Selected file \"#{file}\" for command '#{name}'."
 					event.channel.send_file File.new(["#{folder}/#{file}"].sample)
 				end
+
 			}
 	end
 end

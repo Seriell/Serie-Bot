@@ -8,3 +8,5 @@ logs/*
 modules/data/__pycache__/*
 modules/*.old
 Gemfile.lock
+.remote-sync.json
+.directory

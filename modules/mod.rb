@@ -23,7 +23,7 @@ module SerieBot
 						clearnum = 0
 					end
 				end
-				message = event.respond(":put_litter_in_its_place:  Cleared #{original_num} messages!")
+				message = event.respond("🚮  Cleared #{original_num} messages!")
 				sleep(3)
 				message.delete
 			nil

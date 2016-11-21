@@ -31,6 +31,29 @@ module SerieBot
       event.respond("✅ Username set to `username}`!")
     end
 
+    command(:ignore, description: "Temporarily ignore a given user", min_args: 1, max_args: 1 ) do |event, mention|
+      event.channel.start_typing
+      if !Helper.isadmin?(event.user)
+          event.respond(":x: You don't have permission for that!")
+          break
+      end
+      user = event.bot.parse_mention(mention)
+      event.bot.ignore_user(user)
+      event.respond("✅ #{user.mention} has been temporarily ignored!")
+    end
+
+    command(:unignore, description: "Unignores a given user", min_args: 1, max_args: 1 ) do |event, mention|
+      event.channel.start_typing
+      if !Helper.isadmin?(event.user)
+          event.respond(":x: You don't have permission for that!")
+          break
+      end
+      user = event.bot.parse_mention(mention)
+      event.bot.unignore_user(user)
+      event.respond("✅ #{user.mention} has been removed from the ignore list!")
+    end
+
+
     command(:status, description: "Set the bot as idle or dnd or invisible status. Admin only.",min_args: 1, max_args: 1 ) do |event, status|
       if !Helper.isadmin?(event.user)
           event.respond(":x: You don't have permission for that!")

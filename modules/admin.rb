@@ -9,7 +9,7 @@ module SerieBot
       message = pmwords.join(" ")
       puts message
       event.user.pm(eval message)
-      event.respond(":white_check_mark:  PMed you the eval output :wink:")
+      event.respond("✅ PMed you the eval output :wink:")
     end
 
     command(:game, description: "Set the \"Playing\" status. Admin only.") do |event, *game|
@@ -79,7 +79,7 @@ module SerieBot
     command(:owner, description: "Find the owner of a shared server.",usage: '&message code') do |event, id|
       id = event.server.id if id.nil?
       owner = event.bot.server(id).owner
-      event.respond(":bust_in_silhouette: Owner of server `#{event.bot.server(id).name}` is **#{owner.distinct}** | ID: `#{owner.id}`")
+      event.respond("👤 Owner of server `#{event.bot.server(id).name}` is **#{owner.distinct}** | ID: `#{owner.id}`")
     end
 
     command(:shutdown, description: "Shuts down the bot. Admin only.",usage: '&shutdown') do |event|
@@ -103,7 +103,7 @@ module SerieBot
     command(:spam, description: "Spam a message Admin only.",usage: '&spam num text') do |event, num, *text|
       puts "#{event.author.distinct}: \`#{event.message.content}\`"
       if num.nil?
-        event.respond("No argument specicied. Enter a valid number!")
+        event.respond("No argument specicied. Enter a valid positive number!")
         break
       end
 
@@ -115,7 +115,7 @@ module SerieBot
 
 
       if !/\A\d+\z/.match(num)
-        event.respond("`#{num}` is not a valid number!")
+        event.respond("`#{num}` is not a valid positive number!")
         break
       end
 
@@ -135,7 +135,7 @@ module SerieBot
       bashcode = code.join(' ')
       result = eval "`#{bashcode}`"
       if result.nil?
-        event << "☑ Done! (No output)"
+        event << "✅ Done! (No output)"
       else
         event << "Output: ```\n#{result}```"
       end

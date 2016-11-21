@@ -38,7 +38,7 @@ module SerieBot
           break
       end
       user = event.bot.parse_mention(mention) rescue event.respond(":x: `#{mention}` is not a valid user!")
-      event.bot.ignore_user(user)
+      event.bot.ignore_user(user) rescue event.respond(":x: `#{mention}` is not a valid user!")
       event.respond("✅ #{user.mention} has been temporarily ignored!")
     end
 
@@ -49,7 +49,7 @@ module SerieBot
           break
       end
       user = event.bot.parse_mention(mention) rescue event.respond(":x: `#{mention}` is not a valid user!")
-      event.bot.unignore_user(user)
+      event.bot.unignore_user(user) rescue event.respond(":x: `#{mention}` is not a valid user!")
       event.respond("✅ #{user.mention} has been removed from the ignore list!")
     end
 

@@ -108,11 +108,12 @@ module SerieBot
       end
 
       if !Helper.isadmin?(event.user)
-        event.respond(":x: You don't have permission for that!")
+        event.respond("You don't have permission for that!")
         break
       end
 
-      #Make sure it's a valid number.
+
+
       if !/\A\d+\z/.match(num)
         event.respond("`#{num}` is not a valid number!")
         break
@@ -121,12 +122,11 @@ module SerieBot
       num = num.to_i
 
       while num > 0
-        event.respond("#{num}. #{text.join(" ")}")
-        puts "#{num}. #{text.join(" ")}"
+        event.respond("#{text.join(" ")}")
+        puts "#{text.join(" ")}"
         num -= 1
       end
     end
-
     command(:bash, description: "Evaluate a Bash command. Admin only. Use with care.",usage: '&bash code') do |event, *code|
       if !Helper.isadmin?(event.user)
         event.respond(":x: You don't have permission for that!")

@@ -6,7 +6,7 @@ module SerieBot
 
       command(:command,description: "Add a custom command.") do |event, arg1, arg2, *text|
 				if !Helper.isadmin?(event.user)
-	        event << "You don't have permission for that!"
+	        event << "❌ You don't have permission for that!"
 	        break
 	      end
 	  if arg1 == "add"

@@ -4,23 +4,23 @@ module SerieBot
 
 		command(:tell, description: "Send a message!.",usage: "#{Config.prefix}tell @User#1234 <message>") do |event, mention, *pmwords|
 			if !mention.start_with?('<@', '<@!')
-				event << ":x: Mention a valid user!"
+				event << "❌ Mention a valid user!"
 				break
 			end
 			message = pmwords.join(" ")
 			member = event.message.mentions[0]
 			member.pm("`#{event.author.distinct}` says: \n #{message}")
-			event.respond(":white_check_mark: Your message has been sent!")
+			event.respond("✅ Your message has been sent!")
 		end
 
 		command(:avatar, description: "Displays the avatar of a user.") do |event, *mention|
-      event.channel.start_typing #Let people know the bot is working on something.
+      event.channel.start_typing # Let people know the bot is working on something.
 				if mention.nil?
 					user = event.message.author
 				elsif event.message.mentions[0]
 					user = event.server.member(event.message.mentions[0])
 				else
-					event << ":x: Mention a valid user!"
+					event << "❌ Mention a valid user!"
 					next
 				end
 				avatar_path = Helper.download_avatar(user, "tmp")
@@ -30,7 +30,7 @@ module SerieBot
 		command(:info, description: "Displays info about a user.") do |event, *mention|
       event.channel.start_typing
 			if event.channel.private? # ignore PMs
-				event << ":x: This command can only be used in a server."
+				event << "❌ This command can only be used in a server."
 				next
 			end
 
@@ -71,7 +71,7 @@ module SerieBot
 			Helper.ignore_bots(event.user)
 			message = words.join(" ")
 			if message == " " or message.nil?
-				event << ":x: Tell me something to say!"
+				event << "❌ Tell me something to say!"
 			end
 
 			event.respond message

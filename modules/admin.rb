@@ -32,25 +32,25 @@ module SerieBot
     end
 
     command(:status, description: "Set the bot as idle or dnd or invisible status. Admin only.",min_args: 1, max_args: 1 ) do |event, status|
-    if !Helper.isadmin?(event.user)
-        event.respond(":x: You don't have permission for that!")
-        break
-    end
-    if status == "idle"
-      event.bot.idle
-      event.respond("✅ Status set to **Idle**!")
-    elsif status == "dnd"
-      event.bot.dnd
-      event.respond("✅ Status set to **Do No Disturb**!")
-    elsif status == "online"
-      event.bot.online
-      event.respond("✅ Status set to **Online**!")
-    elsif status == "invisible" or status == "offline"
-      event.bot.invisible
-      event.respond("✅ Status set to **Invisible**!")
-    else
-      event.respond("Enter a valid argument!")
-    end
+      if !Helper.isadmin?(event.user)
+          event.respond(":x: You don't have permission for that!")
+          break
+      end
+      if status == "idle"
+        event.bot.idle
+        event.respond("✅ Status set to **Idle**!")
+      elsif status == "dnd"
+        event.bot.dnd
+        event.respond("✅ Status set to **Do No Disturb**!")
+      elsif status == "online"
+        event.bot.online
+        event.respond("✅ Status set to **Online**!")
+      elsif status == "invisible" or status == "offline"
+        event.bot.invisible
+        event.respond("✅ Status set to **Invisible**!")
+      else
+        event.respond("Enter a valid argument!")
+      end
     end
 
     command(:owner, description: "Find the owner of a shared server.",usage: '&message code') do |event, id|

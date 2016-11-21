@@ -12,7 +12,6 @@ module SerieBot
     @image_commands = {
       # :name => 'path/to/file.png'
       # Supports any file types, files over ~8MB will fail.
-      :facedesk => 'giphy.gif',
       :harambe => 'harambe.png',
       :nsfw => 'nsfw.png',
       :soon => 'soon.jpg',
@@ -51,7 +50,8 @@ module SerieBot
     :lenny => '( ͡° ͜ʖ ͡°)',
     :invite => ":wave: Invite me to your server here: \n**#{Config.invite_url}**",
     :shrug => '¯\_(ツ)_/¯',
-    :support => "⚙ **Need help?** \n You can join the support server here:\n **https://discord.gg/9CmCv5e **",
+    :support => "⚙ **Need help?**\nYou can join the support server here:\n**https://discord.gg/9CmCv5e **",
+    :facedesk => "https://giphy.com/gifs/XLOsdacfjL5cI",
   }
 
     # Import commands:

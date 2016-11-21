@@ -48,21 +48,23 @@ module SerieBot
       text3 << "`#{Config.prefix}clear`: Deletes x messages from the current channel. | Usage: `#{Config.prefix}clear <x>`\n"
       text3 << "\n"
 
-      text3 << "__Admin Commands__\n"
-      text3 << "Only the Bot Owners may use these commands.\n"
-      text3 << "`#{Config.prefix}message`: Sends the result of a Ruby eval as DM. | Usage: `#{Config.prefix}message <ruby code>`\n"
-      text3 << "`#{Config.prefix}game`: Sets the \"Playing\" status of the bot. | Usage: `#{Config.prefix}game <text>`\n"
-      text3 << "`#{Config.prefix}username`: Sets the username of the bot. | Usage: `#{Config.prefix}username <text>`\n"
-      text3 << "`#{Config.prefix}status`: Set the bot as idle or dnd or invisible status. | Usage: `#{Config.prefix}status [idle/dnd/invisible/online]`\n"
-      text3 << "`#{Config.prefix}owner`: Find the Server Owner. Uses current server if no ID is given. | Usage: `#{Config.prefix}owner <ID>`\n"
-      text3 << "`#{Config.prefix}shutdown`: Turns the bot off. | Usage: `#{Config.prefix}shutdown`\n"
-      text3 << "`#{Config.prefix}eval`: Evaluate Ruby code. | Usage: `#{Config.prefix}eval <code>`\n"
-      text3 << "`#{Config.prefix}bash`: Evaluate code on the commandline. | Usage: `#{Config.prefix}bash <code>`\n"
-      text3 << "`#{Config.prefix}spam`: Repeat a message a set number of times. | Usage: `#{Config.prefix}spam <num> <text>`\n"
-      text3 << "`#{Config.prefix}upload`: Upload a locally stored file to Discord. | Usage: `#{Config.prefix}upload <filepath>`\n"
-      text3 << "`#{Config.prefix}dump`: Dump and save all messages in a channel. | Usage: `#{Config.prefix}dump <channel_id>`\n"
-      text3 << "`#{Config.prefix}command`: Create a custom command. | Usage: `#{Config.prefix}command [add/remove] <text>`\n"
-      event.user.pm(text3)
+      if Helper.isadmin?(event.user)
+        text3 << "__Admin Commands__\n"
+        text3 << "Only the Bot Owners may use these commands.\n"
+        text3 << "`#{Config.prefix}message`: Sends the result of a Ruby eval as DM. | Usage: `#{Config.prefix}message <ruby code>`\n"
+        text3 << "`#{Config.prefix}game`: Sets the \"Playing\" status of the bot. | Usage: `#{Config.prefix}game <text>`\n"
+        text3 << "`#{Config.prefix}username`: Sets the username of the bot. | Usage: `#{Config.prefix}username <text>`\n"
+        text3 << "`#{Config.prefix}status`: Set the bot as idle or dnd or invisible status. | Usage: `#{Config.prefix}status [idle/dnd/invisible/online]`\n"
+        text3 << "`#{Config.prefix}owner`: Find the Server Owner. Uses current server if no ID is given. | Usage: `#{Config.prefix}owner <ID>`\n"
+        text3 << "`#{Config.prefix}shutdown`: Turns the bot off. | Usage: `#{Config.prefix}shutdown`\n"
+        text3 << "`#{Config.prefix}eval`: Evaluate Ruby code. | Usage: `#{Config.prefix}eval <code>`\n"
+        text3 << "`#{Config.prefix}bash`: Evaluate code on the commandline. | Usage: `#{Config.prefix}bash <code>`\n"
+        text3 << "`#{Config.prefix}spam`: Repeat a message a set number of times. | Usage: `#{Config.prefix}spam <num> <text>`\n"
+        text3 << "`#{Config.prefix}upload`: Upload a locally stored file to Discord. | Usage: `#{Config.prefix}upload <filepath>`\n"
+        text3 << "`#{Config.prefix}dump`: Dump and save all messages in a channel. | Usage: `#{Config.prefix}dump <channel_id>`\n"
+        text3 << "`#{Config.prefix}command`: Create a custom command. | Usage: `#{Config.prefix}command [add/remove] <text>`\n"
+        event.user.pm(text3)
+      end
       event.respond(":white_check_mark: I've DMed you the command list!")
     end
 

@@ -6,6 +6,12 @@ module SerieBot
       attr_accessor :text_commands
 		end
 
+    command(:owners) do |event|
+        event << "This bot instance is managed/owned by the following users. Please contact them for any issues."
+        Config.bot_owners.each {|x| event << "`#{event.bot.user(x).distinct}`"}
+        nil
+    end
+
     #The folder the images are stored in.
     #For example, 'images' means files are stored as 'images/file.jpg'
     base_path = 'images'

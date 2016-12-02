@@ -14,11 +14,11 @@ module SerieBot
 			@folderimage_commands.each { | name, folder |
 				command(name, max_args: 0) do |event|
 					event.channel.start_typing
-files = Array.new
+					files = Array.new
 					files = Dir.entries(folder)
-					
+
 					file = files.sample
-					
+
 					puts "Selected file \"#{file}\" for command '#{name}'."
 					event.channel.send_file File.new(["#{folder}/#{file}"].sample)
 				end

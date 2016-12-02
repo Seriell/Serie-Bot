@@ -4,7 +4,7 @@ module SerieBot
       extend Discordrb::EventContainer
 
       member_join do |event|
-        
+        puts "TEST"
       end
 
   end

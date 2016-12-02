@@ -58,6 +58,7 @@ module SerieBot
     :shrug => '¯\_(ツ)_/¯',
     :support => "⚙ **Need help?**\nYou can join the support server here:\n**https://discord.gg/9CmCv5e **",
     :facedesk => "https://giphy.com/gifs/XLOsdacfjL5cI",
+    :smea => "https://giphy.com/gifs/Sb2NkTl1oV6eI"
   }
 
     # Import commands:

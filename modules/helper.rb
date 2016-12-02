@@ -51,6 +51,12 @@ module SerieBot
 			end
     end
 
+
+    def self.upload_file(channel, filename)
+      channel.send_file File.new([filename].sample)
+      puts "Uploaded `#{filename} to \##{channel.name}!"
+    end
+
     # Dumps all messages in a given channel.
     # Returns the filepath of the file containing the dump.
     def self.dump_channel(channel, output_channel = nil, folder, timestamp)

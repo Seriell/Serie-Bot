@@ -12,6 +12,18 @@ module SerieBot
       event.respond("✅ PMed you the eval output 😉")
     end
 
+    command(:setavatar) do |event, *url|
+      if !Helper.isadmin?(event.user)
+          event.respond("❌ You don't have permission for that!")
+          break
+      end
+      url = url.join(' ')
+      file = Helper.download_file(url, 'tmp')
+      event.bot.profile.avatar = File.open(file)
+      event.respond("✅ Avatar should be updated!")
+
+    end
+
     command(:game, description: "Set the \"Playing\" status. Admin only.") do |event, *game|
     if !Helper.isadmin?(event.user)
         event.respond("❌ You don't have permission for that!")
@@ -149,6 +161,12 @@ module SerieBot
       event.channel.send_file File.new([filename].sample)
     end
 
+
+    command(:rehost) do |event, *url|
+      url = url.join(' ')
+      file = Helper.download_file(url, 'tmp')
+      Helper.upload_file(event.channel, file)
+    end
     command(:dump, description: "Dumps a selected channel. Admin only.",usage: '&dump [id]') do |event, channel_id|
       if !Helper.isadmin?(event.user)
         event << "❌ You don't have permission for that!"

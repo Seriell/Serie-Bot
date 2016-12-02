@@ -13,6 +13,18 @@ module SerieBot
 			event.respond("✅ Your message has been sent!")
 		end
 
+command(:space) do |event, *args|
+event.channel.start_typing
+text = args.join(' ').gsub(/(.{1})/, '\1 ')
+event << text
+end
+
+command(:angry) do |event, *args|
+event.channel.start_typing
+text = args.join(' ').gsub(/(.{1})/, '\1 ').upcase
+event << "** *#{text}* **"
+end
+
 		command(:avatar, description: "Displays the avatar of a user.") do |event, *mention|
       event.channel.start_typing # Let people know the bot is working on something.
 				if mention.nil?
@@ -53,8 +65,8 @@ module SerieBot
 				event << "-Nickname: **#{nick}**"
 				event << "-Status: **#{user.status}**"
 				event << "-Playing: **#{playing}**"
-				event << "-Account created: **#{user.creation_time}**"
-				event << "-Joined server at: **#{member.joined_at}**"
+				event << "-Account created: **#{user.creation_time.getutc.asctime}** UTC"
+				event << "-Joined server at: **#{member.joined_at.getutc.asctime}** UTC"
 			end
 		end
 
@@ -74,7 +86,7 @@ module SerieBot
 				event << "❌ Tell me something to say!"
 			end
 
-			event.respond message
+			event.respond message.gsub("@everyone","@\x00everyone")
 		end
 	end
 end

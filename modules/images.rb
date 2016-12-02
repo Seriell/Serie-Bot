@@ -8,16 +8,17 @@ module SerieBot
 				#:name => 'path/to/folder'
 				:furry => 'images/furry',
 				:eevee => 'images/eevee',
+				:catgirl => 'images/catgirls'
 			}
 
 			@folderimage_commands.each { | name, folder |
 				command(name, max_args: 0) do |event|
 					event.channel.start_typing
+files = Array.new
 					files = Dir.entries(folder)
-					files = files.delete('.')
-					files = files.delete('..')
-					file = files.sample(1)
-					file = file.join()
+					
+					file = files.sample
+					
 					puts "Selected file \"#{file}\" for command '#{name}'."
 					event.channel.send_file File.new(["#{folder}/#{file}"].sample)
 				end

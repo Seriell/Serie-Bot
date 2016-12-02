@@ -3,8 +3,9 @@ images/furries/*
 images/eevee/*
 images/weeb/*
 avatars/*
-tmp/
-logs/
+tmp/*
+logs/*
+logs*
 modules/data/__pycache__/*
 modules/*.old
 Gemfile.lock

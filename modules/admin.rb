@@ -21,14 +21,14 @@ module SerieBot
       event.respond("✅ Game set to `#{game.join(" ")}`!")
     end
 
-    command(:username, description: "Set the Bot's username. Admin only.") do |event, *name|
+    command(:username, description: "Set the Bot's username. Admin only.",  min_args: 1) do |event, *name|
     if !Helper.isadmin?(event.user)
         event.respond("❌ You don't have permission for that!")
         break
       end
       username = name.join(' ')
       event.bot.profile.name = username rescue event.respond("An error has occured!")
-      event.respond("✅ Username set to `username}`!")
+      event.respond("Username set to `#{username}`!")
     end
 
     command(:ignore, description: "Temporarily ignore a given user", min_args: 1, max_args: 1 ) do |event, mention|

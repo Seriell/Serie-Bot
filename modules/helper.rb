@@ -58,8 +58,9 @@ module SerieBot
     end
 
     #Accepts a message, and returns the message content, with all mentions replaced with @User#1234
-    def self.parse_mentions(message)
-      content = message.content
+    def self.parse_mentions(message, text = nil)
+      text = message.content if text.nil?
+      content = text
       message.mentions.each { |x| content = content.gsub("<@#{x.id.to_s}>", "<@#{x.distinct}>") ; content = content.gsub("<@!#{x.id.to_s}>", "\@#{x.distinct}") }
       return content
     end

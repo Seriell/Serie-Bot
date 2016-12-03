@@ -91,8 +91,9 @@ module SerieBot
 
 		command(:zalgo) do |event, *text|
 			text = text.join(' ')
+			text = Helper.parse_mentions(event.message, text)
 			event.respond(Zalgo.zalgo(text))
 		end
-		
+
 	end
 end

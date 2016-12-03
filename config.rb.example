@@ -18,7 +18,7 @@ module SerieBot
 
 		# These users will have full access to the bot's admin commands, and by extension, the server it is hosted on.
 		# Give this power with care!!
-		@bot_owners = [228574821590499329, 110833169757945856] #An array of user IDS.
+		@bot_owners = [0000000000000000, 000000000000000000] #An array of user IDS.
 
 		#~~ Advanced Options
 
@@ -27,11 +27,11 @@ module SerieBot
     # Status - EXPERIMENTAL
     @status = "online"
     @streaming = false
-    @twitch_url = "http://twitch.tv/seriell"
+    @twitch_url = "http://twitch.tv/NAME"
 
     # Message logging
 		@logging = true
-		@ignored_servers = [110373943822540800] #An array of Server IDs
+		@ignored_servers = [] #An array of Server IDs
 
     @dump_dir = 'logs' #Con't contain spaces.
 		@login_type = :bot #EXPERIMENTAL

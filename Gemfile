@@ -1,4 +1,4 @@
-source 'https://rubygems.org'
+source 'http://rubygems.org'
 gem 'discordrb', git: 'git://github.com/meew0/discordrb.git'
 gem 'open-uri-s3'
 gem 'rumoji'

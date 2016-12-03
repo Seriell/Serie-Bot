@@ -18,7 +18,7 @@ module SerieBot
     @image_commands = {
       # :name => 'path/to/file.png'
       # Supports any file types, files over ~8MB will fail.
-      :harambe => 'harambe.png',
+      :harambe => 'harambe.jpg',
       :nsfw => 'nsfw.png',
       :soon => 'soon.jpg',
       :salt => 'salt.jpg',

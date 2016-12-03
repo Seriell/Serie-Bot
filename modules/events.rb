@@ -17,15 +17,11 @@ module SerieBot
         end
       end
 
-      ready do |event|
+ready do |event|
 
-        event.bot.game=Config::playing
-        event.bot.stream(Config.playing, Config.twitch_url) if Config.streaming
-
-        status_eval = "event.bot.#{Config.status}"
-        eval status_eval
-        puts "Bot succesfully launched!"
-      end
+  event.bot.game=Config::playing
+  puts "Bot succesfully launched!"
+end
 
 
 

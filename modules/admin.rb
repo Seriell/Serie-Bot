@@ -139,8 +139,10 @@ module SerieBot
         break
       end
       bashcode = code.join(' ')
-      result = eval "`#{bashcode}`"
-        if result.nil? or result == "" or result == " "
+      # Capture all output, including STDERR.
+      toBeRun = "#{bashcode} 2>&1"
+      result = %x( #{toBeRun} )
+        if result.nil? or result == "" or result == " " or result == "\n"
           event << "✅ Done! (No output)"
         else
           event << "Output: ```\n#{result}```"

@@ -3,15 +3,25 @@ module SerieBot
 
     #~ Basic Config (Required)
 
-		@token = '' #Your bot account token. Create a bot account if you don't a bot account, get one and it's token here -> https://discordapp.com/developers/applications/me/
-		@appid = 000000000000000000 #The bots App ID, find at https://discordapp.com/developers/applications/me/
-		@prefix = "s!" #All commands will use this symbol(s) before the command name. eg. &say for a prefix of &
-		@playing = "Powered by Ruby!" #Will appear after "Playing" under the bots name. Set to nil to not show a game
+		# Your bot account token. Create a bot account if you don't have a bot account. Then get its token here -> https://discordapp.com/developers/applications/me/
+		@token = ''
+
+		# The bot's App ID, found at https://discordapp.com/developers/applications/me/
+		@appid = 000000000000000000
+
+		# All commands will use this symbol(s) before the command name.
+		# Eg. The command &say has a prefix of &
+		@prefix = "s!"
+		# Will appear after "Playing" under the bots name. Set to nil to not show a game
+		@playing = "Powered by Ruby!"
 		@blacklisted_channels = []
-    @invite_url = nil  # Custom invite URL. Set to nil to use the default.
+
+		# Custom invite URL. Set to nil to use the default.
+    @invite_url = nil
 
     # Cleverbot
-    @use_cleverbot = false #Set to true and configure below to use the Cleverbot feature.
+		# Set to true and configure below to use the Cleverbot feature.
+    @use_cleverbot = false
     # Powered by cleverbot.io
     @cleverbot_api_user = ''
     @cleverbot_api_token = ''

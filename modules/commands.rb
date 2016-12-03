@@ -72,7 +72,7 @@ module SerieBot
           event.channel.start_typing
           event.channel.send_file File.new(["#{base_path}/#{file}"].sample)
         end
-        puts "Command #{Config.prefix}#{name} with image \"#{base_path + file}\" loaded successfully!"
+        puts "Command #{Config.prefix}#{name} with image \"#{base_path + "/" + file}\" loaded successfully!"
       }
 
       @text_commands.each { | name, text |

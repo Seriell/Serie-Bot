@@ -17,14 +17,11 @@ module SerieBot
         end
       end
 
-ready do |event|
-
-  event.bot.game=Config::playing
-  puts "Bot succesfully launched!"
-end
-
-
-
+			ready do |event|
+  			event.bot.game=Config::playing
+  			puts "Bot succesfully launched!"
+			end
+			
     end
 	end
 end

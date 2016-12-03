@@ -57,6 +57,17 @@ module SerieBot
       puts "Uploaded `#{filename} to \##{channel.name}!"
     end
 
+    #Accepts a message, and returns the message content, with all mentions replaced with @User#1234
+    def self.parse_mentions(message)
+      content = message.content
+      message.mentions.each { |x| content = content.gsub("<@#{x.id.to_s}>", "<@#{x.distinct}>") ; content = content.gsub("<@!#{x.id.to_s}>", "\@#{x.distinct}") }
+      return content
+    end
+
+    def self.filter_everyone(text)
+      return text.gsub("@everyone","@\x00everyone")
+    end
+
     # Dumps all messages in a given channel.
     # Returns the filepath of the file containing the dump.
     def self.dump_channel(channel, output_channel = nil, folder, timestamp)

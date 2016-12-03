@@ -146,7 +146,7 @@ module SerieBot
       end
       bashcode = code.join(' ')
       result = eval "`#{bashcode}`"
-      if result.nil?
+      if result.nil? or result == "" or result == " "
         event << "✅ Done! (No output)"
       else
         event << "Output: ```\n#{result}```"
@@ -178,5 +178,44 @@ module SerieBot
       output_filename = Helper.dump_channel(channel, event.channel, Config.dump_dir , event.message.timestamp)
       event.channel.send_file File.new([output_filename].sample)
     end
+
+    command(:prune, max_args: 1) do |event, num|
+      if !Helper.isadmin?(event.user)
+        event << "❌ You don't have permission for that!"
+        break
+      end
+      num = 50 if num.nil?
+      count = 0
+      event.channel.history(num).each { |x|
+         if x.author.id == event.bot.profile.id
+           x.delete
+           count = count + 1
+         end
+       }
+       message = event.respond("✅ Pruned #{count} messages!")
+       sleep(10)
+       message.delete
+       event.message.delete
+     end
+
+     command(:pruneuser, max_args: 1) do |event, user, num|
+       if !Helper.isadmin?(event.user)
+         event << "❌ You don't have permission for that!"
+         break
+       end
+       user = event.bot.parse_mention(user)
+       num = 50 if num.nil?
+       count = 0
+       event.channel.history(num).each { |x|
+          if x.author.id == user.id
+            x.delete
+            count = count + 1
+          end
+        }
+        message = event.respond("✅ Pruned #{count} messages!")
+        sleep(10)
+        message.delete
+        event.message.delete
+      end
   end
 end

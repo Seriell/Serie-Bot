@@ -58,7 +58,9 @@ module SerieBot
     :shrug => '¯\_(ツ)_/¯',
     :support => "⚙ **Need help?**\nYou can join the support server here:\n**https://discord.gg/9CmCv5e **",
     :facedesk => "https://giphy.com/gifs/XLOsdacfjL5cI",
-    :smea => "https://giphy.com/gifs/Sb2NkTl1oV6eI"
+    :smea => "https://giphy.com/gifs/Sb2NkTl1oV6eI",
+    :play => "Use % you silly boy!",
+    :pause => "FIRST OF ALL IF YOU DONT KNOW HOW TO USE % THEN YOU SHOULDN'T BE PAUSING THE MUSIC",
   }
 
     # Import commands:

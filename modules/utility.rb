@@ -13,17 +13,17 @@ module SerieBot
 			event.respond("✅ Your message has been sent!")
 		end
 
-command(:space) do |event, *args|
-event.channel.start_typing
-text = args.join(' ').gsub(/(.{1})/, '\1 ')
-event << text
-end
+		command(:space) do |event, *args|
+			event.channel.start_typing
+			text = args.join(' ').gsub(/(.{1})/, '\1 ')
+			event << text
+		end
 
-command(:angry) do |event, *args|
-event.channel.start_typing
-text = args.join(' ').gsub(/(.{1})/, '\1 ').upcase
-event << "** *#{text}* **"
-end
+		command(:angry) do |event, *args|
+			event.channel.start_typing
+			text = args.join(' ').gsub(/(.{1})/, '\1 ').upcase
+			event << "** *#{text}* **"
+		end
 
 		command(:avatar, description: "Displays the avatar of a user.") do |event, *mention|
       event.channel.start_typing # Let people know the bot is working on something.
@@ -55,7 +55,7 @@ end
 				end
 				member = user.on(event.server)
         if member.nickname.nil?
-					nick = "[N/A]"
+					nick = "[N/A]" #
 				else
 					nick = member.nickname
 				end

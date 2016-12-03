@@ -18,8 +18,6 @@ module SerieBot
       end
 			content = Helper.parse_mentions(event.message)
       content = Rumoji.encode(content)
-
-
       attachments = event.message.attachments
       id = Base64.strict_encode64([event.message.id].pack('L<'))
 

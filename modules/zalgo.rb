@@ -2,7 +2,9 @@
 
 module SerieBot
   module Zalgo
-    def zalgo(text, intensity=50)
+    extend Discordrb::Commands::CommandContainer
+    extend Discordrb::EventContainer
+    def self.zalgo(text, intensity=50)
       zalgo_chars = (0x0300..0x036F).map { |i| i.chr('UTF-8') }
       zalgo_chars.concat(["\u0488", "\u0489"])
       source = insert_randoms(text.upcase)
@@ -17,7 +19,7 @@ module SerieBot
     end
 
     private
-    def insert_randoms(text)
+    def self.insert_randoms(text)
       random_extras = (0x1D023..0x1D045).map { |i| i.chr('UTF-8') }
       newtext = []
       text.each_char do |char|

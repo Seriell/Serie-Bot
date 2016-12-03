@@ -88,5 +88,11 @@ module SerieBot
 
 			event.respond message.gsub("@everyone","@\x00everyone")
 		end
+
+		command(:zalgo) do |event, *text|
+			text = text.join(' ')
+			event.respond(Zalgo.zalgo(text))
+		end
+		
 	end
 end

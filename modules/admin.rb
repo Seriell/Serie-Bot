@@ -146,11 +146,11 @@ module SerieBot
       end
       bashcode = code.join(' ')
       result = eval "`#{bashcode}`"
-      if result.nil? or result == "" or result == " "
-        event << "✅ Done! (No output)"
-      else
-        event << "Output: ```\n#{result}```"
-      end
+        if result.nil? or result == "" or result == " "
+          event << "✅ Done! (No output)"
+        else
+          event << "Output: ```\n#{result}```"
+        end
     end
     command(:upload, description: "Upload a file to Discord. Admin only.",usage: '&upload filename') do |event, *file|
       if !Helper.isadmin?(event.user)

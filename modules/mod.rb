@@ -61,5 +61,35 @@ If you wish to appeal for your ban's removal, please contact this person, or the
 			end
 		end
 
+
+
+		command(:lockdown, required_permissions: [:administrator]) do |event, time, *reason|
+			reason = reason.join(' ')
+			lockdown = Discordrb::Permissions.new
+			lockdown.can_send_messages = true
+			everyone_role = Helper.role_from_name(event.server, "@everyone")
+			event.channel.define_overwrite(everyone_role, 0, lockdown)
+			if time.nil?
+				event.respond("🔒 **This channel is now in lockdown. Only staff can send messages. **🔒")
+			elsif /\A\d+\z/.match(time)
+				event.respond("🔒 **This channel is now in lockdown. Only staff can send messages. **🔒\n**Time:** #{time} minute(s)")
+				time_sec = time * 60
+				sleep(time_sec)
+				lockdown = Discordrb::Permissions.new
+				lockdown.can_send_messages = true
+				everyone_role = Helper.role_from_name(event.server, "@everyone")
+				event.channel.define_overwrite(everyone_role, lockdown, 0)
+				event.respond(":unlock: **Channel has been unlocked.**:unlock:")
+			end
+		end
+
+		command(:unlockdown, required_permissions: [:administrator]) do |event|
+			lockdown = Discordrb::Permissions.new
+			lockdown.can_send_messages = true
+			everyone_role = Helper.role_from_name(event.server, "@everyone")
+			event.channel.define_overwrite(everyone_role, lockdown, 0)
+			event.respond(":unlock: **Channel has been unlocked.**:unlock:")
+		end
+
 	end
 end

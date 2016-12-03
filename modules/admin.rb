@@ -112,18 +112,12 @@ module SerieBot
       eval code.join(' ')
     end
 
-    command(:spam, description: "Spam a message Admin only.",usage: '&spam num text') do |event, num, *text|
+    command(:spam, required_permissions: [:administrator],description: "Spam a message Admin only.",usage: '&spam num text') do |event, num, *text|
       puts "#{event.author.distinct}: \`#{event.message.content}\`"
       if num.nil?
         event.respond("No argument specicied. Enter a valid positive number!")
         break
       end
-
-      if !Helper.isadmin?(event.user)
-        event.respond("You don't have permission for that!")
-        break
-      end
-
 
 
       if !/\A\d+\z/.match(num)
@@ -166,6 +160,7 @@ module SerieBot
       url = url.join(' ')
       file = Helper.download_file(url, 'tmp')
       Helper.upload_file(event.channel, file)
+      event.message.delete
     end
     command(:dump, description: "Dumps a selected channel. Admin only.",usage: '&dump [id]') do |event, channel_id|
       if !Helper.isadmin?(event.user)
@@ -179,11 +174,7 @@ module SerieBot
       event.channel.send_file File.new([output_filename].sample)
     end
 
-    command(:prune, max_args: 1) do |event, num|
-      if !Helper.isadmin?(event.user)
-        event << "❌ You don't have permission for that!"
-        break
-      end
+    command(:prune, required_permissions: [:manage_messages],max_args: 1) do |event, num|
       num = 50 if num.nil?
       count = 0
       event.channel.history(num).each { |x|
@@ -198,11 +189,7 @@ module SerieBot
        event.message.delete
      end
 
-     command(:pruneuser, max_args: 1) do |event, user, num|
-       if !Helper.isadmin?(event.user)
-         event << "❌ You don't have permission for that!"
-         break
-       end
+     command(:pruneuser,required_permissions: [:manage_messages], max_args: 1) do |event, user, num|
        user = event.bot.parse_mention(user)
        num = 50 if num.nil?
        count = 0

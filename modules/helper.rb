@@ -109,5 +109,10 @@ module SerieBot
       return output_filename
     end
 
+    def self.role_from_name(server, rolename)
+      roles = server.roles
+      role = roles.select { |r| r.name == rolename }.first
+      return role
+    end
   end
  end

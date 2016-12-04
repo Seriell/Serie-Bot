@@ -9,27 +9,33 @@ module SerieBot
     @messages = Hash.new
 
 		def self.get_message(event, state)
-      if (event.channel.private?)
-        server_name = "DM"
-        channel_name = event.channel.name
-      else
-        server_name = event.server.name
-        channel_name = "##{event.channel.name}"
-      end
-			content = Helper.parse_mentions(event.message)
-      content = Rumoji.encode(content)
-      attachments = event.message.attachments
-      id = Base64.strict_encode64([event.message.id].pack('L<'))
+			# Only log messages written for the bot
+			if event.message.content.start_with?(Config.prefix)
+	      if (event.channel.private?)
+        	server_name = "DM"
+        	channel_name = event.channel.name
+      	else
+        	server_name = event.server.name
+        	channel_name = "##{event.channel.name}"
+      	end
+				content = Helper.parse_mentions(event.message)
+      	content = Rumoji.encode(content)
+      	attachments = event.message.attachments
+      	id = Base64.strict_encode64([event.message.id].pack('L<'))
 
-      puts "#{state}(#{id}) #{event.message.timestamp.strftime('[%D %H:%M]')} #{server_name}/#{channel_name} <#{event.message.author.distinct}> #{content}"
-      puts "<Attachments: #{attachments[0].filename}: #{attachments[0].url} >" unless attachments.empty?
-      @messages = {
-      event.message.id => {
-        :message => event.message,
-        :channel => channel_name,
-        :server => server_name,
-        },
-      }
+				# Format expected:
+				# (ID) [D H:M] server name/channel name <author>: message
+      	puts "#{state}(#{id}) #{event.message.timestamp.strftime('[%D %H:%M]')} #{server_name}/#{channel_name} <#{event.author.distinct}>: #{content}"
+      	puts "<Attachments: #{attachments[0].filename}: #{attachments[0].url} >" unless attachments.empty?
+			end
+			# Store message, even if it's not for the bot
+			@messages = {
+				event.message.id => {
+					:message => event.message,
+					:channel => channel_name,
+					:server => server_name,
+				},
+			}
 		end
 
     def self.get_deleted_message(event, state)

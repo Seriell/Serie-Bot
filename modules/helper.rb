@@ -57,12 +57,27 @@ module SerieBot
       puts "Uploaded `#{filename} to \##{channel.name}!"
     end
 
-    #Accepts a message, and returns the message content, with all mentions replaced with @User#1234
-    def self.parse_mentions(message, text = nil)
+    # Accepts a message, and returns the message content, with all mentions + channels replaced with @User#1234 or #channel-name
+    def self.parse_mentions(bot, message, text = nil)
       text = message.content if text.nil?
       content = text
-      message.mentions.each { |x| content = content.gsub("<@#{x.id.to_s}>", "<@#{x.distinct}>") ; content = content.gsub("<@!#{x.id.to_s}>", "\@#{x.distinct}") }
+      # Replce user IDs with names
+      message.mentions.each { |x| content = content.gsub("<@#{x.id.to_s}>", "@#{x.distinct}"); content = content.gsub("<@!#{x.id.to_s}>", "\@#{x.distinct}") }
+      # Replace channel IDs with names
+      # scan for some regex, /<#\d+>/ or something, then you can map ids.map { |id| bot.channel(id).name } or something
+      somethingSomethingTextArray = Array.new
+      content = content.gsub(/<#\d+>/){ |id| get_channel_name(id, bot)}
       return content
+    end
+
+    def self.get_channel_name(channel_id, bot)
+      toReturn = nil;
+      begin
+        toReturn = "#" + bot.channel(channel_id.gsub(/[^0-9,.]/, "")).name
+      rescue NoMethodError
+        toReturn = "#deleted-channel"
+      end
+      return toReturn
     end
 
     def self.filter_everyone(text)

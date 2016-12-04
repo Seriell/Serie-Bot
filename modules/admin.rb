@@ -112,7 +112,7 @@ module SerieBot
       eval code.join(' ')
     end
 
-    command(:spam, required_permissions: [:administrator],description: "Spam a message Admin only.",usage: '&spam num text') do |event, num, *text|
+    command(:spam, required_permissions: [:administrator],description: "Spam a message. Admin only.",usage: '&spam num text') do |event, num, *text|
       puts "#{event.author.distinct}: \`#{event.message.content}\`"
       if num.nil?
         event.respond("No argument specicied. Enter a valid positive number!")

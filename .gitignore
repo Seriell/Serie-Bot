@@ -11,3 +11,4 @@ modules/*.old
 Gemfile.lock
 .remote-sync.json
 .directory
+data/*

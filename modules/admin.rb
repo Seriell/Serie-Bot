@@ -177,26 +177,11 @@ module SerieBot
     end
 
     command(:prune, required_permissions: [:manage_messages],max_args: 1) do |event, num|
-      num = 50 if num.nil?
-      count = 0
-      event.channel.history(num).each { |x|
-         if x.author.id == event.bot.profile.id
-           x.delete
-           count = count + 1
-         end
-       }
-       message = event.respond("✅ Pruned #{count} messages!")
-       sleep(10)
-       message.delete
-       event.message.delete
-     end
-
-     command(:pruneuser,required_permissions: [:manage_messages], max_args: 1) do |event, user, num|
-       user = event.bot.parse_mention(user)
-       num = 50 if num.nil?
-       count = 0
-       event.channel.history(num).each { |x|
-          if x.author.id == user.id
+      begin
+        num = 50 if num.nil?
+        count = 0
+        event.channel.history(num).each { |x|
+          if x.author.id == event.bot.profile.id
             x.delete
             count = count + 1
           end
@@ -205,6 +190,31 @@ module SerieBot
         sleep(10)
         message.delete
         event.message.delete
+      rescue Discordrb::Errors::NoPermission
+        event.channel.send_message("❌ I don't have permission to delete messages!")
+        puts "The bot does not have the delete message permission!"
+      end
+     end
+
+     command(:pruneuser,required_permissions: [:manage_messages], max_args: 1) do |event, user, num|
+       begin
+         user = event.bot.parse_mention(user)
+         num = 50 if num.nil?
+         count = 0
+         event.channel.history(num).each { |x|
+            if x.author.id == user.id
+              x.delete
+              count = count + 1
+            end
+          }
+          message = event.respond("✅ Pruned #{count} messages!")
+          sleep(10)
+          message.delete
+          event.message.delete
+        rescue Discordrb::Errors::NoPermission
+          event.channel.send_message("❌ I don't have permission to delete messages!")
+          puts "The bot does not have the delete message permission!"
+        end
       end
   end
 end

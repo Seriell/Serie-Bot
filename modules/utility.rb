@@ -2,21 +2,33 @@ module SerieBot
 	module Utility
 		extend Discordrb::Commands::CommandContainer
 
-		command(:tell, description: "Send a message!.",usage: "#{Config.prefix}tell @User#1234 <message>") do |event, mention, *pmwords|
+		command(:tell, description: "Send a message to a user.",usage: "#{Config.prefix}tell @User#1234 <message>") do |event, mention, *pmwords|
 			if !mention.start_with?('<@', '<@!')
-				event << "❌ Mention a valid user!"
+				event.respond("❌ Mention a valid user!")
+				break
+			end
+			member = event.message.mentions[0]
+			if member.id == event.bot.id
+				event.respond("❌ Sorry, calls can't come from inside the house.")
 				break
 			end
 			message = pmwords.join(" ")
-			member = event.message.mentions[0]
 			member.pm("`#{event.author.distinct}` says: \n #{message}")
 			event.respond("✅ Your message has been sent!")
 		end
 
 		command(:space) do |event, *args|
-			event.channel.start_typing
-			text = args.join(' ').gsub(/(.{1})/, '\1 ')
-			event << text
+			text = nil
+			begin
+				event.channel.start_typing
+				text = args.join(' ').gsub(/(.{1})/, '\1 ')
+				event.respond(text)
+			rescue Discordrb::Errors::MessageTooLong
+				# Determine how many characters the message is over
+				lengthOver = text.length - 2000
+				event.respond("❌ Message was too long to send by #{lengthOver} characters!")
+				puts "Message was over the Discord character limit and could not be sent."
+			end
 		end
 
 		command(:angry) do |event, *args|

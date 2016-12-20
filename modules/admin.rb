@@ -115,21 +115,21 @@ module SerieBot
     command(:spam, required_permissions: [:administrator],description: "Spam a message. Admin only.",usage: '&spam num text') do |event, num, *text|
       puts "#{event.author.distinct}: \`#{event.message.content}\`"
       if num.nil?
-        event.respond("No argument specicied. Enter a valid positive number!")
+        event.respond("❌ No argument specicied. Enter a valid positive number!")
         break
       end
 
-
       if !/\A\d+\z/.match(num)
-        event.respond("`#{num}` is not a valid positive number!")
+        event.respond("❌ `#{num}` is not a valid positive number!")
         break
+      else num == 0
+        event.respond("❌ You can't spam zero times!")
       end
 
       num = num.to_i
 
       while num > 0
         event.respond("#{text.join(" ")}")
-        puts "#{text.join(" ")}"
         num -= 1
       end
     end

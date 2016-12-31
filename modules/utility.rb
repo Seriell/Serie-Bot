@@ -94,11 +94,13 @@ module SerieBot
             event.channel.send_file File.new(filepath)
         end
 
-        command(:say, min_args: 1, description: 'Make the bot say something!', usage: "#{Config.prefix}say <some text>") do |event, *words|
-            event.channel.start_typing
-            Helper.ignore_bots(event.user)
-            message = words.join(' ')
-            event << "❌ Tell me something to say!" if message == ' ' || message.nil?
+		command(:say, min_args: 1, description: "Make the bot say something!", usage: "#{Config.prefix}say <some text>") do |event, *words|
+      event.channel.start_typing
+			Helper.ignore_bots(event.user)
+			message = words.join(" ")
+			if message == " " or message.nil?
+				event << "❌ Tell me something to say!"
+			end
 
             event.respond message.gsub('@everyone', "@\x00everyone")
         end

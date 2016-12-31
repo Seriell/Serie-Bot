@@ -106,7 +106,12 @@ module SerieBot
           rescue
               nil
           end
-            puts "#{Time.now.strftime('[%D %H:%M]')} #{event.member.distinct} joined #{event.server.name}"
+          join_message = "#{Time.now.strftime('[%D %H:%M]')} #{event.member.distinct} joined #{event.server.name}"
+          if Config.color
+            puts "#{join_message}".colorize(:yellow)
+          else
+            puts "#{join_message}"
+          end
         end
     end
 end

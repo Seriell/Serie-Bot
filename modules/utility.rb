@@ -1,6 +1,7 @@
 module SerieBot
     module Utility
         extend Discordrb::Commands::CommandContainer
+        require 'rqrcode'
 
         command(:tell, description: 'Send a message to a user.', usage: "#{Config.prefix}tell @User#1234 <message>") do |event, mention, *pmwords|
             unless mention.start_with?('<@', '<@!')
@@ -88,10 +89,20 @@ module SerieBot
 
         command(:qr, description: 'Returns a QR code of an input.', min_args: 1) do |event, *text|
             event.channel.start_typing
-            qrtext = text.join(' ')
-            url = "https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=#{qrtext}"
-            filepath = Helper.download_file(url, 'tmp', 'qr.png')
-            event.channel.send_file File.new(filepath)
+            tmp_path = "#{Dir.pwd}/tmp/qr.png"
+				    content = text.join(" ")
+				    # "Sanitize" qr code content
+    				if content.length >= 1000
+    					event.respond("❌ QR codes have a limit of 1000 characters. You went over by #{content.length - 1000}!")
+    					break
+    				end
+    				qrcode = RQRCode::QRCode.new(content)
+    				FileUtils.mkdir("#{Dir.pwd}/tmp/") unless File.exist?("#{Dir.pwd}/tmp/")
+    				FileUtils.rm(tmp_path) if File.exist?(tmp_path)
+    				png = qrcode.as_png(
+              file: tmp_path # path to write
+              )
+    				event.channel.send_file(File.new(tmp_path), caption: "Here's your QR code:")
         end
 
 		command(:say, min_args: 1, description: "Make the bot say something!", usage: "#{Config.prefix}say <some text>") do |event, *words|

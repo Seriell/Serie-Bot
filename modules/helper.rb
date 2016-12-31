@@ -1,5 +1,6 @@
 module SerieBot
     module Helper
+      require 'open-uri'
         def self.isadmin?(member)
             Config.bot_owners.include?(member)
       end
@@ -33,14 +34,12 @@ module SerieBot
 
             path = "#{folder}/#{name}"
 
+            FileUtils.mkdir(folder) unless File.exist?(folder)
             FileUtils.rm(path) if File.exist?(path)
 
-            File.new path, 'w'
-            File.open(path, 'wb') do |file|
-                file.write open(url).read
-            end
-
-            path
+            download = open(url)
+            IO.copy_stream(download, path)
+            return path
         end
 
         # If the user passed is a bot, it will be ignored.

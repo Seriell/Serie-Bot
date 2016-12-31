@@ -39,11 +39,6 @@ module SerieBot
 		end
 
     def self.get_deleted_message(event, state)
-      if @messages[event.id].nil?
-        puts "/!\\{DELETE} Message with ID #{event.id} was deleted, but the contents couldn't be fetched."
-        return nil
-      end
-
       message = @messages[event.id][:message]
       channel_name = @messages[event.id][:channel]
       server_name = @messages[event.id][:server]

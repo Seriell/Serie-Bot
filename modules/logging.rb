@@ -1,7 +1,7 @@
 module SerieBot
     module Logging
         require 'rumoji'
-				require 'colorize'
+				require 'rainbow'
         extend Discordrb::Commands::CommandContainer
         extend Discordrb::EventContainer
         class << self
@@ -27,13 +27,14 @@ module SerieBot
 
                 # Format expected:
                 # (ID) [D H:M] server name/channel name <author>: message
-								log_message = "#{state}(#{id}) #{event.message.timestamp.strftime('[%D %H:%M]')} #{server_name}/#{channel_name} <#{event.author.distinct}>: #{content}"
-								if Config.color
-									puts "#{log_message}".colorize(:green)
-									puts "<Attachments: #{attachments[0].filename}: #{attachments[0].url} >".colorize(:green) unless attachments.empty?
+                log_message = "#{state}(#{id}) #{event.message.timestamp.strftime('[%D %H:%M]')} #{server_name}/#{channel_name} <#{event.author.distinct}>: #{content}"
+                attachment_message = "<Attachments: #{attachments[0].filename}: #{attachments[0].url} >" unless attachments.empty?
+                if state == '{EDIT}'
+                    puts Rainbow(log_message.to_s).yellow
+                    puts Rainbow(attachment_message.to_s).yellow unless attachments.empty?
 								else
-									puts "#{log_message}"
-									puts "#{attachment_message}" unless attachments.empty?
+                  puts Rainbow(log_message.to_s).green
+                  puts Rainbow(attachment_message.to_s).green unless attachments.empty?
 								end
 
 								# Store message
@@ -63,14 +64,8 @@ module SerieBot
             attachments = message.attachments
             id = Base64.strict_encode64([message.id].pack('L<'))
 
-						log_message = "/!\\#{state}(#{id}) #{message.timestamp.strftime('[%D %H:%M]')} #{server_name}/#{channel_name} <#{message.author.distinct}> #{content}"
-						if Config.color
-            puts "/!\\#{state}(#{id}) #{message.timestamp.strftime('[%D %H:%M]')} #{server_name}/#{channel_name} <#{message.author.distinct}> #{content}".colorize(:red)
-            puts "<Attachments: #{attachments[0].filename}: #{attachments[0].url} >}".colorize(:red) unless attachments.empty?
-					else
-						puts "/!\\#{state}(#{id}) #{message.timestamp.strftime('[%D %H:%M]')} #{server_name}/#{channel_name} <#{message.author.distinct}> #{content}"
-						puts "<Attachments: #{attachments[0].filename}: #{attachments[0].url} >" unless attachments.empty?
-					end
+            puts Rainbow("/!\\#{state}(#{id}) #{message.timestamp.strftime('[%D %H:%M]')} #{server_name}/#{channel_name} <#{message.author.distinct}> #{content}").red
+            puts Rainbow("<Attachments: #{attachments[0].filename}: #{attachments[0].url} >}").red unless attachments.empty?
         end
 
         message do |event|
@@ -106,12 +101,7 @@ module SerieBot
           rescue
               nil
           end
-          join_message = "#{Time.now.strftime('[%D %H:%M]')} #{event.member.distinct} joined #{event.server.name}"
-          if Config.color
-            puts "#{join_message}".colorize(:yellow)
-          else
-            puts "#{join_message}"
-          end
+          puts Rainbow("#{Time.now.strftime('[%D %H:%M]')} #{event.member.distinct} joined #{event.server.name}").blue
         end
     end
 end

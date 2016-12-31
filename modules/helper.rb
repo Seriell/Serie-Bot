@@ -14,6 +14,10 @@ module SerieBot
     # Returns the path of the downloaded file.
     def self.download_avatar(user, folder)
       url = user.avatar_url
+      uri = URI.parse(url)
+      filename = File.basename(uri.path)
+      filename = filename.gsub('.jpg', '.gif') if filename.start_with?('a_')
+      filename << '?size=256'
       path = self.download_file(url, folder)
       return path
     end

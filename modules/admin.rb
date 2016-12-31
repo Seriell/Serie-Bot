@@ -115,7 +115,7 @@ module SerieBot
     command(:spam, required_permissions: [:administrator],description: "Spam a message. Admin only.",usage: '&spam num text') do |event, num, *text|
       puts "#{event.author.distinct}: \`#{event.message.content}\`"
       if num.nil?
-        event.respond("❌ No argument specicied. Enter a valid positive number!")
+        event.respond("No argument specicied. Enter a valid positive number!")
         break
       end
 
@@ -216,5 +216,17 @@ module SerieBot
           puts "The bot does not have the delete message permission!"
         end
       end
+
+      command(:slap, max_args: 1) do |event, user|
+        if user == nil or user == "" or user == " "
+          event.respond("❌ You have to enter a user to slap!")
+          break
+        end
+        if event.author == event.bot.parse_mention(user)
+          event.respond("❌ Slapping yourself just doesn't work!")
+          break
+        end
+        event.respond("**#{event.author.mention} slapped #{event.bot.parse_mention(user).mention}!**")
+       end
   end
 end

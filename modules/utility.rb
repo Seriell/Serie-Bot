@@ -16,7 +16,11 @@ module SerieBot
 			member.pm("`#{event.author.distinct}` says: \n #{message}")
 			event.respond("✅ Your message has been sent!")
 		end
-
+command(:ping) do |event|
+        return_message = event.respond("Ping!")
+        ping = (return_message.id - event.message.id) >> 22
+        return_message.edit("Pong! - #{ping}ms")
+end
 		command(:space) do |event, *args|
 			text = nil
 			begin

@@ -45,5 +45,8 @@ module SerieBot
 
     @dump_dir = 'logs' #Con't contain spaces.
 		@login_type = :bot #EXPERIMENTAL
+
+		# Set this to true to enable color in your logs.
+		@color = true
 	end
 end

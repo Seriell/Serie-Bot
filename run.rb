@@ -35,10 +35,12 @@ module SerieBot
     end
 
     if Config.color.nil?
-        puts 'Recently, a new color logging option has been added. Please add this option to your config.rb! Look at the example config for reference.'        exit
+        puts 'Recently, a new color logging option has been added. Please add this option to your config.rb! Look at the example config for reference.'
+        exit
     end
+
     Rainbow.enabled = Config.color
-    
+
     bot = Discordrb::Commands::CommandBot.new token: Config.token, client_id: Config.appid, prefix: Config.prefix, parse_self: true, type: Config.login_type
     modules.each { |m| bot.include! m; puts "Included: #{m}" }
     # Run Bot

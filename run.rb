@@ -44,5 +44,8 @@ module SerieBot
     # Run Bot
     Config.invite_url = bot.invite_url if Config.invite_url.nil?
     puts "Invite URL #{Config.invite_url}"
-    bot.run
+    bot.run :async
+    bot.online
+    bot.game = Config.playing
+    bot.sync
 end

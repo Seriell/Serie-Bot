@@ -1,7 +1,7 @@
 module SerieBot
     module Logging
         require 'rumoji'
-				require 'rainbow'
+        require 'rainbow'
         extend Discordrb::Commands::CommandContainer
         extend Discordrb::EventContainer
         class << self
@@ -22,7 +22,7 @@ module SerieBot
                 end
                 content = Helper.parse_mentions(event.bot, event.message)
                 content = Rumoji.encode(content)
-								attachments = event.message.attachments
+                attachments = event.message.attachments
                 id = Base64.strict_encode64([event.message.id].pack('L<'))
 
                 # Format expected:
@@ -32,12 +32,12 @@ module SerieBot
                 if state == '{EDIT}'
                     puts Rainbow(log_message.to_s).yellow
                     puts Rainbow(attachment_message.to_s).yellow unless attachments.empty?
-								else
-                  puts Rainbow(log_message.to_s).green
-                  puts Rainbow(attachment_message.to_s).green unless attachments.empty?
-								end
+                else
+                    puts Rainbow(log_message.to_s).green
+                    puts Rainbow(attachment_message.to_s).green unless attachments.empty?
+                end
 
-								# Store message
+                # Store message
                 @messages = {
                     event.message.id => {
                         message: event.message,

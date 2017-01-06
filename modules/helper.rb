@@ -10,6 +10,39 @@ module SerieBot
             exit
         end
 
+        def self.parse_history(hist, count)
+        			messages = Array.new
+        			i = 0
+        			until i == hist.length
+        				message = hist[i]
+        				if message == nil
+        					#STTTOOOOPPPPPP
+        					puts "nii"
+        					break
+        				end
+        				if message.author.nil?
+        					author = "Unknown Disconnected User"
+        				else
+        					author = message.author.distinct
+        				end
+        				time = message.timestamp
+        				content = message.content
+
+        				attachments = message.attachments
+        				#attachments.each { |u| attachments.push("#{u.filename}: #{u.url}") }
+
+        				messages[i] = "--#{time} #{author}: #{content}"
+        				messages[i] += "\n<Attachments: #{attachments[0].filename}: #{attachments[0].url}}>" unless attachments.empty?
+        	#			puts "Logged message #{i} ID:#{message.id}: #{messages[i]}"
+        				i += 1
+
+        				count += 1
+        			end
+        			return_value = [count, messages]
+        			return return_value
+        		end
+
+
         # Downloads an avatar when given a `user` object.
         # Returns the path of the downloaded file.
         def self.download_avatar(user, folder)
@@ -28,7 +61,7 @@ module SerieBot
           path = self.download_file(url, folder)
           return path
         end
-        
+
         # Download a file from a url to a specified folder.
         # If no name is given, it will be taken from the url.
         # Returns the full path of the downloaded file.
@@ -109,7 +142,7 @@ module SerieBot
             else
                 output_filename = "#{folder}/output_" + server + '_' + channel.name + '_' + channel.id.to_s + '_' + timestamp.to_s + '.txt'
             end
-            output_filename = output_filename.tr(' ', '_').delete('+').delete('\\').delete('/').delete(':').delete('*').delete('?').delete('"').delete('<').delete('>').delete('|')
+            output_filename = output_filename.tr(' ', '_').delete('+').delete(':').delete('*').delete('?').delete('"').delete('<').delete('>').delete('|')
             hist_count_and_messages = [[], [0, []]]
 
             output_file = File.open(output_filename, 'w')
@@ -119,7 +152,7 @@ module SerieBot
             loop do
                 hist_count_and_messages[0] = channel.history(100, nil, offset_id) # next 100
                 break if hist_count_and_messages[0] == []
-                hist_count_and_messages[1] = SerieBot.parse_history(hist_count_and_messages[0], hist_count_and_messages[1][0])
+                hist_count_and_messages[1] = self.parse_history(hist_count_and_messages[0], hist_count_and_messages[1][0])
                 output_file.write((hist_count_and_messages[1][1].reverse.join("\n") + "\n").encode('UTF-8')) # write to file right away, don't store everything in memory
                 output_file.flush # make sure it gets written to the file
                 offset_id = hist_count_and_messages[0][0].id

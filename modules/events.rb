@@ -3,21 +3,27 @@ module SerieBot
         extend Discordrb::Commands::CommandContainer
         extend Discordrb::EventContainer
 
-        if Config.use_cleverbot
-            require 'cleverbot'
-            extend Discordrb::Commands::CommandContainer
-            extend Discordrb::EventContainer
-            friend = Cleverbot.new(Config.cleverbot_api_user, Config.cleverbot_api_token)
 
-            message do |event|
-                if event.message.content.start_with?(event.bot.user(event.bot.profile.id).mention)
-                    message = event.message.content.slice!(event.bot.user(Config.appid).mention.length, event.message.content.size)
-                    response = friend.say(message)
-                    event.respond("💬 #{response}") unless response.nil?
-                end
-            end
+
+# REMOVED
+=begin
+        if Config.use_cleverbot
+          require 'cleverbot'
+          extend Discordrb::Commands::CommandContainer
+          extend Discordrb::EventContainer
+          friend = Cleverbot.new(Config.cleverbot_api_user, Config.cleverbot_api_token)
+
+          message do |event|
+              if event.message.content.start_with?(event.bot.user(event.bot.profile.id).mention)
+                  message = event.message.content.slice!(event.bot.user(Config.appid).mention.length, event.message.content.size)
+                  response = friend.say(message)
+                  event.respond("💬 #{response}") unless response.nil?
+              end
+        end
+=end
 
             ready do |event|
+                event.bot.online
                 event.bot.game = Config.playing
                 puts 'Bot succesfully launched!'
             end

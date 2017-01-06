@@ -1,15 +1,25 @@
+# Public bot config.
 config.rb
-images/IOS80.wad
+
+# Folder image commands are not included in the source.
 images/furry/*
 images/eevee/*
 images/catgirls/*
-avatars/*
+
+# Temporary files should not be uploaded.
 tmp/*
+
+# Except for the readme.
+!tmp/README.md
+
+# All logs files dumped by the bot with the default settings.
 logs/*
 logs*
-modules/data/__pycache__/*
-modules/*.old
+
 Gemfile.lock
+
+# Atom remote sync config.
 .remote-sync.json
+
+# Dolphin directory config file.
 .directory
-data/*

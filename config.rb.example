@@ -19,12 +19,7 @@ module SerieBot
 		# Custom invite URL. Set to nil to use the default.
     @invite_url = nil
 
-    # Cleverbot
-		# Set to true and configure below to use the Cleverbot feature.
-    @use_cleverbot = false
-    # Powered by cleverbot.io
-    @cleverbot_api_user = ''
-    @cleverbot_api_token = ''
+
 
 		# These users will have full access to the bot's admin commands, and by extension, the server it is hosted on.
 		# Give this power with care!!
@@ -48,5 +43,12 @@ module SerieBot
 
 		# Set this to true to enable color in your logs.
 		@color = true
+
+		# Cleverbot
+		# Set to true and configure below to use the Cleverbot feature.
+    @use_cleverbot = false
+    # Powered by cleverbot.io
+    @cleverbot_api_user = ''
+    @cleverbot_api_token = ''
 	end
 end

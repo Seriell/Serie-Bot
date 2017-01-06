@@ -42,49 +42,54 @@ module SerieBot
             event << "** *#{text}* **"
         end
 
-        command(:avatar, description: 'Displays the avatar of a user.') do |event, *mention|
-            event.channel.start_typing # Let people know the bot is working on something.
-            if mention.nil?
-                user = event.message.author
-            elsif event.message.mentions[0]
-                user = event.server.member(event.message.mentions[0])
-            else
-                event << "❌ Mention a valid user!"
-                next
-            end
-            avatar_path = Helper.download_avatar(user, 'tmp')
-            event.channel.send_file File.new([avatar_path].sample)
-        end
+        command(:avatar, description: "Displays the avatar of a user.") do |event, *mention|
+          event.channel.start_typing # Let people know the bot is working on something.
+    				if mention.nil?
+    					user = event.user
+    				elsif event.message.mentions[0]
+    					user = event.server.member(event.message.mentions[0])
+    				else
+    					user = event.user
+    				end
+    				avatar_path = Helper.download_avatar(user, "tmp")
+    				event.channel.send_file File.new([avatar_path].sample)
+    		end
 
-        command(:info, description: 'Displays info about a user.') do |event, *_mention|
+        command(:info, description: 'Displays info about a user.') do |event, mention|
             event.channel.start_typing
             if event.channel.private? # ignore PMs
                 event << "❌ This command can only be used in a server."
                 next
             end
 
-            if event.message.mentions[0]
-                user = event.message.mentions[0]
-                playing = if user.game.nil?
-                              '[N/A]'
-                          else
-                              user.game
-                          end
-                member = user.on(event.server)
-                nick = if member.nickname.nil?
-                           '[N/A]' #
-                       else
-                           member.nickname
-                       end
-                event << "👥  Infomation about **#{member.display_name}**"
-                event << "-ID: **#{user.id}**"
-                event << "-Username: `#{user.distinct}`"
-                event << "-Nickname: **#{nick}**"
-                event << "-Status: **#{user.status}**"
-                event << "-Playing: **#{playing}**"
-                event << "-Account created: **#{user.creation_time.getutc.asctime}** UTC"
-                event << "-Joined server at: **#{member.joined_at.getutc.asctime}** UTC"
+            if mention.nil?
+              user = event.user
+            elsif event.message.mentions[0]
+              user = event.server.member(event.message.mentions[0])
+            else
+              user = event.user
             end
+
+            user = event.message.mentions[0]
+            playing = if user.game.nil?
+                          '[N/A]'
+                      else
+                          user.game
+                      end
+            member = user.on(event.server)
+            nick = if member.nickname.nil?
+                       '[N/A]' #
+                   else
+                       member.nickname
+                   end
+            event << "👥  Infomation about **#{member.display_name}**"
+            event << "-ID: **#{user.id}**"
+            event << "-Username: `#{user.distinct}`"
+            event << "-Nickname: **#{nick}**"
+            event << "-Status: **#{user.status}**"
+            event << "-Playing: **#{playing}**"
+            event << "-Account created: **#{user.creation_time.getutc.asctime}** UTC"
+            event << "-Joined server at: **#{member.joined_at.getutc.asctime}** UTC"
         end
 
         command(:qr, description: 'Returns a QR code of an input.', min_args: 1) do |event, *text|
@@ -101,20 +106,19 @@ module SerieBot
     				FileUtils.rm(tmp_path) if File.exist?(tmp_path)
     				png = qrcode.as_png(
               file: tmp_path # path to write
-              )
+            )
     				event.channel.send_file(File.new(tmp_path), caption: "Here's your QR code:")
         end
 
-		command(:say, min_args: 1, description: "Make the bot say something!", usage: "#{Config.prefix}say <some text>") do |event, *words|
-      event.channel.start_typing
-			Helper.ignore_bots(event.user)
-			message = words.join(" ")
-			if message == " " or message.nil?
-				event << "❌ Tell me something to say!"
-			end
-
-            event.respond message.gsub('@everyone', "@\x00everyone")
-        end
+  		command(:say, min_args: 1, description: "Make the bot say something!", usage: "#{Config.prefix}say <some text>") do |event, *words|
+        event.channel.start_typing
+  			Helper.ignore_bots(event.user)
+  			message = words.join(" ")
+  			if message == ' ' or message.nil?
+  				event << "❌ Tell me something to say!"
+  			end
+        event.respond message.gsub('@everyone', "@\x00everyone").gsub('@here', "@\x00here")
+      end
 
         command(:zalgo) do |event, *text|
             text = text.join(' ')

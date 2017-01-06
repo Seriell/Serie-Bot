@@ -4,6 +4,8 @@ module SerieBot
 		extend Discordrb::EventContainer
       extend Discordrb::Commands::CommandContainer
 
+
+			# Not working for some reason.
       command(:command,description: "Add a custom command.") do |event, arg1, arg2, *text|
 				if !Helper.isadmin?(event.user)
 	        event << "❌ You don't have permission for that!"

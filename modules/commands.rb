@@ -94,7 +94,7 @@ module SerieBot
         end
 
         command(:about, min_args: 0, max_args: 0) do |event|
-            event << "`#{event.bot.user(event.bot.profile.id).distinct}` running **SerieBot-Git** \n**https://github.com/Seriell/Serie-Bot **"
+            event << "`#{event.bot.user(event.bot.profile.id).distinct}` running **SerieBot-Git v3-#{`git rev-parse --short HEAD`}** \n**https://github.com/Seriell/Serie-Bot **"
         end
     end
 end

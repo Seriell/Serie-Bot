@@ -6,6 +6,7 @@ module SerieBot
 
 
 # REMOVED
+
 =begin
         if Config.use_cleverbot
           require 'cleverbot'
@@ -27,7 +28,5 @@ module SerieBot
                 event.bot.game = Config.playing
                 puts 'Bot succesfully launched!'
             end
-
-        end
     end
 end

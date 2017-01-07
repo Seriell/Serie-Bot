@@ -11,7 +11,7 @@ The Public Bot might not always be online, if you want the bot all the time for 
 - Ruby
 - bundler (`gem install bundler`)
 
-# Install
+## Install
 1. Clone the repo: `git clone https://github.com/Seriell/Serie-Bot.git`
 2. cd into the repo: `cd Serie-Bot`
 3. Edit `config.rb.example` to include the needed information and save it as `config.rb`
@@ -19,7 +19,7 @@ The Public Bot might not always be online, if you want the bot all the time for 
 5. Install the bundle: `bundle install`
 6. Run the bot. For Linux: `./run_linux.sh`. For Windows: `run_windows.bat`.
 
-# Updating
+## Updating
 1. Pull any changes from the repo: `git pull`
 2. Check any config changes. Open `config.rb.example` and see if any new information is needed in your `config.rb`
 3. Update the bundle: `bundle update`

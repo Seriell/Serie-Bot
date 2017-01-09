@@ -56,7 +56,6 @@ module SerieBot
                 ~~   ~~
     ..."Have you mooed today?"...```',
             lenny: '( ͡° ͜ʖ ͡°)',
-            invite: "👋 Invite me to your server here: \n**#{Config.invite_url}**",
             shrug: '¯\_(ツ)_/¯',
             support: "⚙ **Need help?**\nYou can join the support server here:\n**https://discord.gg/9CmCv5e **",
             facedesk: 'https://giphy.com/gifs/XLOsdacfjL5cI',

@@ -249,9 +249,8 @@ module SerieBot
             end
             event.respond("**#{event.author.mention} slapped #{event.bot.parse_mention(user).mention}!**")
         end
-    end
-    
-    command(:invite) do |event|
-      "👋 Invite me to your server here: \n**#{Config.invite_url}**"
+	command(:invite) do |event|
+      	    "👋 Invite me to your server here: \n**#{Config.invite_url}**"
+    	end
     end
 end

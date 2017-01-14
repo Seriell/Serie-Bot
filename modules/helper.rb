@@ -46,7 +46,14 @@ module SerieBot
         # Downloads an avatar when given a `user` object.
         # Returns the path of the downloaded file.
         def self.download_avatar(user, folder)
-          url = user.avatar_url
+		  url = Helper.avatar_url(user)
+          path = self.download_file(url, folder)
+          return path
+        end
+		
+		
+		def self.avatar_url(user)
+		  url = user.avatar_url
           uri = URI.parse(url)
           extension = File.extname(uri.path)
           filename = File.basename(uri.path)
@@ -58,9 +65,9 @@ module SerieBot
           end
           url << '?size=256'
           url = "https://cdn.discordapp.com/avatars/#{user.id}/#{filename}?size=256"
-          path = self.download_file(url, folder)
-          return path
-        end
+		  return url
+		end
+		  
 
         # Download a file from a url to a specified folder.
         # If no name is given, it will be taken from the url.

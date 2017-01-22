@@ -13,8 +13,8 @@ tmp/*
 !tmp/README.md
 
 # All logs files dumped by the bot with the default settings.
-logs/*
-logs*
+logs/*.txt
+!logs/README.md
 
 Gemfile.lock
 
@@ -23,5 +23,5 @@ Gemfile.lock
 
 # Dolphin directory config file.
 .directory
-!logs/README.md
+
 test/*

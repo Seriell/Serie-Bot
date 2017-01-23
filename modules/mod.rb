@@ -16,10 +16,11 @@ module SerieBot
 
             while clearnum > 0
                 if clearnum >= 99
-                    event.channel.prune(99)
+                    Discordrb::API::Channel.bulk_delete_messages(event.bot.token, event.channel.id, event.channel.history(99))
                     clearnum -= 99
                 else
-                    event.channel.prune(clearnum)
+                    #event.channel.prune(clearnum)
+                    Discordrb::API::Channel.bulk_delete_messages(event.bot.token, event.channel.id, event.channel.history(clearnum))
                     clearnum = 0
                 end
               end

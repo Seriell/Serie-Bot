@@ -26,6 +26,7 @@ The Public Bot might not always be online, if you want the bot all the time for 
 4. Run the bot: `./run_linux.sh` or `run_windows.bat`
 
 Please report any issues to `@Seriel#0757` | `<@228574821590499329>` on Discord, or open an Issue on Github! <br />
+You can also join my server for support! https://discord.gg/43SaDy6 <br />
 
 Enjoy~
 <br />

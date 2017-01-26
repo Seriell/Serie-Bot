@@ -14,19 +14,28 @@ module SerieBot
             original_num = count.to_i
             clearnum = count.to_i + 1
 
-            while clearnum > 0
-                if clearnum >= 99
-                    Discordrb::API::Channel.bulk_delete_messages(event.bot.token, event.channel.id, event.channel.history(99))
-                    clearnum -= 99
-                else
-                    #event.channel.prune(clearnum)
-                    Discordrb::API::Channel.bulk_delete_messages(event.bot.token, event.channel.id, event.channel.history(clearnum))
-                    clearnum = 0
-                end
-              end
-            message = event.respond("🚮  Cleared #{original_num} messages!")
-            sleep(3)
-            message.delete
+            begin
+                while clearnum > 0
+                    if clearnum >= 99
+                        # Welcome back to Workaround city.
+                        ids = []
+                        event.channel.history(99).each { |x| ids.push(x.id) }
+                        Discordrb::API::Channel.bulk_delete_messages(event.bot.token, event.channel.id, ids)
+                        clearnum -= 99
+                    else
+                        ids = []
+                        event.channel.history(clearnum).each { |x| ids.push(x.id) }
+                        Discordrb::API::Channel.bulk_delete_messages(event.bot.token, event.channel.id, ids)
+                        clearnum = 0
+                    end
+                  end
+                message = event.respond("🚮  Cleared #{original_num} messages!")
+                sleep(3)
+                message.delete
+            rescue Discordrb::Errors::NoPermission
+                event.respond("❌ I don't have permission to delete messages!")
+                break
+            end
             nil
         end
 

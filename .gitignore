@@ -1,5 +1,6 @@
 # Public bot config.
 config.rb
+config.rb.bak
 
 # Folder image commands are not included in the source.
 images/furry/*

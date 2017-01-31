@@ -118,6 +118,7 @@ module SerieBot
                 event.respond("❌ You don't have permission for that!")
                 break
             end
+            event.bot.invisible
             event.respond 'Goodbye!'
             Helper.quit
         end
@@ -152,6 +153,7 @@ module SerieBot
             end
         end
         command(:bash, description: 'Evaluate a Bash command. Admin only. Use with care.', usage: '&bash code') do |event, *code|
+          event.channel.start_typing
             unless Helper.isadmin?(event.user)
                 event.respond("❌ You don't have permission for that!")
                 break
@@ -167,6 +169,7 @@ module SerieBot
                      end
         end
         command(:upload, description: 'Upload a file to Discord. Admin only.', usage: '&upload filename') do |event, *file|
+          event.channel.start_typing
             unless Helper.isadmin?(event.user)
                 event << "❌ You don't have permission for that!"
                 break
@@ -176,6 +179,7 @@ module SerieBot
         end
 
         command(:rehost) do |event, *url|
+            event.channel.start_typing
             url = url.join(' ')
             file = Helper.download_file(url, 'tmp')
             Helper.upload_file(event.channel, file)

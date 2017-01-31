@@ -44,6 +44,16 @@ module SerieBot
 
     bot = Discordrb::Commands::CommandBot.new token: Config.token, client_id: Config.appid, prefix: Config.prefix, parse_self: true, type: Config.login_type
     modules.each { |m| bot.include! m; puts "Included: #{m}" }
+
+    # Check for Yuu module.
+    begin
+      bot.include! Yuu
+      puts "Yuu loaded!"
+    rescue NameError
+      # Yuu module isn't present, don't panic. Move on.
+      puts "Yuu not present, resuming..."
+    end
+
     # Run Bot
     Config.invite_url = bot.invite_url if Config.invite_url.nil?
     puts "Invite URL #{Config.invite_url}"

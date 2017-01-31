@@ -35,6 +35,7 @@ Enjoy~
 
 Kudos to the following users for helping me out:
 
+- edwardslabs for https://github.com/edwardslabs/CloudBot/
 - luigoalma (https://github.com/luigoalma)
 - megumi (https://github.com/megumisonoda)
 - Anyone active on the Discordrb channel in the Discord API server.

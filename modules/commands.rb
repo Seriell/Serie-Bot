@@ -60,8 +60,6 @@ module SerieBot
             support: "⚙ **Need help?**\nYou can join the support server here:\n**https://discord.gg/43SaDy6 **",
             facedesk: 'https://giphy.com/gifs/XLOsdacfjL5cI',
             smea: 'https://giphy.com/gifs/Sb2NkTl1oV6eI',
-            play: 'Use % you silly boy!',
-            pause: "FIRST OF ALL IF YOU DONT KNOW HOW TO USE % THEN YOU SHOULDN'T BE PAUSING THE MUSIC"
         }
 
         # Import commands:
@@ -93,7 +91,12 @@ module SerieBot
         end
 
         command(:about, min_args: 0, max_args: 0) do |event|
-            event << "`#{event.bot.user(event.bot.profile.id).distinct}` running **SerieBot-Git v3-#{`git rev-parse --short HEAD`}** \n**https://github.com/Seriell/Serie-Bot **"
+            event << "`#{event.bot.user(event.bot.profile.id).distinct}` running **SerieBot-Git v3-#{`git rev-parse --short HEAD`}** \n**<https://github.com/Seriell/Serie-Bot> \n**"
+            if Config.yuu_commands
+              event << "⚙ Extra commands: **Enabled**"
+            else
+              event << "⚙ Extra commands: **Disabled**"
+            end
         end
     end
 end

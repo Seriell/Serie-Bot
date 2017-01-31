@@ -17,6 +17,7 @@ module SerieBot
 
       #Advanced Options
       attr_accessor :use_bundler
+      attr_accessor :yuu_commands
 
       #Status
       attr_accessor :status

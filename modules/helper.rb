@@ -6,6 +6,7 @@ module SerieBot
       end
 
         def self.quit
+            
             puts 'Exiting...'
             exit
         end
@@ -50,8 +51,8 @@ module SerieBot
           path = self.download_file(url, folder)
           return path
         end
-		
-		
+
+
 		def self.avatar_url(user)
 		  url = user.avatar_url
           uri = URI.parse(url)
@@ -67,7 +68,7 @@ module SerieBot
           url = "https://cdn.discordapp.com/avatars/#{user.id}/#{filename}?size=256"
 		  return url
 		end
-		  
+
 
         # Download a file from a url to a specified folder.
         # If no name is given, it will be taken from the url.

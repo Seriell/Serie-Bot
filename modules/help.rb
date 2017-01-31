@@ -45,6 +45,30 @@ module SerieBot
       text2 << foldcoms[0...-2] + ".\n\n"
       event.user.pm(text2)
 
+      if Config.yuu_commands
+        text3 = ''
+        text3 << "__Food Commands:__\n\n"
+        # To preserve readability, we'll split the following list across multiple lines.
+        text3 << '`potato`, `cake`, `cookie`, `biscuit`, `sandwich`, `taco`, `coffee`, `noodles`, `muffin`, `tea`,'
+        text3 << '`keto`, `beer`, `cheese`, `pancake`, `chicken`, `nugget`, `pie`, `icecream`, `brekkie`, `doobie`,'
+        text3 << "`pizza`, `chocolate`, `pasta`, `cereal`.\n"
+
+        text3 << "__Attack Commands:__\n\n"
+        text3 << "`#{Config.prefix}lart @user`: LARTs the given user\n"
+        text3 << "`#{Config.prefix}slap @user`: Makes the bot slap the given user.\n"
+        text3 << "`#{Config.prefix}compliment @user`: Makes the bot compliment the given user.\n"
+        text3 << "`#{Config.prefix}strax @user`: Strax quote.\n"
+        text3 << "`#{Config.prefix}nk @user`: Outputs a random North Korea propaganda slogan.\n"
+        text3 << "`#{Config.prefix}insult @user`: insults the given user\n"
+        text3 << "`#{Config.prefix}present @user`: gives gift to the given user\n"
+        text3 << "\n"
+
+        text3 << "__Other Commands:__\n\n"
+        text3 << '`wouldyourather`, `fact`, `eightball`, `vote`, `topicchange`, `fortune`, `factdiscord`, `cats`, `catgifs`,'
+        text3 << '`flip`, `fight`, `choose`, `coin`.'
+        event.user.pm(text3)
+      end
+
             text3 = ''
             text3 << "__Moderation Commands:__\n\n"
             text3 << "The user executing these commands needs the appropriate permission. For example to use `#{Config.prefix}clear`, you need Manage Messages.\n"

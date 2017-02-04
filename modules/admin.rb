@@ -2,14 +2,33 @@ module SerieBot
     module Admin
         extend Discordrb::Commands::CommandContainer
 
-        command(:message, description: 'Send the result of an eval in PM. Admin only.', usage: '&message code') do |event, *pmwords|
+        command(:message, description: 'Send the result of an eval in PM. Admin only.', usage: "#{Config.prefix}message code") do |event, *pmwords|
             break unless Helper.isadmin?(event.user)
 
-            puts pmwords
-            message = pmwords.join(' ')
-            puts message
-            event.user.pm(eval(message))
-            event.respond("✅ PMed you the eval output 😉")
+            eval_message = nil
+            begin
+                # Set eval result for further tracking later
+                eval_message = eval pmwords.join(' ')
+                event.user.pm(eval_message)
+            rescue Discordrb::Errors::MessageTooLong
+                # Determine how many characters the message is over
+                lengthOver = text.length - 2000
+                event.respond("❌ Message was too long to send by #{lengthOver} characters!")
+                break
+            rescue Discordrb::Errors::NoPermission
+                event.respond("❌ Sorry, but it looks like you're blocking DMs.")
+                break
+            rescue => error
+                # Exception:
+                # stacktrace
+                error_response = "#{$ERROR_INFO}\n#{error.backtrace.join("\n")}"
+                event.respond("```#{error_response}```")
+                # Log to console as well
+                puts error_response.to_s
+            end
+            # If we're already DMing the user the output, it makes no sense to say it was DM'd.
+            event.respond("✅ DM'd you the eval output 😉") unless event.channel.private?
+            nil
         end
 
         command(:setavatar) do |event, *url|
@@ -123,12 +142,32 @@ module SerieBot
             Helper.quit
         end
 
-        command(:eval, description: 'Evaluate a Ruby command. Admin only.', usage: '&eval code') do |event, *code|
+        command(:eval, description: 'Evaluate a Ruby command. Admin only.', usage: "#{Config.prefix}eval code") do |event, *code|
             unless Helper.isadmin?(event.user)
                 event.respond("❌ You don't have permission for that!")
                 break
             end
-            eval code.join(' ')
+
+            eval_message = code.join(' ')
+            begin
+                # Set eval result for further tracking later
+                event.respond(eval eval_message)
+                eval_message = nil
+                break
+            rescue Discordrb::Errors::MessageTooLong
+                # Determine how many characters the message is over
+                lengthOver = eval_message.length - 2000
+                event.respond("❌ Message was too long to send by #{lengthOver} characters!")
+                break
+            rescue => error
+                # Exception:
+                # stacktrace
+                error_response = "#{$ERROR_INFO}\n#{error.backtrace.join("\n")}"
+                event.respond("```#{error_response}```")
+                # Log to console as well
+                puts error_response.to_s
+                break
+            end
         end
 
         command(:spam, required_permissions: [:administrator], description: 'Spam a message. Admin only.', usage: '&spam num text') do |event, num, *text|
@@ -153,7 +192,7 @@ module SerieBot
             end
         end
         command(:bash, description: 'Evaluate a Bash command. Admin only. Use with care.', usage: '&bash code') do |event, *code|
-          event.channel.start_typing
+            event.channel.start_typing
             unless Helper.isadmin?(event.user)
                 event.respond("❌ You don't have permission for that!")
                 break
@@ -169,7 +208,7 @@ module SerieBot
                      end
         end
         command(:upload, description: 'Upload a file to Discord. Admin only.', usage: '&upload filename') do |event, *file|
-          event.channel.start_typing
+            event.channel.start_typing
             unless Helper.isadmin?(event.user)
                 event << "❌ You don't have permission for that!"
                 break
@@ -253,8 +292,8 @@ module SerieBot
             end
             event.respond("**#{event.author.mention} slapped #{event.bot.parse_mention(user).mention}!**")
         end
-	command(:invite) do |event|
-      	    "👋 Invite me to your server here: \n**#{Config.invite_url}**"
-    	end
+        command(:invite) do |_event|
+            "👋 Invite me to your server here: \n**#{Config.invite_url}**"
+        end
     end
 end

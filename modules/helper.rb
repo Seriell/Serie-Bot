@@ -1,74 +1,70 @@
 module SerieBot
     module Helper
-      require 'open-uri'
+        require 'open-uri'
         def self.isadmin?(member)
             Config.bot_owners.include?(member)
       end
 
         def self.quit
-            
             puts 'Exiting...'
             exit
         end
 
         def self.parse_history(hist, count)
-        			messages = Array.new
-        			i = 0
-        			until i == hist.length
-        				message = hist[i]
-        				if message == nil
-        					#STTTOOOOPPPPPP
-        					puts "nii"
-        					break
-        				end
-        				if message.author.nil?
-        					author = "Unknown Disconnected User"
-        				else
-        					author = message.author.distinct
-        				end
-        				time = message.timestamp
-        				content = message.content
+            messages = []
+            i = 0
+            until i == hist.length
+                message = hist[i]
+                if message.nil?
+                    # STTTOOOOPPPPPP
+                    puts 'nii'
+                    break
+                end
+                author = if message.author.nil?
+                             'Unknown Disconnected User'
+                         else
+                             message.author.distinct
+                         end
+                time = message.timestamp
+                content = message.content
 
-        				attachments = message.attachments
-        				#attachments.each { |u| attachments.push("#{u.filename}: #{u.url}") }
+                attachments = message.attachments
+                # attachments.each { |u| attachments.push("#{u.filename}: #{u.url}") }
 
-        				messages[i] = "--#{time} #{author}: #{content}"
-        				messages[i] += "\n<Attachments: #{attachments[0].filename}: #{attachments[0].url}}>" unless attachments.empty?
-        	#			puts "Logged message #{i} ID:#{message.id}: #{messages[i]}"
-        				i += 1
+                messages[i] = "--#{time} #{author}: #{content}"
+                messages[i] += "\n<Attachments: #{attachments[0].filename}: #{attachments[0].url}}>" unless attachments.empty?
+                #			puts "Logged message #{i} ID:#{message.id}: #{messages[i]}"
+                i += 1
 
-        				count += 1
-        			end
-        			return_value = [count, messages]
-        			return return_value
-        		end
-
+                count += 1
+            end
+            return_value = [count, messages]
+            return_value
+            end
 
         # Downloads an avatar when given a `user` object.
         # Returns the path of the downloaded file.
         def self.download_avatar(user, folder)
-		  url = Helper.avatar_url(user)
-          path = self.download_file(url, folder)
-          return path
+            url = Helper.avatar_url(user)
+            path = download_file(url, folder)
+            path
         end
 
+        def self.avatar_url(user)
+            url = user.avatar_url
+            uri = URI.parse(url)
+            extension = File.extname(uri.path)
+            filename = File.basename(uri.path)
 
-		def self.avatar_url(user)
-		  url = user.avatar_url
-          uri = URI.parse(url)
-          extension = File.extname(uri.path)
-          filename = File.basename(uri.path)
-
-          if filename.start_with?('a_')
-            filename = filename.gsub('.jpg', '.gif')
-          else
-            filename = filename.gsub('.jpg', '.png')
-          end
-          url << '?size=256'
-          url = "https://cdn.discordapp.com/avatars/#{user.id}/#{filename}?size=256"
-		  return url
-		end
-
+            filename = if filename.start_with?('a_')
+                           filename.gsub('.jpg', '.gif')
+                       else
+                           filename.gsub('.jpg', '.png')
+                       end
+            url << '?size=256'
+            url = "https://cdn.discordapp.com/avatars/#{user.id}/#{filename}?size=256"
+            url
+        end
 
         # Download a file from a url to a specified folder.
         # If no name is given, it will be taken from the url.
@@ -87,7 +83,7 @@ module SerieBot
 
             download = open(url)
             IO.copy_stream(download, path)
-            return path
+            path
         end
 
         # If the user passed is a bot, it will be ignored.
@@ -106,23 +102,56 @@ module SerieBot
             puts "Uploaded `#{filename} to \##{channel.name}!"
       end
 
-        # Accepts a message, and returns the message content, with all mentions + channels replaced with @User#1234 or #channel-name
-        def self.parse_mentions(bot, message, text = nil)
-            text = message.content if text.nil?
-            content = text
+        # Accepts a message, and returns the message content, with all mentions + channels replaced with @user#1234 or #channel-name
+        def self.parse_mentions(bot, content)
             # Replce user IDs with names
-            message.mentions.each { |x| content = content.gsub("<@#{x.id}>", "@#{x.distinct}"); content = content.gsub("<@!#{x.id}>", "\@#{x.distinct}") }
+            loop do
+                match = /<@\d+>/.match(content)
+                break if match.nil?
+                # Get user
+                id = match[0]
+                # We have to sub to just get the numerical ID.
+                num_id = /\d+/.match(id)[0]
+                content = content.sub(id, get_user_name(num_id, bot))
+            end
+            loop do
+                match = /<@!\d+>/.match(content)
+                break if match.nil?
+                # Get user
+                id = match[0]
+                # We have to sub to just get the numerical ID.
+                num_id = /\d+/.match(id)[0]
+                content = content.sub(id, get_user_name(num_id, bot))
+            end
             # Replace channel IDs with names
-            # scan for some regex, /<#\d+>/ or something, then you can map ids.map { |id| bot.channel(id).name } or something
-            somethingSomethingTextArray = []
-            content = content.gsub(/<#\d+>/) { |id| get_channel_name(id, bot) }
+            loop do
+                match = /<#\d+>/.match(content)
+                break if match.nil?
+                # Get channel
+                id = match[0]
+                # We have to gsub to just get the numerical ID.
+                num_id = /\d+/.match(id)[0]
+                content = content.sub(id, get_channel_name(num_id, bot))
+            end
             content
         end
 
+        # Returns a user-readable username for the specified ID.
+        def self.get_user_name(user_id, bot)
+            toReturn = nil
+            begin
+                toReturn = '@' + bot.user(user_id).distinct
+            rescue NoMethodError
+                toReturn = '@invalid-user'
+            end
+            toReturn
+        end
+
+        # Returns a user-readable channel name for the specified ID.
         def self.get_channel_name(channel_id, bot)
             toReturn = nil
             begin
-                toReturn = '#' + bot.channel(channel_id.gsub(/[^0-9,.]/, '')).name
+                toReturn = '#' + bot.channel(channel_id).name
             rescue NoMethodError
                 toReturn = '#deleted-channel'
             end
@@ -160,7 +189,7 @@ module SerieBot
             loop do
                 hist_count_and_messages[0] = channel.history(100, nil, offset_id) # next 100
                 break if hist_count_and_messages[0] == []
-                hist_count_and_messages[1] = self.parse_history(hist_count_and_messages[0], hist_count_and_messages[1][0])
+                hist_count_and_messages[1] = parse_history(hist_count_and_messages[0], hist_count_and_messages[1][0])
                 output_file.write((hist_count_and_messages[1][1].reverse.join("\n") + "\n").encode('UTF-8')) # write to file right away, don't store everything in memory
                 output_file.flush # make sure it gets written to the file
                 offset_id = hist_count_and_messages[0][0].id
@@ -180,3 +209,11 @@ module SerieBot
         end
     end
  end
+module Discordrb
+    module Cache
+        # Change find_user to include our own awesome methods
+        def find_user(username)
+            @users.values.find_all { |e| e.username.includes? username }
+        end
+    end
+end

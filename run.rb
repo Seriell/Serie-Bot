@@ -6,11 +6,7 @@ module SerieBot
     require 'fileutils'
     require 'rainbow'
 
-    def self.role(rolename, server)
-        roles = server.roles
-        roles.select { |r| r.name == rolename }.first
-    end
-
+    
     # Require modules
     Dir['modules/*.rb'].each { |r| require_relative r; puts "Loaded: #{r}" }
 

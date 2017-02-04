@@ -10,7 +10,7 @@ module SerieBot
 
         # All food commands.
 
-        json_food_commands = %w(potato cake cookie sandwich taco coffee noodles muffin tea keto beer cheese pancake chicken nugget pie icecream pizza chocolate pasta cereal)
+        json_food_commands = %w(potato cake cookie sandwich taco coffee noodles muffin tea keto beer cheese pancake chicken nugget pie icecream pizza chocolate pasta cereal sushi steak burger oreo)
 
         json_food_commands.each do |x|
             command(x.to_sym, usage: "#{Config.prefix}#{x} <person to give to>", min_args: 1) do |event, *args|

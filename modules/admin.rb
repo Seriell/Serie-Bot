@@ -5,30 +5,7 @@ module SerieBot
         command(:message, description: 'Send the result of an eval in PM. Admin only.', usage: "#{Config.prefix}message code") do |event, *pmwords|
             break unless Helper.isadmin?(event.user)
 
-            eval_message = nil
-            begin
-                # Set eval result for further tracking later
-                eval_message = eval pmwords.join(' ')
-                event.user.pm(eval_message)
-            rescue Discordrb::Errors::MessageTooLong
-                # Determine how many characters the message is over
-                lengthOver = text.length - 2000
-                event.respond("❌ Message was too long to send by #{lengthOver} characters!")
-                break
-            rescue Discordrb::Errors::NoPermission
-                event.respond("❌ Sorry, but it looks like you're blocking DMs.")
-                break
-            rescue => error
-                # Exception:
-                # stacktrace
-                error_response = "#{$ERROR_INFO}\n#{error.backtrace.join("\n")}"
-                event.respond("```#{error_response}```")
-                # Log to console as well
-                puts error_response.to_s
-            end
-            # If we're already DMing the user the output, it makes no sense to say it was DM'd.
-            event.respond("✅ DM'd you the eval output 😉") unless event.channel.private?
-            nil
+            eval code.join(' ')
         end
 
         command(:setavatar) do |event, *url|
@@ -148,26 +125,7 @@ module SerieBot
                 break
             end
 
-            eval_message = code.join(' ')
-            begin
-                # Set eval result for further tracking later
-                event.respond(eval eval_message)
-                eval_message = nil
-                break
-            rescue Discordrb::Errors::MessageTooLong
-                # Determine how many characters the message is over
-                lengthOver = eval_message.length - 2000
-                event.respond("❌ Message was too long to send by #{lengthOver} characters!")
-                break
-            rescue => error
-                # Exception:
-                # stacktrace
-                error_response = "#{$ERROR_INFO}\n#{error.backtrace.join("\n")}"
-                event.respond("```#{error_response}```")
-                # Log to console as well
-                puts error_response.to_s
-                break
-            end
+           eval code.join(' ')
         end
 
         command(:spam, required_permissions: [:administrator], description: 'Spam a message. Admin only.', usage: '&spam num text') do |event, num, *text|

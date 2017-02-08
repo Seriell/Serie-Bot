@@ -2,6 +2,7 @@ module SerieBot
     module Mod
         extend Discordrb::Commands::CommandContainer
         command(:clear, max_args: 1, required_permissions: [:manage_messages], description: 'Deletes x messages, mod only.', usage: '&clear x') do |event, count|
+          Helper.ignore_bots(event)
             if count.nil?
                 event.respond('No argument specicied. Enter a valid number!')
                 break
@@ -40,6 +41,7 @@ module SerieBot
         end
 
         command(:kick, description: 'Temporarily Kick somebody from the server. Mod only.', required_permissions: [:kick_members], usage: '&kick @User reason', min_args: 2) do |event, *kickreason|
+          Helper.ignore_bots(event)
             member = event.server.member(event.message.mentions[0])
 
             break if event.channel.private?
@@ -59,6 +61,7 @@ module SerieBot
         end
 
         command(:ban, description: 'Permanently ban someone from the server. Mod only.', required_permissions: [:ban_members], usage: '&ban @User reason', min_args: 2) do |event, *banreason|
+          Helper.ignore_bots(event)
             member = event.server.member(event.message.mentions[0])
             break if event.channel.private?
             if event.message.mentions[0]
@@ -79,6 +82,7 @@ module SerieBot
         end
 
         command(:lockdown, required_permissions: [:administrator]) do |event, time, *reason|
+          Helper.ignore_bots(event)
             reason = reason.join(' ')
             lockdown = Discordrb::Permissions.new
             lockdown.can_send_messages = true
@@ -99,6 +103,7 @@ module SerieBot
         end
 
         command(:unlockdown, required_permissions: [:administrator]) do |event|
+          Helper.ignore_bots(event)
             lockdown = Discordrb::Permissions.new
             lockdown.can_send_messages = true
             everyone_role = Helper.role_from_name(event.server, '@everyone')

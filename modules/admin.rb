@@ -3,12 +3,14 @@ module SerieBot
         extend Discordrb::Commands::CommandContainer
 
         command(:message, description: 'Send the result of an eval in PM. Admin only.', usage: "#{Config.prefix}message code") do |event, *pmwords|
+          Helper.ignore_bots(event)
             break unless Helper.isadmin?(event.user)
 
             eval code.join(' ')
         end
 
         command(:setavatar) do |event, *url|
+          Helper.ignore_bots(event)
             unless Helper.isadmin?(event.user)
                 event.respond("❌ You don't have permission for that!")
                 break
@@ -20,6 +22,7 @@ module SerieBot
         end
 
         command(:game, description: 'Set the "Playing" status. Admin only.') do |event, *game|
+          Helper.ignore_bots(event)
             unless Helper.isadmin?(event.user)
                 event.respond("❌ You don't have permission for that!")
                 break
@@ -29,6 +32,7 @@ module SerieBot
         end
 
         command(:username, description: "Set the Bot's username. Admin only.", min_args: 1) do |event, *name|
+          Helper.ignore_bots(event)
             unless Helper.isadmin?(event.user)
                 event.respond("❌ You don't have permission for that!")
                 break
@@ -43,6 +47,7 @@ module SerieBot
         end
 
         command(:ignore, description: 'Temporarily ignore a given user', min_args: 1, max_args: 1) do |event, mention|
+          Helper.ignore_bots(event)
             event.channel.start_typing
             unless Helper.isadmin?(event.user)
                 event.respond("❌ You don't have permission for that!")
@@ -62,6 +67,7 @@ module SerieBot
         end
 
         command(:unignore, description: 'Unignores a given user', min_args: 1, max_args: 1) do |event, mention|
+          Helper.ignore_bots(event)
             event.channel.start_typing
             unless Helper.isadmin?(event.user)
                 event.respond("❌ You don't have permission for that!")
@@ -81,6 +87,7 @@ module SerieBot
         end
 
         command(:status, description: 'Set the bot as idle or dnd or invisible status. Admin only.', min_args: 1, max_args: 1) do |event, status|
+          Helper.ignore_bots(event)
             unless Helper.isadmin?(event.user)
                 event.respond("❌ You don't have permission for that!")
                 break
@@ -103,12 +110,14 @@ module SerieBot
         end
 
         command(:owner, description: 'Find the owner of a shared server.', usage: '&message code') do |event, id|
+          Helper.ignore_bots(event)
             id = event.server.id if id.nil?
             owner = event.bot.server(id).owner
             event.respond("👤 Owner of server `#{event.bot.server(id).name}` is **#{owner.distinct}** | ID: `#{owner.id}`")
         end
 
         command(:shutdown, description: 'Shuts down the bot. Admin only.', usage: '&shutdown') do |event|
+          Helper.ignore_bots(event)
             puts "#{event.author.distinct}: \`#{event.message.content}\`"
             unless Helper.isadmin?(event.user)
                 event.respond("❌ You don't have permission for that!")
@@ -120,6 +129,7 @@ module SerieBot
         end
 
         command(:eval, description: 'Evaluate a Ruby command. Admin only.', usage: "#{Config.prefix}eval code") do |event, *code|
+          Helper.ignore_bots(event)
             unless Helper.isadmin?(event.user)
                 event.respond("❌ You don't have permission for that!")
                 break
@@ -129,6 +139,7 @@ module SerieBot
         end
 
         command(:spam, required_permissions: [:administrator], description: 'Spam a message. Admin only.', usage: '&spam num text') do |event, num, *text|
+          Helper.ignore_bots(event)
             puts "#{event.author.distinct}: \`#{event.message.content}\`"
             if num.nil?
                 event.respond('No argument specicied. Enter a valid positive number!')
@@ -149,7 +160,9 @@ module SerieBot
                 num -= 1
             end
         end
+
         command(:bash, description: 'Evaluate a Bash command. Admin only. Use with care.', usage: '&bash code') do |event, *code|
+          Helper.ignore_bots(event)
             event.channel.start_typing
             unless Helper.isadmin?(event.user)
                 event.respond("❌ You don't have permission for that!")
@@ -165,7 +178,9 @@ module SerieBot
                          "Output: ```\n#{result}```"
                      end
         end
+
         command(:upload, description: 'Upload a file to Discord. Admin only.', usage: '&upload filename') do |event, *file|
+          Helper.ignore_bots(event)
             event.channel.start_typing
             unless Helper.isadmin?(event.user)
                 event << "❌ You don't have permission for that!"
@@ -176,13 +191,16 @@ module SerieBot
         end
 
         command(:rehost) do |event, *url|
+          Helper.ignore_bots(event)
             event.channel.start_typing
             url = url.join(' ')
             file = Helper.download_file(url, 'tmp')
             Helper.upload_file(event.channel, file)
             event.message.delete
         end
+
         command(:dump, description: 'Dumps a selected channel. Admin only.', usage: '&dump [id]') do |event, channel_id|
+          Helper.ignore_bots(event)
             unless Helper.isadmin?(event.user)
                 event << "❌ You don't have permission for that!"
                 break
@@ -199,6 +217,7 @@ module SerieBot
         end
 
         command(:prune, required_permissions: [:manage_messages], max_args: 1) do |event, num|
+          Helper.ignore_bots(event)
             begin
                 num = 50 if num.nil?
                 count = 0
@@ -219,6 +238,7 @@ module SerieBot
         end
 
         command(:pruneuser, required_permissions: [:manage_messages], max_args: 1) do |event, user, num|
+          Helper.ignore_bots(event)
             begin
                  user = event.bot.parse_mention(user)
                  num = 50 if num.nil?
@@ -240,6 +260,7 @@ module SerieBot
         end
 
         command(:slap, max_args: 1) do |event, user|
+          Helper.ignore_bots(event)
             if user.nil? || user == '' || user == ' '
                 event.respond("❌ You have to enter a user to slap!")
                 break

@@ -112,7 +112,7 @@ module SerieBot
 
   		command(:say, min_args: 1, description: "Make the bot say something!", usage: "#{Config.prefix}say <some text>") do |event, *words|
         event.channel.start_typing
-  			Helper.ignore_bots(event.user)
+  			Helper.ignore_bots(event)
   			message = words.join(" ")
   			if message == ' ' or message.nil?
   				event << "❌ Tell me something to say!"

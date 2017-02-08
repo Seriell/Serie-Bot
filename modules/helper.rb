@@ -88,8 +88,8 @@ module SerieBot
 
         # If the user passed is a bot, it will be ignored.
         # Returns true if the user was a bot.
-        def self.ignore_bots(user)
-            if user.bot_account?
+        def self.ignore_bots(event)
+            if event.user.bot_account?
                 event.bot.ignore_user(event.user)
                 return true
             else

@@ -3,7 +3,24 @@ module SerieBot
         require 'open-uri'
         def self.isadmin?(member)
             Config.bot_owners.include?(member)
-      end
+        end
+
+        def self.save_settings
+          File.open('data/settings.yml', 'w+') do |f|
+              f.write(Data.settings.to_yaml)
+          end
+        end
+
+        def self.load_settings
+            folder = 'data'
+            settingsPath = "#{folder}/settings.yml"
+            FileUtils.mkdir(folder) unless File.exist?(folder)
+            unless File.exist?(settingsPath)
+              File.open(settingsPath, "w") { |file| file.write("---\n:version: 1\n") }
+            end
+            Data.settings = {}
+            Data.settings = YAML.load(File.read(settingsPath))
+        end
 
         def self.quit
             puts 'Exiting...'

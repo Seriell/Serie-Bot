@@ -6,7 +6,7 @@ module SerieBot
     require 'fileutils'
     require 'rainbow'
 
-    
+
     # Require modules
     Dir['modules/*.rb'].each { |r| require_relative r; puts "Loaded: #{r}" }
 
@@ -23,7 +23,8 @@ module SerieBot
         Utility,
         Mod,
         Zalgo,
-        Quotes
+        Quotes,
+        Data
     ]
     # Set up bot
     if Config.appid == 0 || Config.appid.nil?
@@ -53,7 +54,10 @@ module SerieBot
     # Run Bot
     Config.invite_url = bot.invite_url if Config.invite_url.nil?
     puts "Invite URL #{Config.invite_url}"
+
     bot.run
     bot.online
+    Helper.load_settings
     bot.game = Config.playing
+
 end

@@ -103,5 +103,15 @@ module SerieBot
           end
           puts Rainbow("#{Time.now.strftime('[%D %H:%M]')} #{event.member.distinct} joined #{event.server.name}").blue
         end
+
+        # Fires when the bot is invited to a new server.
+        server_create do |event|
+          #puts "Test: #{event.server.name} | #{event.server.id}"
+          if Data.settings[:blacklisted_servers].include?(event.server.id.to_s)
+            event.server.leave
+            puts "Left #{event.server.name} due to blacklist!!"
+          end
+        end
+
     end
 end

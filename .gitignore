@@ -9,6 +9,7 @@ images/catgirls/*
 
 # Temporary files should not be uploaded.
 tmp/*
+data/*.yml
 
 # Except for the readme.
 !tmp/README.md

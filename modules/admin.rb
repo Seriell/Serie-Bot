@@ -2,6 +2,16 @@ module SerieBot
     module Admin
         extend Discordrb::Commands::CommandContainer
 
+        command(:save) do |event|
+            unless Helper.isadmin?(event.user)
+                event.respond("❌ You don't have permission for that!")
+                break
+            end
+            message = event.respond 'Saving...'
+            Helper.save_settings
+            message.edit('All saved!')
+        end
+
         command(:message, description: 'Send the result of an eval in PM. Admin only.', usage: "#{Config.prefix}message code") do |event, *pmwords|
           Helper.ignore_bots(event)
             break unless Helper.isadmin?(event.user)
@@ -116,6 +126,29 @@ module SerieBot
             event.respond("👤 Owner of server `#{event.bot.server(id).name}` is **#{owner.distinct}** | ID: `#{owner.id}`")
         end
 
+        command(:blockserver) do |event,id|
+          unless Helper.isadmin?(event.user)
+              event.respond("❌ You don't have permission for that!")
+              break
+          end
+
+          if Data.settings[:blacklisted_servers].include?(id)
+            index = Data.settings[:blacklisted_servers].index(id)
+            Data.settings[:blacklisted_servers][index] = nil
+
+            event.respond("✅ Server removed from blacklist!")
+          else
+            Data.settings[:blacklisted_servers].push(id)
+            begin
+              server = event.bot.server(id)
+              server.leave
+              event.respond("✅ Server added to blacklist!")
+            rescue
+            end
+          end
+        end
+
+
         command(:shutdown, description: 'Shuts down the bot. Admin only.', usage: '&shutdown') do |event|
           Helper.ignore_bots(event)
             puts "#{event.author.distinct}: \`#{event.message.content}\`"
@@ -123,8 +156,10 @@ module SerieBot
                 event.respond("❌ You don't have permission for that!")
                 break
             end
+            message = event.respond 'Saving and exiting... '
+            Helper.save_settings
             event.bot.invisible
-            event.respond 'Goodbye!'
+            message.edit('All saved. Goodbye!')
             Helper.quit
         end
 

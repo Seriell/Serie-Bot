@@ -11,7 +11,8 @@ module SerieBot
 
 		# All commands will use this symbol(s) before the command name.
 		# Eg. The command &say has a prefix of &
-		@prefix = "s!!"
+		@prefix = "s!"
+		
 		# Will appear after "Playing" under the bots name. Set to nil to not show a game
 		@playing = "Powered by Ruby!"
 		@blacklisted_channels = []

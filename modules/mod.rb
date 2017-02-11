@@ -29,7 +29,7 @@ module SerieBot
                         Discordrb::API::Channel.bulk_delete_messages(event.bot.token, event.channel.id, ids)
                         clearnum = 0
                     end
-                  end
+                end
                 message = event.respond("🚮  Cleared #{original_num} messages!")
                 sleep(3)
                 message.delete
@@ -52,7 +52,7 @@ module SerieBot
                         event.server.kick(member)
                     rescue
                         next
-                    end
+                end
                 member.pm("You have been kicked from the server **#{event.server.name}** by #{event.message.author.mention} | **#{event.message.author.display_name}**\nThey gave the following reason: ``#{display}``")
 
             else
@@ -71,7 +71,7 @@ module SerieBot
                         event.server.ban(member)
                     rescue
                         next
-                    end
+                end
                 member.pm("You have been **permanently banned** from the server #{event.server.name} by #{event.message.author.mention} | **#{event.message.author.display_name}**
         They gave the following reason: ``#{bandisplay}``
         If you wish to appeal for your ban's removal, please contact this person, or the server owner.")

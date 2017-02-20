@@ -119,15 +119,7 @@ module SerieBot
             end
         end
 
-        command(:owner, description: 'Find the owner of a shared server.', usage: '&message code') do |event, id|
-            if event.channel.private?
-                event.respond("❌ Sorry, you can't find the owner of a DM! (Hint: it's you.)")
-                break
-            end
-            id = event.server.id if id.nil?
-            owner = event.bot.server(id).owner
-            event.respond("👤 Owner of server `#{event.bot.server(id).name}` is **#{owner.distinct}** | ID: `#{owner.id}`")
-        end
+
 
         command(:blockserver) do |event,id|
           unless Helper.isadmin?(event.user)
@@ -295,22 +287,6 @@ module SerieBot
                  event.channel.send_message("❌ I don't have permission to delete messages!")
                  puts 'The bot does not have the delete message permission!'
              end
-        end
-
-        command(:slap, max_args: 1) do |event, user|
-          Helper.ignore_bots(event)
-            if user.nil? || user == '' || user == ' '
-                event.respond("❌ You have to enter a user to slap!")
-                break
-            end
-            if event.author == event.bot.parse_mention(user)
-                event.respond("❌ Slapping yourself just doesn't work!")
-                break
-            end
-            event.respond("**#{event.author.mention} slapped #{event.bot.parse_mention(user).mention}!**")
-        end
-        command(:invite) do |_event|
-            "👋 Invite me to your server here: \n**#{Config.invite_url}**"
         end
     end
 end

@@ -183,57 +183,62 @@ module SerieBot
             response = Textgen.generate_string(json['templates'], json['parts'], variables)
         end
 
+
+
+
         command(:love, min_args: 1) do |event, *args|
           event.channel.start_typing
-              first = ""
-              second = ""
-              if args.length == 1
-                first = event.user.name
-                begin
-                  second = event.bot.parse_mention(args).name
-                rescue
-                  second = args[0]
-                end
-              elsif args.length == 2
-                first = args[0]
-                second = args[1]
-              end
+          second = ''
+          if args.length == 1
+            first = event.user.name
+            begin
+              second = event.bot.parse_mention(args).name
+            rescue
+              second = args[0]
+            end
+          elsif args.length == 2
+            first = args[0]
+            second = args[1]
+          else
+            event.respond('Specify only two people or yourself!')
+            break
+          end
 
           prng = Random.new
-              percentage = prng.rand(1..100)
+          percentage = prng.rand(1..100)
 
           case
-          when percentage < 10
-            result = "Awful 😭"
-          when percentage < 20
-            result = "Bad 😢"
-          when percentage < 30
-            result = "Pretty Low 😦"
-          when percentage < 40
-            result = "Not Too Great 😕"
-          when percentage < 50
-            result = "Worse Than Average 😐"
-          when percentage < 60
-            result = "Barely 😶"
-          when percentage == 69
-            result = "( ͡° ͜ʖ ͡°)"
-          when percentage < 70
-            result = "Not Bad 🙂"
-          when percentage < 80
-            result = "Pretty Good 😃"
-          when percentage < 90
-            result = "Great 😄"
-          when percentage < 100
-            result = "Amazing 😍"
-          when percentage == 100
-            result = "PERFECT! :heart_exclamation:"
+            when percentage < 10
+              result = 'Awful 😭'
+            when percentage < 20
+              result = 'Bad 😢'
+            when percentage < 30
+              result = 'Pretty Low 😦'
+            when percentage < 40
+              result = 'Not Too Great 😕'
+            when percentage < 50
+              result = 'Worse Than Average 😐'
+            when percentage < 60
+              result = 'Barely 😶'
+            when percentage == 69
+              result = '( ͡° ͜ʖ ͡°)'
+            when percentage < 70
+              result = 'Not Bad 🙂'
+            when percentage < 80
+              result = 'Pretty Good 😃'
+            when percentage < 90
+              result = 'Great 😄'
+            when percentage < 100
+              result = 'Amazing 😍'
+            when percentage == 100
+              result = 'PERFECT! :heart_exclamation:'
           end
 
           "💗 **MATCHMAKING** 💗\n" +
-          "First - #{first}\n" +
-          "Second - #{second}\n" +
-          "**-=-=-=-=-=-=-=-=-=-=-=-**\n" +
-          "Result ~ #{percentage}% - #{result}\n"
+              "First - #{first}\n" +
+              "Second - #{second}\n" +
+              "**-=-=-=-=-=-=-=-=-=-=-=-**\n" +
+              "Result ~ #{percentage}% - #{result}\n"
         end
 
         command(:randommovie) do |event, *args|

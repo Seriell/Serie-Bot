@@ -27,3 +27,6 @@ Gemfile.lock
 .directory
 
 test/*
+
+# IDEs
+.idea/*

@@ -4,7 +4,7 @@ module SerieBot
         command(:clear, max_args: 1, required_permissions: [:manage_messages], description: 'Deletes x messages, mod only.', usage: '&clear x') do |event, count|
           Helper.ignore_bots(event)
             if count.nil?
-                event.respond('No argument specicied. Enter a valid number!')
+                event.respond('❌ No argument specicied. Enter a valid number!')
                 break
             end
 
@@ -54,7 +54,7 @@ module SerieBot
                         next
                 end
                 member.pm("You have been kicked from the server **#{event.server.name}** by #{event.message.author.mention} | **#{event.message.author.display_name}**\nThey gave the following reason: ``#{display}``")
-
+                event.respond('👌')
             else
                 'Invalid argument. Please mention a valid user.'
             end
@@ -68,47 +68,59 @@ module SerieBot
                 finalbanmessage = banreason.drop(1)
                 bandisplay = finalbanmessage.join(' ')
                 begin
-                        event.server.ban(member)
-                    rescue
-                        next
+                  event.server.ban(member)
+                rescue Discordrb::Errors::NoPermission
+                  "The bot doesn't have permision to ban!"
                 end
-                member.pm("You have been **permanently banned** from the server #{event.server.name} by #{event.message.author.mention} | **#{event.message.author.display_name}**
-        They gave the following reason: ``#{bandisplay}``
-        If you wish to appeal for your ban's removal, please contact this person, or the server owner.")
-
+                message = "You have been **permanently banned** from the server #{event.server.name} by #{event.message.author.mention} | **#{event.message.author.display_name}**\n"
+                message << "They gave the following reason: ``#{bandisplay}``\n\n"
+                message << "If you wish to appeal for your ban's removal, please contact this person, or the server owner."
+                begin
+                    memeber.pm(message)
+                rescue Discordrb::Errors::NoPermission
+                    event.respond("👌 Banned sucessfully, but I wasn't able to DM the user about ban reasons.")
+                    break
+                end
+                event.respond('👌 The ban hammer has hit, hard.')
             else
                 'Invalid argument. Please mention a valid user.'
             end
         end
 
-        command(:lockdown, required_permissions: [:administrator]) do |event, time, *reason|
+        command(:lockdown, required_permissions: [:administrator]) do |event, time|
           Helper.ignore_bots(event)
-            reason = reason.join(' ')
-            lockdown = Discordrb::Permissions.new
-            lockdown.can_send_messages = true
-            everyone_role = Helper.role_from_name(event.server, '@everyone')
-            event.channel.define_overwrite(everyone_role, 0, lockdown)
-            if time.nil?
-                event.respond("🔒 **This channel is now in lockdown. Only staff can send messages. **🔒")
-            elsif /\A\d+\z/ =~ time
-                event.respond("🔒 **This channel is now in lockdown. Only staff can send messages. **🔒\n**Time:** #{time} minute(s)")
-                time_sec = time * 60
-                sleep(time_sec)
+            begin
+                lockdown = Discordrb::Permissions.new
+                lockdown.can_send_messages = true
+                everyone_role = Helper.role_from_name(event.server, '@everyone')
+                event.channel.define_overwrite(everyone_role, 0, lockdown)
+                if time.nil?
+                    event.respond('🔒 **This channel is now in lockdown. Only staff can send messages. **🔒')
+                elsif /\A\d+\z/ =~ time
+                    event.respond("🔒 **This channel is now in lockdown. Only staff can send messages. **🔒\n**Time:** #{time} minute(s)")
+                    time_sec = time * 60
+                    sleep(time_sec)
+                    lockdown = Discordrb::Permissions.new
+                    lockdown.can_send_messages = true
+                    everyone_role = Helper.role_from_name(event.server, '@everyone')
+                    event.channel.define_overwrite(everyone_role, lockdown, 0)
+                    event.respond(':unlock: **Channel has been unlocked.**:unlock:')
+                end
+            rescue Discordrb::Errors::NoPermission
+                event.channel.send_message("❌ I don't have permission to change this channel's permissions!")
+            end
+        end
+
+        command(:unlockdown, required_permissions: [:administrator]) do |event|
+            begin
                 lockdown = Discordrb::Permissions.new
                 lockdown.can_send_messages = true
                 everyone_role = Helper.role_from_name(event.server, '@everyone')
                 event.channel.define_overwrite(everyone_role, lockdown, 0)
                 event.respond(':unlock: **Channel has been unlocked.**:unlock:')
+            rescue Discordrb::Errors::NoPermission
+                event.channel.send_message("❌ I don't have permission to change this channel's permissions!")
             end
-        end
-
-        command(:unlockdown, required_permissions: [:administrator]) do |event|
-          Helper.ignore_bots(event)
-            lockdown = Discordrb::Permissions.new
-            lockdown.can_send_messages = true
-            everyone_role = Helper.role_from_name(event.server, '@everyone')
-            event.channel.define_overwrite(everyone_role, lockdown, 0)
-            event.respond(':unlock: **Channel has been unlocked.**:unlock:')
         end
     end
 end

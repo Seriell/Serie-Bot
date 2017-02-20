@@ -93,7 +93,8 @@ module SerieBot
                 text3 << "`#{Config.prefix}command [add/remove] <text>`: Create a custom command.\n"
             end
             event.user.pm(text3)
-            event.respond("✅ I've DMed you the command list!")
+            # We don't need to say this if it's currently in a DM.
+            event.respond("✅ I've DMed you the command list!") unless event.channel.private?
         end
       end
 end

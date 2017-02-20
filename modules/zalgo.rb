@@ -18,15 +18,16 @@ module SerieBot
             zalgo_text
         end
 
-    private
-    def self.insert_randoms(text)
-      random_extras = (0x1D023..0x1D045).map { |i| i.chr('UTF-8') }
-      newtext = []
-      text.each_char do |char|
-        newtext << char
-        newtext << random_extras.sample if rand(10) == 1
-      end
-      return newtext.join
-    end
+        private
+
+        def self.insert_randoms(text)
+            random_extras = (0x1D023..0x1D045).map { |i| i.chr('UTF-8') }
+            newtext = []
+            text.each_char do |char|
+                newtext << char
+                newtext << random_extras.sample if rand(10) == 1
+            end
+            newtext.join
+        end
   end
 end

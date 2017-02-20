@@ -108,9 +108,9 @@ module SerieBot
         def self.ignore_bots(event)
             if event.user.bot_account?
                 event.bot.ignore_user(event.user)
-                return true
+                true
             else
-                return false
+                false
             end
         end
 
@@ -176,6 +176,7 @@ module SerieBot
         end
 
         def self.filter_everyone(text)
+            # Replace with sneaky null
             text.gsub('@everyone', "@\x00everyone")
         end
 
@@ -213,10 +214,9 @@ module SerieBot
             end
             output_file.close
             message = "#{hist_count_and_messages[1][0]} messages logged."
-            output_channel.send_message(message) unless output_channel.nil?
+            output_channel.send_file(File.open(output_filename, 'r'), caption: message) unless output_channel.nil?
             puts message
             puts "Done. Dump file: #{output_filename}"
-            output_filename
         end
 
         def self.role_from_name(server, rolename)

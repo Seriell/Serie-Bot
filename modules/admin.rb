@@ -28,7 +28,7 @@ module SerieBot
             url = url.join(' ')
             file = Helper.download_file(url, 'tmp')
             event.bot.profile.avatar = File.open(file)
-            event.respond("✅ Avatar should be updated!")
+            event.respond('✅ Avatar should be updated!')
         end
 
         command(:game, description: 'Set the "Playing" status. Admin only.') do |event, *game|
@@ -120,7 +120,10 @@ module SerieBot
         end
 
         command(:owner, description: 'Find the owner of a shared server.', usage: '&message code') do |event, id|
-          Helper.ignore_bots(event)
+            if event.channel.private?
+                event.respond("❌ Sorry, you can't find the owner of a DM! (Hint: it's you.)")
+                break
+            end
             id = event.server.id if id.nil?
             owner = event.bot.server(id).owner
             event.respond("👤 Owner of server `#{event.bot.server(id).name}` is **#{owner.distinct}** | ID: `#{owner.id}`")
@@ -247,8 +250,8 @@ module SerieBot
                         event.respond("❌ Enter a valid channel id!")
                     end
 
-            output_filename = Helper.dump_channel(channel, event.channel, Config.dump_dir, event.message.timestamp)
-            event.channel.send_file File.new([output_filename].sample)
+            Helper.dump_channel(channel, event.channel, Config.dump_dir, event.message.timestamp)
+            event.respond('✅ Dumped successfully!')
         end
 
         command(:prune, required_permissions: [:manage_messages], max_args: 1) do |event, num|

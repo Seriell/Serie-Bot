@@ -18,7 +18,7 @@ module SerieBot
                     # It doesn't exist, so let the user know that.
                     event.respond("❌ The images folder for **#{name}** does not exist!")
                     return
-                elsif (Dir.entries(folder) - %w( . .. )).empty?
+                elsif (Dir.entries(folder) - %w(. ..)).empty?
                     # Nothing's in the directory, so let the user know that.
                     event.respond("❌ There are no images in the folder for **#{name}**!")
                     return

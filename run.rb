@@ -15,7 +15,7 @@ module SerieBot
         Admin,
         Autorole,
         Events,
-        Tags,
+        # Tags,
         Logging,
         Commands,
         Images,

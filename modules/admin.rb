@@ -179,7 +179,7 @@ module SerieBot
             if !/\A\d+\z/.match(num)
                 event.respond("❌ `#{num}` is not a valid positive number!")
                 break
-            else num == 0
+            elsif num == 0
                  event.respond("❌ You can't spam zero times!")
             end
 

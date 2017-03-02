@@ -62,12 +62,14 @@ module SerieBot
         end
 
         command(:about, min_args: 0, max_args: 0) do |event|
-            event << "`#{event.bot.user(event.bot.profile.id).distinct}` running **SerieBot-Git v3-#{`git rev-parse --short HEAD`}** \n**<https://github.com/Seriell/Serie-Bot> \n**"
+            about_text = "`#{event.bot.user(event.bot.profile.id).distinct}` running **SerieBot-Git v3-#{`git rev-parse --short HEAD`}** \n**<https://github.com/Seriell/Serie-Bot> \n**"
             if Config.yuu_commands
-              event << '⚙ Extra commands: **Enabled**'
+                about_text += '⚙ Extra commands: **Enabled**'
             else
-              event << '⚙ Extra commands: **Disabled**'
+                about_text += '⚙ Extra commands: **Disabled**'
             end
+            about_text += "\n\n:moneybag: Hey, making bots and hosting them isn't free. If you want this bot to stay alive, consider giving some :dollar: to the devs: https://paypal.me/Seriel and https://paypal.me/spotlightisok"
+            event.respond(about_text)
         end
 
         command(:owner, description: 'Find the owner of a shared server.', usage: '&message code') do |event, id|

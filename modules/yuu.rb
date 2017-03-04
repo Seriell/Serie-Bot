@@ -10,7 +10,7 @@ module SerieBot
 
         # All food commands.
 
-        json_food_commands = %w(potato cake cookie sandwich taco coffee noodles muffin tea keto beer cheese pancake chicken nugget pie icecream pizza chocolate pasta cereal sushi steak burger oreo)
+        json_food_commands = %w(potato cake cookie sandwich taco coffee noodles muffin tea keto beer cheese pancake chicken nugget pie icecream pizza chocolate pasta cereal sushi steak burger oreo biscuit)
 
         json_food_commands.each do |x|
             command(x.to_sym, usage: "#{Config.prefix}#{x} <person to give to>", min_args: 1) do |event, *args|
@@ -135,7 +135,7 @@ module SerieBot
 
         command(:eightball) do |event, *_args|
           event.channel.start_typing
-            "shakes the magic 8 ball... **#{File.readlines('text/Other/8ball_responses.txt').sample.chomp}**"
+            "shakes the magic 8 ball... **#{File.readlines('text/Other/Text/8ball_responses.txt').sample.chomp}**"
         end
 
         command(:cats) do |event, *_args|
@@ -182,9 +182,6 @@ module SerieBot
             variables['target'] = target
             response = Textgen.generate_string(json['templates'], json['parts'], variables)
         end
-
-
-
 
         command(:love, min_args: 1) do |event, *args|
           event.channel.start_typing
@@ -256,51 +253,34 @@ module SerieBot
           "IMDB Votes: #{array[:imdbVotes]}\n" +
           "Poster: #{array[:Poster].sub("._V1_SX300", "")}"
         end
-
-        command(:todayandtomorrow) do |event, *args|
+        
+        command(:fakename) do |event, *args|
+          event.channel.start_typing
+          fakename = open("http://api.namefake.com/").read
+          array = JSON.parse(fakename, symbolize_names: true)
+          
+          ":busts_in_silhouette: **Fake Name** :busts_in_silhouette:\n" +
+          "Full Name: #{array[:name]}\n" + 
+          "Address: #{array[:address]}\n" + 
+          "Maiden Name: #{array[:maiden_name]}\n" +
+          "Username: #{array[:username]}\n" + 
+          "Password: #{array[:password]}\n"
+        end
+        
+        command(:adorableavatar) do |event, *args|
           event.channel.start_typing
           args = args.join(' ')
-
-          if args.nil?
-            "**TODAY AND TOMORROW CHANNEL**\n" +
-            "Welcome to the Today and Tomorrow Channel. Use these commands:\n" +
-            "`&todayandtomorrow details`: Shows you detailed fortunes."
-          elsif args == "details"
-            text_love = File.readlines("text/Other/Text/todayandtomorrowlove.txt").sample.chomp
-            text_work = File.readlines("text/Other/Text/todayandtomorrowwork.txt").sample.chomp
-            text_study = File.readlines("text/Other/Text/todayandtomorrowstudy.txt").sample.chomp
-            text_communication = File.readlines("text/Other/Text/todayandtomorrowcommunication.txt").sample.chomp
-            text_money = File.readlines("text/Other/Text/todayandtomorrowmoney.txt").sample.chomp
-
-            prng = Random.new
-
-                emoji_love = prng.rand(1..5)
-                emoji_work = prng.rand(1..5)
-                emoji_study = prng.rand(1..5)
-                emoji_communication = prng.rand(1..5)
-                emoji_money = prng.rand(1..5)
-
-                emoji_diamond = "<:TodayAndTomorrowChannelDiamond:275403049437233153>"
-
-                emoji_love = ("<:TodayAndTomorrowChannelLove:275402579780042764>" * emoji_love) + (emoji_diamond * 5 - emoji_love)
-                emoji_work = ("<:TodayAndTomorrowChannelWork:275402433172209665>" * emoji_love) + (emoji_diamond * 5 - emoji_work)
-                emoji_study = ("<:TodayAndTomorrowChannelStudy:275402471357153282>" * emoji_love) + (emoji_diamond * 5 - emoji_study)
-                emoji_communication = ("<:TodayAndTomorrowChannelCommunica:275402659899375627>" * emoji_love) + (emoji_diamond * 5 - emoji_communication)
-                emoji_money = ("<:TodayAndTomorrowChannelMoney:275402527384535042>" * emoji_love) + (emoji_diamond * 5 - emoji_money)
-
-                "**DETAILS**\n" +
-                "**Love**\n" +
-                "#{emoji_love} - #{text_love}\n" +
-                "**Work**\n" +
-                "#{emoji_work} - #{text_work}\n" +
-                "**Study**\n" +
-                "#{emoji_study} - #{text_study}\n" +
-                "**Communication**\n" +
-                "#{emoji_communication} - #{text_communication}\n" +
-                "**Money**\n" +
-                "#{emoji_money} - #{text_money}"
-              end
-            end
+          
+          "https://api.adorable.io/avatars/285/#{args}"
+        end
+        
+        command(:chucknorris) do |event, *args|
+          event.channel.start_typing
+          chucknorris = open("https://api.chucknorris.io/jokes/random").read
+          array = JSON.parse(chucknorris, symbolize_names: true)
+          
+          array[:value]
+        end
 
         command(:choose, min_args: 1) do |event, *args|
           event.channel.start_typing

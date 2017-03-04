@@ -253,6 +253,26 @@ module SerieBot
           "IMDB Votes: #{array[:imdbVotes]}\n" +
           "Poster: #{array[:Poster].sub("._V1_SX300", "")}"
         end
+        
+        command(:fakename) do |event, *args|
+          event.channel.start_typing
+          fakename = open("http://api.namefake.com/").read
+          array = JSON.parse(fakename, symbolize_names: true)
+          
+          ":busts_in_silhouette: **Fake Name** :busts_in_silhouette:\n" +
+          "Full Name: #{array[:name]}\n" + 
+          "Address: #{array[:address]}\n" + 
+          "Maiden Name: #{array[:maiden_name]}\n" +
+          "Username: #{array[:username]}\n" + 
+          "Password: #{array[:password]}\n"
+        end
+        
+        command(:adorableavatar) do |event, *args|
+          event.channel.start_typing
+          args = args.join(' ')
+          
+          "https://api.adorable.io/avatars/285/#{args}"
+        end
 
         command(:choose, min_args: 1) do |event, *args|
           event.channel.start_typing

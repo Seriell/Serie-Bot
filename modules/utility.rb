@@ -57,7 +57,7 @@ module SerieBot
             end
             # Let people know the bot is working on something.
             event.channel.start_typing
-            if mention.nil?
+            if mention.nil? || mention = ''
                 user = event.message.author
             elsif event.message.mentions[0]
                 user = event.server.member(event.message.mentions[0])

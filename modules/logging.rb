@@ -10,8 +10,9 @@ module SerieBot
         @messages = {}
 
         def self.get_message(event, state)
-            # Only log messages written for the bot
-            if event.message.content.start_with?(Config.prefix)
+            if event.message.nil?
+                # Why is this nil?
+            elsif event.message.content.start_with?(Config.prefix)
                 # Figure out logging message
                 if event.channel.private?
                     server_name = 'DM'

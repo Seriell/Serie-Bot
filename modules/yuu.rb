@@ -10,7 +10,7 @@ module SerieBot
 
         # All food commands.
 
-        json_food_commands = %w(potato cake cookie sandwich taco coffee noodles muffin tea keto beer cheese pancake chicken nugget pie icecream pizza chocolate pasta cereal sushi steak burger oreo)
+        json_food_commands = %w(potato cake cookie sandwich taco coffee noodles muffin tea keto beer cheese pancake chicken nugget pie icecream pizza chocolate pasta cereal sushi steak burger oreo biscuit)
 
         json_food_commands.each do |x|
             command(x.to_sym, usage: "#{Config.prefix}#{x} <person to give to>", min_args: 1) do |event, *args|
@@ -272,6 +272,14 @@ module SerieBot
           args = args.join(' ')
           
           "https://api.adorable.io/avatars/285/#{args}"
+        end
+        
+        command(:chucknorris) do |event, *args|
+          event.channel.start_typing
+          chucknorris = open("https://api.chucknorris.io/jokes/random").read
+          array = JSON.parse(chucknorris, symbolize_names: true)
+          
+          array[:value]
         end
 
         command(:choose, min_args: 1) do |event, *args|

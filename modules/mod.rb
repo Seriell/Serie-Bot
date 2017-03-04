@@ -78,7 +78,7 @@ module SerieBot
                 begin
                     member.pm(message)
                 rescue Discordrb::Errors::NoPermission
-                    event.respond("👌 Banned sucessfully, but I wasn't able to DM the user about ban reasons.")
+                    event.respond("👌 Banned successfully, but I wasn't able to DM the user about ban reasons.")
                     break
                 end
                 event.respond('👌 The ban hammer has hit, hard.')

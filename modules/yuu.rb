@@ -84,6 +84,18 @@ module SerieBot
             end
             puts "Added jokes command for #{x}!"
         end
+        
+        fun_translation_commands = %w(yoda pirate valspeak minion ferblatin piglatin dothraki valyrian sindarin quenya sith cheunh gungan mandalorian huttese chef oldenglish shakespeare vulcan klingon jive dolan fudd cockney morse us2uk uk2us)
+        fun_translation_commands.each do |x|
+        	command(x.to_sym) do |event, *args|
+        	  args = args.join(' ')
+        	  event.channel.start_typing
+        	  json_string = open("http://api.funtranslations.com/translate/#{x}.json?text=#{args}").read
+        	  
+        	  json_string[:translated]
+        	end
+        	puts "Added translation command for #{x}!"
+        end
 
         command(:randomquestion) do |event|
           event.channel.start_typing

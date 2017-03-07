@@ -6,8 +6,6 @@ module SerieBot
         require 'json'
         require 'open-uri'
         require 'flippy'
-        require 'net/http'
-
 
         # All food commands.
 

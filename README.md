@@ -1,9 +1,13 @@
+## Important!:
+Serie-Bot is currently undergoing an extensive rewrite/refactor of it's code. There may be issues present on the last current Serie-Bot version which are already fixed in the rewrite. Please keep this in mind before reporting any problems. Big things are coming soon ;)
+
 # Serie-Bot
 Publicly available bot for [Discord](https://discordapp.com)
 Feel free to do whatever with the source code.
 
-You can invite the Public Bot with this link -> http://bot.seriel.pw <br />
+You can invite the Public Bot with this link -> https://sbot.fl0.co <br />
 The Public Bot might not always be online, if you want the bot all the time for sure, please host it yourself.
+
 
 # Self-Hosting:
 

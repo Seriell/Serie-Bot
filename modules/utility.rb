@@ -50,23 +50,25 @@ module SerieBot
             event << "** *#{text}* **"
         end
 
-        command(:avatar, description: 'Displays the avatar of a user.') do |event, *mention|
+        command(:avatar, description: 'Displays the avatar of a user.', max_args: 1) do |event, mention|
             if event.channel.private?
                 event.respond("❌ I can't grab avatars of others due to limitations of DMs!")
                 break
             end
             # Let people know the bot is working on something.
             event.channel.start_typing
-            if mention.nil? || mention = ''
+            if mention.nil?
                 user = event.message.author
             elsif event.message.mentions[0]
                 user = event.server.member(event.message.mentions[0])
-            else
-                event << '❌ Mention a valid user!'
-                next
             end
-            avatar_path = Helper.download_avatar(user, 'tmp')
-            event.channel.send_file File.new([avatar_path].sample)
+
+            if user.nil?
+                event << '❌ Mention a valid user!'
+            else
+                avatar_path = Helper.download_avatar(user, 'tmp')
+                event.channel.send_file File.new([avatar_path].sample)
+            end
         end
 
         command(:info, description: 'Displays info about a user.') do |event, *_mention|

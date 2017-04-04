@@ -1,5 +1,5 @@
 ## Important!:
-Serie-Bot is currently undergoing an extensive rewrite/refactor of it's code. There may be issues present on the last current Serie-Bot version which are already fixed in the rewrite. Please keep this in mind before reporting any problems. Big things are coming soon ;)
+Serie-Bot is currently undergoing an extensive rewrite/refactor of it's code. There may be issues present on the last current Serie-Bot version which are already fixed in the rewrite. Please keep this in mind before reporting any problems. Big things are coming soon ;) <br>
 **Check https://github.com/Seriell/Yuuki-Bot for rewrite progress**
 
 # Serie-Bot

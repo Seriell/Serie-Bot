@@ -46,6 +46,8 @@ module SerieBot
             support: "⚙ **Need help?**\nYou can join the support server here:\n**https://discord.gg/43SaDy6 **",
             facedesk: 'https://giphy.com/gifs/XLOsdacfjL5cI',
             smea: 'https://giphy.com/gifs/Sb2NkTl1oV6eI',
+            milk: 'I am a frequent ice chewer and I recently discovered "milk" :wink: ice. Firstly you put "milk" :wink: in the ice tray and then you let it freeze. I got so addicted to this that I covered my whole freezer with "milk" :wink: ! Of course nothing beats the original water so sometimes I shave a half cup of water with half cup of "milk" :wink: and crunch away. It' + "'" + 's probably bad for me but I also try "lemon" :wink: mixed with "milk" :wink: :wink:',
+            mine: "This mailbox :mailbox: is mine :thumbsup: and this triangular sign :zzz: that blue balloon :balloon: the month of June :calendar: there mine mine mine mine Mine ziggy's sweets :candy: are mine :thumbsup: the birdies tweets are mine! :thumbsup: city streets :walking: both ur feet :feet: there all emphatically mine :thumbsup: it's all belong to me :open_hands: everything that I see :see_no_evil: north south east and west I caress it :open_hands: cause I possess it, I'm stingy and it's mine!!!!! :thumbsup::thumbsup::thumbsup: snap snap snap :ok_hand::ok_hand: And this instrumental break is also mine :thumbsup::thumbsup: the floor :thumbsdown: and ceiling :thumbsup: are mine all your feeling are mine :slight_smile::confused::cry::angry::thinking:  you always knew it! That's all there is to it! It's mine mine mine mine mine :raised_hands: that's what I said it's mine!",            
         }
 
         @text_commands.each do |name, text|

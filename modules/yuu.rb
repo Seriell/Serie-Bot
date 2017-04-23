@@ -7,7 +7,6 @@ module SerieBot
         require 'open-uri'
         require 'flippy'
 
-
         # All food commands.
 
         json_food_commands = %w(potato cake cookie sandwich taco coffee noodles muffin tea keto beer cheese pancake chicken nugget pie icecream pizza chocolate pasta cereal sushi steak burger oreo biscuit)

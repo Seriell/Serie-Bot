@@ -1,1 +1,1 @@
-# https://github.com/Seriell/Yuuki-Bot
+# https://owo.codes/Seriel/Yuuki-Bot
